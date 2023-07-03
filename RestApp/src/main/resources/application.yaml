@@ -4,13 +4,13 @@ spring:
       fail-on-unknown-properties: true
   jpa:
     hibernate:
-      ddl-auto: create
+      ddl-auto: update
     properties:
       hibernate:
-        dialect: org.hibernate.dialect.MySQL5Dialect
+        dialect: org.hibernate.dialect.MySQL8Dialect
     show-sql: true
   datasource:
-    url: jdbc:mysql://127.0.0.1:3306/doctor
+    url: jdbc:mysql://127.0.0.1:3306/doctors
     username: testuser
-    password : ${DB_PWD}
+    password : test1990%%
     driver-class-name: com.mysql.cj.jdbc.Driver
