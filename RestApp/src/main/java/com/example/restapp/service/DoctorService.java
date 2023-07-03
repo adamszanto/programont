@@ -35,4 +35,8 @@ public class DoctorService {
     public Doctor saveDoctor(Doctor doctor) {
         return doctorRepository.save(doctor);
     }
+
+    public void deleteDoctorById(Long id) {
+        doctorRepository.deleteById(id);
+    }
 }

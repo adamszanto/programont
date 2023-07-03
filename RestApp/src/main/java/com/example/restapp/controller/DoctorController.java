@@ -2,6 +2,7 @@ package com.example.restapp.controller;
 
 import com.example.restapp.Repository.entity.Doctor;
 import com.example.restapp.service.DoctorService;
+import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -47,5 +48,11 @@ public class DoctorController {
         doctor.getPatients().add(patientName);
         Doctor updatedDoctor = doctorService.saveDoctor(doctor);
         return ResponseEntity.ok(updatedDoctor);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Long> deleteDoctor(@PathVariable Long id) {
+        doctorService.deleteDoctorById(id);
+        return new ResponseEntity<>(id, HttpStatus.OK);
     }
 }
