@@ -1,7 +1,9 @@
 package com.example.restapp.service;
 
+import com.example.restapp.mapper.DoctorMapper;
 import com.example.restapp.repository.entity.DoctorEntity;
 import com.example.restapp.repository.DoctorRepository;
+import com.example.restapp.service.model.Doctor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,10 +13,12 @@ import java.util.NoSuchElementException;
 @Service
 public class DoctorService {
     private final DoctorRepository doctorRepository;
+    private final DoctorMapper doctorMapper;
 
     @Autowired
-    public DoctorService(DoctorRepository doctorRepository) {
+    public DoctorService(DoctorRepository doctorRepository, DoctorMapper doctorMapper) {
         this.doctorRepository = doctorRepository;
+        this.doctorMapper = doctorMapper;
     }
 
     public DoctorEntity findDoctorById(Long id) {
@@ -28,12 +32,18 @@ public class DoctorService {
     public DoctorEntity updateDoctorSpecialization(Long id, String specialization) {
         DoctorEntity doctor = findDoctorById(id);
         doctor.setSpecialization(specialization);
-        // Esetleg további műveletek, validáció, adatbázis mentés stb.
+
         return doctorRepository.save(doctor);
     }
 
-    public DoctorEntity saveDoctor(DoctorEntity doctor) {
-        return doctorRepository.save(doctor);
+    public Doctor createDoctor(Doctor doctor) {
+        DoctorEntity doctorEntity = new DoctorEntity();
+        doctorEntity.setName(doctor.getName());
+        doctorEntity.setPatients(doctor.getPatients());
+        doctorEntity.setSpecialization(doctor.getSpecialization());
+
+        DoctorEntity savedEntity = doctorRepository.save(doctorEntity);
+        return doctorMapper.convertEntityToModel(savedEntity);
     }
 
     public void deleteDoctorById(Long id) {

@@ -14,7 +14,7 @@ public class CustomRepository {
     @PersistenceContext
     private EntityManager entityManager;
 
-    public DoctorEntity findById(Integer id) {
+    public DoctorEntity findById(Long id) {
         return entityManager.find(DoctorEntity.class, id);
     }
 

@@ -14,7 +14,7 @@ public class DoctorDto {
         return doctor;
     }
 
-    public void setDoctor(DoctorEntity doctor) {
+    public void setDoctor(Doctor doctor) {
         this.doctor = doctor;
     }
 
