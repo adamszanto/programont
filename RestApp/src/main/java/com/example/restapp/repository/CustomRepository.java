@@ -3,6 +3,7 @@ package com.example.restapp.repository;
 import com.example.restapp.repository.entity.DoctorEntity;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
+import jakarta.persistence.TypedQuery;
 import jakarta.transaction.Transactional;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -21,6 +22,18 @@ public class CustomRepository {
     @Query
     public List<DoctorEntity> getAllDoctor() {
         return entityManager.createQuery("SELECT s FROM DoctorEntity s", DoctorEntity.class).getResultList();
+    }
+
+    @Query
+    public DoctorEntity findByName(String name) {
+        TypedQuery<DoctorEntity> query = entityManager.createQuery("SELECT d FROM DoctorEntity d WHERE d.name = :name", DoctorEntity.class);
+        query.setParameter("name", name);
+        List<DoctorEntity> results = query.getResultList();
+        if (!results.isEmpty()) {
+            return results.get(0);
+        } else {
+            return null;
+        }
     }
 
     @Transactional

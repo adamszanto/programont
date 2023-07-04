@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/doctor")
@@ -38,6 +39,21 @@ public class DoctorController {
             return ResponseEntity.noContent().build();
         }
         return ResponseEntity.ok(doctors);
+    }
+
+    @GetMapping("/even")
+    public ResponseEntity<List<DoctorEntity>> getAllEvenIds() {
+        List<DoctorEntity> doctors = doctorService.getAllDoctors();
+
+        List<DoctorEntity> evenIdDoctors = doctors.stream()
+                .filter(doctor -> doctor.getId() % 2 == 0)
+                .collect(Collectors.toList());
+
+        if (evenIdDoctors.isEmpty()) {
+            return ResponseEntity.noContent().build();
+        }
+
+        return ResponseEntity.ok(evenIdDoctors);
     }
 
     @GetMapping("/{id}")
@@ -74,7 +90,6 @@ public class DoctorController {
         Doctor updatedDoctor = doctorService.createDoctor(doctor);
         return ResponseEntity.ok(updatedDoctor);
     }
-
 
 
     @DeleteMapping("/{id}")
