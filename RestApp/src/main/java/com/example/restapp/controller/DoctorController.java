@@ -4,8 +4,8 @@ import com.example.restapp.controller.dto.DoctorDto;
 import com.example.restapp.mapper.DoctorMapper;
 import com.example.restapp.repository.entity.DoctorEntity;
 import com.example.restapp.service.DoctorService;
+import com.example.restapp.service.model.Doctor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -42,32 +42,40 @@ public class DoctorController {
 
     @GetMapping("/{id}")
     public ResponseEntity<DoctorDto> getDoctorById(@PathVariable Long id) {
-        DoctorEntity doctor = doctorService.findDoctorById(id);
-        if(doctor == null) {
+        DoctorEntity doctorEntity = doctorService.findDoctorById(id);
+        if(doctorEntity == null) {
             return ResponseEntity.notFound().build();
         }
-        DoctorDto doctorDto = doctorMapper.convertEntityToDto(doctor);
+
+        Doctor doctor = doctorMapper.convertEntityToModel(doctorEntity);
+        DoctorDto doctorDto = doctorMapper.convertModelToDto(doctor);
         return ResponseEntity.ok(doctorDto);
     }
 
     @PostMapping()
-    public ResponseEntity<DoctorDto> createDoctor(@RequestParam String name) {
-        DoctorEntity doctor = new DoctorEntity();
-        doctor.setName(name);
-        DoctorEntity savedDoctor = doctorService.saveDoctor(doctor);
-        DoctorDto savedDoctorDto = doctorMapper.convertEntityToDto(savedDoctor);
-        return new ResponseEntity<>(savedDoctorDto, HttpStatus.CREATED);
+    public ResponseEntity<DoctorDto> createDoctor(@RequestBody DoctorDto doctorDto) {
+        Doctor doctor = new Doctor();
+        doctor.setName(doctorDto.getDoctor().getName());
+        doctor.setSpecialization(doctorDto.getDoctor().getSpecialization());
+        doctor.setPatients(doctorDto.getDoctor().getPatients());
+
+        Doctor savedDoctor = doctorService.createDoctor(doctorDto.getDoctor());
+        DoctorDto convertedDoctor = doctorMapper.convertModelToDto(savedDoctor);
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(convertedDoctor);
     }
 
     @PostMapping("/{id}/patients")
-    public ResponseEntity<DoctorDto> addPatient(@PathVariable Long id, @RequestBody Map<String, String> requestBody) {
-        DoctorEntity doctor = doctorService.findDoctorById(id);
-        String patientName = requestBody.get("patientName");
-        doctor.getPatients().add(patientName);
-        DoctorEntity updatedDoctor = doctorService.saveDoctor(doctor);
-        DoctorDto updatedDoctorDto = doctorMapper.convertEntityToDto(updatedDoctor);
-        return ResponseEntity.ok(updatedDoctorDto);
+    public ResponseEntity<Doctor> addPatient(@PathVariable Long id, @RequestBody String patient) {
+        DoctorEntity doctorEntity = doctorService.findDoctorById(id);
+        doctorEntity.getPatients().add(patient);
+
+        Doctor doctor = doctorMapper.convertEntityToModel(doctorEntity);
+        Doctor updatedDoctor = doctorService.createDoctor(doctor);
+        return ResponseEntity.ok(updatedDoctor);
     }
+
+
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Long> deleteDoctor(@PathVariable Long id) {
@@ -76,12 +84,16 @@ public class DoctorController {
     }
 
     @PatchMapping("/{id}")
-    public ResponseEntity<DoctorEntity> updateDoctorName(@PathVariable Long id, @RequestBody Map<String, String> requestBody) {
-        DoctorEntity doctor = doctorService.findDoctorById(id);
+    public ResponseEntity<DoctorDto> updateDoctorName(@PathVariable Long id, @RequestBody Map<String, String> requestBody) {
+        DoctorEntity doctorEntity = doctorService.findDoctorById(id);
         String newName = requestBody.get("name");
-        doctor.setName(newName);
-        DoctorEntity updatedDoctor = doctorService.saveDoctor(doctor);
-        return ResponseEntity.ok(updatedDoctor);
+        doctorEntity.setName(newName);
+
+        Doctor doctor = doctorMapper.convertEntityToModel(doctorEntity);
+
+        Doctor updatedDoctor = doctorService.createDoctor(doctor);
+        DoctorDto doctorDto = doctorMapper.convertModelToDto(updatedDoctor);
+        return ResponseEntity.ok(doctorDto);
 
     }
 
