@@ -62,4 +62,14 @@ public class DoctorController {
         doctorService.deleteDoctorById(id);
         return new ResponseEntity<>(id, HttpStatus.OK);
     }
+
+    @PatchMapping("/{id}")
+    public ResponseEntity<Doctor> updateDoctorName(@PathVariable Long id, @RequestBody Map<String, String> requestBody) {
+        Doctor doctor = doctorService.findDoctorById(id);
+        String newName = requestBody.get("name");
+        doctor.setName(newName);
+        Doctor updatedDoctor = doctorService.saveDoctor(doctor);
+        return ResponseEntity.ok(updatedDoctor);
+
+    }
 }
