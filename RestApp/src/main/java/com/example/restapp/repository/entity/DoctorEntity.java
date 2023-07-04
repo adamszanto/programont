@@ -1,4 +1,4 @@
-package com.example.restapp.Repository.entity;
+package com.example.restapp.repository.entity;
 
 import jakarta.persistence.*;
 
@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-public class Doctor {
+public class DoctorEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -15,7 +15,7 @@ public class Doctor {
     @ElementCollection
     private List<String> patients;
 
-    public Doctor() {
+    public DoctorEntity() {
         this.specialization = "General Practitioner";
         this.patients = new ArrayList<>();
     }

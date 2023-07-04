@@ -1,7 +1,7 @@
 package com.example.restapp.service;
 
-import com.example.restapp.Repository.entity.Doctor;
-import com.example.restapp.Repository.DoctorRepository;
+import com.example.restapp.repository.entity.DoctorEntity;
+import com.example.restapp.repository.DoctorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,22 +17,22 @@ public class DoctorService {
         this.doctorRepository = doctorRepository;
     }
 
-    public Doctor findDoctorById(Long id) {
+    public DoctorEntity findDoctorById(Long id) {
         return doctorRepository.findById(id).orElseThrow(() -> new NoSuchElementException("Doctor with id " + id + " not found"));
     }
 
-    public List<Doctor> getAllDoctors() {
+    public List<DoctorEntity> getAllDoctors() {
         return doctorRepository.findAll();
     }
 
-    public Doctor updateDoctorSpecialization(Long id, String specialization) {
-        Doctor doctor = findDoctorById(id);
+    public DoctorEntity updateDoctorSpecialization(Long id, String specialization) {
+        DoctorEntity doctor = findDoctorById(id);
         doctor.setSpecialization(specialization);
         // Esetleg további műveletek, validáció, adatbázis mentés stb.
         return doctorRepository.save(doctor);
     }
 
-    public Doctor saveDoctor(Doctor doctor) {
+    public DoctorEntity saveDoctor(DoctorEntity doctor) {
         return doctorRepository.save(doctor);
     }
 
