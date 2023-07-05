@@ -56,6 +56,32 @@ public class DoctorController {
         return ResponseEntity.ok(evenIdDoctors);
     }
 
+    @GetMapping("/prime")
+    public ResponseEntity<List<DoctorEntity>> getAllPrimeIds() {
+        List<DoctorEntity> doctors = doctorService.getAllDoctors();
+
+        List<DoctorEntity> primeIdDoctors = doctors.stream()
+                .filter(doctor -> isPrime(doctor.getId()))
+                .collect(Collectors.toList());
+
+        if (primeIdDoctors.isEmpty()) {
+            return ResponseEntity.noContent().build();
+        }
+
+        return ResponseEntity.ok(primeIdDoctors);
+    }
+    private boolean isPrime(Long number) {
+        if (number <= 1) {
+            return false;
+        }
+        for (long i = 2; i <= Math.sqrt(number); i++) {
+            if (number % i == 0) {
+                return false;
+            }
+        }
+        return true;
+    }
+
     @GetMapping("/{id}")
     public ResponseEntity<DoctorDto> getDoctorById(@PathVariable Long id) {
         DoctorEntity doctorEntity = doctorService.findDoctorById(id);
@@ -106,7 +132,6 @@ public class DoctorController {
         Doctor updatedDoctor = doctorService.createDoctor(doctor);
         DoctorDto doctorDto = doctorMapper.convertModelToDto(updatedDoctor);
         return ResponseEntity.ok(doctorDto);
-
     }
 
     // TODO
