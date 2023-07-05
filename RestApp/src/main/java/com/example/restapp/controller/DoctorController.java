@@ -2,14 +2,18 @@ package com.example.restapp.controller;
 
 import com.example.restapp.controller.dto.DoctorDto;
 import com.example.restapp.mapper.DoctorMapper;
+import com.example.restapp.repository.DoctorRepository;
 import com.example.restapp.repository.entity.DoctorEntity;
 import com.example.restapp.service.DoctorService;
 import com.example.restapp.service.model.Doctor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.actuate.autoconfigure.observation.ObservationProperties;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -19,6 +23,7 @@ import java.util.stream.Collectors;
 public class DoctorController {
     private final DoctorService doctorService;
     private final DoctorMapper doctorMapper;
+
 
     @Autowired
     public DoctorController(DoctorService doctorService, DoctorMapper doctorMapper) {
@@ -117,6 +122,11 @@ public class DoctorController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Long> deleteDoctor(@PathVariable Long id) {
+        if(id == null) {
+          //  return new ResponseEntity<>(Collections.singletonMap("error", "Not found ID."), HttpStatus.BAD_REQUEST);
+            return ResponseEntity.badRequest().build();
+        }
+
         doctorService.deleteDoctorById(id);
         return new ResponseEntity<>(id, HttpStatus.OK);
     }
@@ -133,6 +143,7 @@ public class DoctorController {
         DoctorDto doctorDto = doctorMapper.convertModelToDto(updatedDoctor);
         return ResponseEntity.ok(doctorDto);
     }
+
 
     // TODO
     // HTTP válaszok, nullpointert stb lekezelni

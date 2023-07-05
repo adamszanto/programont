@@ -64,4 +64,13 @@ public class DoctorService {
     public void deleteDoctorById(Long id) {
         doctorRepository.deleteById(id);
     }
+
+    public List<Doctor> findByName(String name) {
+        List<Doctor> doctors = doctorRepository.selectByName(name);
+
+        if(doctors.isEmpty()) {
+            return null;
+        }
+        return doctors;
+    }
 }

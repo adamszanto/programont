@@ -24,6 +24,14 @@ public class CustomRepository {
         return entityManager.createQuery("SELECT s FROM DoctorEntity s", DoctorEntity.class).getResultList();
     }
 
+//    @Query
+//    public List<DoctorEntity> getAllDoctorNativeQuery() {
+//        String nativeQuery = "SELECT * FROM doctor_entity";
+//        List<DoctorEntity> resultList = entityManager.createNativeQuery(nativeQuery, DoctorEntity.class).getResultList();
+//        return resultList;
+//    }
+
+
     @Query
     public DoctorEntity findByName(String name) {
         TypedQuery<DoctorEntity> query = entityManager.createQuery("SELECT d FROM DoctorEntity d WHERE d.name = :name", DoctorEntity.class);
