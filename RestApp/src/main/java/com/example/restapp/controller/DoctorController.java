@@ -5,6 +5,7 @@ import com.example.restapp.mapper.DoctorMapper;
 import com.example.restapp.repository.entity.DoctorEntity;
 import com.example.restapp.service.DoctorService;
 import com.example.restapp.service.model.Doctor;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,12 +21,14 @@ import java.util.stream.Collectors;
 public class DoctorController {
     private final DoctorService doctorService;
     private final DoctorMapper doctorMapper;
+    private final ModelMapper modelMapper;
 
     // TODO: Autowired mindenhová... konzisztensen.
     @Autowired
-    public DoctorController(DoctorService doctorService, DoctorMapper doctorMapper) {
+    public DoctorController(DoctorService doctorService, DoctorMapper doctorMapper, ModelMapper modelMapper) {
         this.doctorService = doctorService;
         this.doctorMapper = doctorMapper;
+        this.modelMapper = modelMapper;
     }
 
     @GetMapping("/auth")
@@ -117,7 +120,8 @@ public class DoctorController {
     public ResponseEntity<DoctorDto> addPatient(@PathVariable Long id, @RequestBody String patient) {
 
         Doctor updatedDoctor = doctorService.addPatient(id, patient);
-        return ResponseEntity.ok(doctorMapper.convertModelToDto(updatedDoctor));
+        return ResponseEntity.ok(modelMapper.map(updatedDoctor, DoctorDto.class));
+      //  return ResponseEntity.ok(doctorMapper.convertModelToDto(updatedDoctor));
     }
 
 

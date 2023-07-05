@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class DoctorService {
@@ -42,8 +43,12 @@ public class DoctorService {
 
     }
 
-    public List<DoctorEntity> getAllDoctors() {
-        return doctorRepository.findAll();
+    public List<Doctor> getAllDoctors() {
+        List<DoctorEntity> doctors = doctorRepository.findAll();
+        List<Doctor> doctorList = doctors.stream()
+                .map(doctor -> doctorMapper.convertEntityToModel(doctor))
+                .collect(Collectors.toList());
+        return doctorList;
     }
 
     public DoctorEntity updateDoctorSpecialization(Long id, String specialization) {

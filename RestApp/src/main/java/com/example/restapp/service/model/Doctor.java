@@ -10,7 +10,6 @@ public class Doctor {
     private List<Patient> patients;
 
     public Doctor() {
-
     }
 
     public Long getId() {
