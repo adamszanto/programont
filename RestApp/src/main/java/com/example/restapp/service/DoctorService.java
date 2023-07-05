@@ -29,6 +29,7 @@ public class DoctorService {
     public Doctor addPatient(Long id, String patientName) {
         Optional<DoctorEntity> optionalDoctor = doctorRepository.findById(id);
 
+        // TODO: Custom Exception, átmappelni státuszkóddá
         if (optionalDoctor.isEmpty()) {
             throw new NoSuchElementException("No doctor with given ID");
         }

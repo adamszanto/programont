@@ -13,6 +13,7 @@ public class DoctorEntity {
     private String name;
     private String specialization;
     @ElementCollection
+    @Column(nullable = false)
     private List<String> patients;
 
     public DoctorEntity() {
@@ -23,7 +24,6 @@ public class DoctorEntity {
     public Long getId() {
         return id;
     }
-
 
     public void setId(Long id) {
         this.id = id;
