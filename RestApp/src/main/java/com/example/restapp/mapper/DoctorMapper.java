@@ -63,5 +63,4 @@ public class DoctorMapper {
                 .map(patient -> patientMapper.convertModelToEntity(doctor, patient))
                 .collect(Collectors.toList());
     }
-
 }

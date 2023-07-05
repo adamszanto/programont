@@ -10,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.print.Doc;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -33,10 +34,20 @@ public class DoctorController {
         return "Success";
     }
 
-    @GetMapping()
-    public ResponseEntity<List<DoctorEntity>> getAllDoctors() {
-        List<DoctorEntity> doctors = doctorService.getAllDoctors();
-        if(doctors.isEmpty()) {
+//    @GetMapping
+//    public ResponseEntity<List<DoctorEntity>> getAllDoctors() {
+//        List<DoctorEntity> doctors = doctorService.getAllDoctors();
+//        if(doctors.isEmpty()) {
+//            return ResponseEntity.noContent().build();
+//        }
+//        return ResponseEntity.ok(doctors);
+//    }
+
+    @GetMapping
+    public ResponseEntity<List<Doctor>> getAllDoctors() {
+        List<Doctor> doctors = doctorService.getAllDoctors();
+
+        if (doctors.isEmpty()) {
             return ResponseEntity.noContent().build();
         }
         return ResponseEntity.ok(doctors);
