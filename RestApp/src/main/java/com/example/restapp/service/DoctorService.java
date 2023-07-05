@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.Optional;
 
 @Service
 public class DoctorService {
@@ -23,6 +24,20 @@ public class DoctorService {
 
     public DoctorEntity findDoctorById(Long id) {
         return doctorRepository.findById(id).orElseThrow(() -> new NoSuchElementException("Doctor with id " + id + " not found"));
+    }
+
+    public Doctor addPatient(Long id, String patientName) {
+        Optional<DoctorEntity> optionalDoctor = doctorRepository.findById(id);
+
+        if (optionalDoctor.isEmpty()) {
+            throw new NoSuchElementException("No doctor with given ID");
+        }
+
+        DoctorEntity doctorEntity = optionalDoctor.get();
+        doctorEntity.getPatients().add(patientName);
+        DoctorEntity savedEntity = doctorRepository.save(doctorEntity);
+        return doctorMapper.convertEntityToModel(savedEntity);
+
     }
 
     public List<DoctorEntity> getAllDoctors() {

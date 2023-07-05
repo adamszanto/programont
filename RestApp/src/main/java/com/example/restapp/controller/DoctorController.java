@@ -82,13 +82,10 @@ public class DoctorController {
     }
 
     @PostMapping("/{id}/patients")
-    public ResponseEntity<Doctor> addPatient(@PathVariable Long id, @RequestBody String patient) {
-        DoctorEntity doctorEntity = doctorService.findDoctorById(id);
-        doctorEntity.getPatients().add(patient);
+    public ResponseEntity<DoctorDto> addPatient(@PathVariable Long id, @RequestBody String patient) {
 
-        Doctor doctor = doctorMapper.convertEntityToModel(doctorEntity);
-        Doctor updatedDoctor = doctorService.createDoctor(doctor);
-        return ResponseEntity.ok(updatedDoctor);
+        Doctor updatedDoctor = doctorService.addPatient(id, patient);
+        return ResponseEntity.ok(doctorMapper.convertModelToDto(updatedDoctor));
     }
 
 
