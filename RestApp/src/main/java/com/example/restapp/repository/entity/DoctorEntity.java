@@ -4,21 +4,30 @@ import jakarta.persistence.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
+@Table(name="doctors")
 public class DoctorEntity {
+    private static final String DEFAULT_SPECIALIZATION = "General Practitioner";
+
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String name;
-    private String specialization;
-    @ElementCollection
-    @Column(nullable = false)
-    private List<String> patients;
+    private String specialization = DEFAULT_SPECIALIZATION;
+    @OneToMany(mappedBy = "doctor", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    private List<PatientEntity> patients;
 
     public DoctorEntity() {
-        this.specialization = "General Practitioner";
-        this.patients = new ArrayList<>();
+
+    }
+
+    public void add(PatientEntity patient) {
+        if(patients == null) {
+            patients = new ArrayList<>();
+        }
+        patients.add(patient);
     }
 
     public Long getId() {
@@ -45,11 +54,44 @@ public class DoctorEntity {
         this.specialization = specialization;
     }
 
-    public List<String> getPatients() {
+    public List<PatientEntity> getPatients() {
         return patients;
     }
 
-    public void setPatients(List<String> patients) {
+    public void setPatients(List<PatientEntity> patients) {
         this.patients = patients;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        DoctorEntity that = (DoctorEntity) o;
+
+        if (!Objects.equals(id, that.id)) return false;
+        if (!Objects.equals(name, that.name)) return false;
+        if (!Objects.equals(specialization, that.specialization))
+            return false;
+        return Objects.equals(patients, that.patients);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = id != null ? id.hashCode() : 0;
+        result = 31 * result + (name != null ? name.hashCode() : 0);
+        result = 31 * result + (specialization != null ? specialization.hashCode() : 0);
+        result = 31 * result + (patients != null ? patients.hashCode() : 0);
+        return result;
+    }
+
+    @Override
+    public String toString() {
+        return "DoctorEntity{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", specialization='" + specialization + '\'' +
+                ", patients=" + patients +
+                '}';
     }
 }

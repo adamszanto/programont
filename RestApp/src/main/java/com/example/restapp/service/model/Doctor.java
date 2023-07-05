@@ -1,7 +1,5 @@
 package com.example.restapp.service.model;
 
-import jakarta.persistence.ElementCollection;
-
 import java.util.List;
 import java.util.Objects;
 
@@ -9,7 +7,7 @@ public class Doctor {
     private Long id;
     private String name;
     private String specialization;
-    private List<String> patients;
+    private List<Patient> patients;
 
     public Doctor() {
 
@@ -39,11 +37,11 @@ public class Doctor {
         this.specialization = specialization;
     }
 
-    public List<String> getPatients() {
+    public List<Patient> getPatients() {
         return patients;
     }
 
-    public void setPatients(List<String> patients) {
+    public void setPatients(List<Patient> patients) {
         this.patients = patients;
     }
 

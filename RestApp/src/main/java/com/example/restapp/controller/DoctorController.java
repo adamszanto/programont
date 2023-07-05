@@ -15,11 +15,12 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/doctor")
+@RequestMapping("/doctors")
 public class DoctorController {
     private final DoctorService doctorService;
     private final DoctorMapper doctorMapper;
 
+    // TODO: Autowired mindenhová... konzisztensen.
     @Autowired
     public DoctorController(DoctorService doctorService, DoctorMapper doctorMapper) {
         this.doctorService = doctorService;
@@ -52,7 +53,6 @@ public class DoctorController {
         if (evenIdDoctors.isEmpty()) {
             return ResponseEntity.noContent().build();
         }
-
         return ResponseEntity.ok(evenIdDoctors);
     }
 
@@ -94,13 +94,8 @@ public class DoctorController {
         return ResponseEntity.ok(doctorDto);
     }
 
-    @PostMapping()
+    @PostMapping
     public ResponseEntity<DoctorDto> createDoctor(@RequestBody DoctorDto doctorDto) {
-        Doctor doctor = new Doctor();
-        doctor.setName(doctorDto.getDoctor().getName());
-        doctor.setSpecialization(doctorDto.getDoctor().getSpecialization());
-        doctor.setPatients(doctorDto.getDoctor().getPatients());
-
         Doctor savedDoctor = doctorService.createDoctor(doctorDto.getDoctor());
         DoctorDto convertedDoctor = doctorMapper.convertModelToDto(savedDoctor);
 
@@ -123,6 +118,8 @@ public class DoctorController {
 
     @PatchMapping("/{id}")
     public ResponseEntity<DoctorDto> updateDoctorName(@PathVariable Long id, @RequestBody Map<String, String> requestBody) {
+        // TODO: Rétegek között szintén figyelni...
+
         DoctorEntity doctorEntity = doctorService.findDoctorById(id);
         String newName = requestBody.get("name");
         doctorEntity.setName(newName);

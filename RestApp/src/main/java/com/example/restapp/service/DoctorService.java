@@ -1,8 +1,9 @@
 package com.example.restapp.service;
 
 import com.example.restapp.mapper.DoctorMapper;
-import com.example.restapp.repository.entity.DoctorEntity;
 import com.example.restapp.repository.DoctorRepository;
+import com.example.restapp.repository.entity.DoctorEntity;
+import com.example.restapp.repository.entity.PatientEntity;
 import com.example.restapp.service.model.Doctor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -35,7 +36,7 @@ public class DoctorService {
         }
 
         DoctorEntity doctorEntity = optionalDoctor.get();
-        doctorEntity.getPatients().add(patientName);
+        doctorEntity.add(PatientEntity.of(patientName, doctorEntity));
         DoctorEntity savedEntity = doctorRepository.save(doctorEntity);
         return doctorMapper.convertEntityToModel(savedEntity);
 
@@ -53,11 +54,7 @@ public class DoctorService {
     }
 
     public Doctor createDoctor(Doctor doctor) {
-        DoctorEntity doctorEntity = new DoctorEntity();
-        doctorEntity.setName(doctor.getName());
-        doctorEntity.setPatients(doctor.getPatients());
-        doctorEntity.setSpecialization(doctor.getSpecialization());
-
+        DoctorEntity doctorEntity = doctorMapper.convertModelToEntity(doctor);
         DoctorEntity savedEntity = doctorRepository.save(doctorEntity);
         return doctorMapper.convertEntityToModel(savedEntity);
     }
