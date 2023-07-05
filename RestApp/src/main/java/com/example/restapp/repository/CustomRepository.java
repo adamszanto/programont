@@ -12,6 +12,7 @@ import java.util.List;
 
 @Repository
 public class CustomRepository {
+
     @PersistenceContext
     private EntityManager entityManager;
 
@@ -21,6 +22,7 @@ public class CustomRepository {
 
     @Query
     public List<DoctorEntity> getAllDoctor() {
+        // TODO: NamedQuery entityManager-nek. De legalább kiemelni private final static változóba. Vagy külön final classt tartalmaz ami csak konstansokat, query-ket tárol.
         return entityManager.createQuery("SELECT s FROM DoctorEntity s", DoctorEntity.class).getResultList();
     }
 
@@ -32,6 +34,7 @@ public class CustomRepository {
         if (!results.isEmpty()) {
             return results.get(0);
         } else {
+            //TODO: null ne adj vissza... Optional<Empty> Optional.of(...) ?
             return null;
         }
     }
@@ -53,6 +56,7 @@ public class CustomRepository {
             save(doctor2);
         } catch(Exception e) {
             entityManager.getTransaction().rollback();
+            // TODO: Custom exceptiont írni... UnableToSaveDoctor
             throw new RuntimeException("Transaction failed ", e);
         }
     }

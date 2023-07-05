@@ -1,7 +1,5 @@
 package com.example.restapp.service.model;
 
-import jakarta.persistence.ElementCollection;
-
 import java.util.List;
 import java.util.Objects;
 

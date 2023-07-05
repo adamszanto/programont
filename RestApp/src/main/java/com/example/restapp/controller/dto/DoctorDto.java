@@ -1,5 +1,4 @@
 package com.example.restapp.controller.dto;
-import com.example.restapp.repository.entity.DoctorEntity;
 import com.example.restapp.service.model.Doctor;
 
 import java.util.Objects;

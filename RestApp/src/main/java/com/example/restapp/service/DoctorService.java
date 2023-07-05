@@ -1,30 +1,27 @@
 package com.example.restapp.service;
 
 import com.example.restapp.mapper.DoctorMapper;
-import com.example.restapp.repository.entity.DoctorEntity;
 import com.example.restapp.repository.DoctorRepository;
+import com.example.restapp.repository.entity.DoctorEntity;
 import com.example.restapp.repository.entity.PatientEntity;
 import com.example.restapp.service.model.Doctor;
-import com.example.restapp.service.model.Patient;
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class DoctorService {
     private final DoctorRepository doctorRepository;
     private final DoctorMapper doctorMapper;
-    private final ModelMapper modelMapper;
 
     @Autowired
-    public DoctorService(DoctorRepository doctorRepository, DoctorMapper doctorMapper, ModelMapper modelMapper) {
+    public DoctorService(DoctorRepository doctorRepository, DoctorMapper doctorMapper) {
         this.doctorRepository = doctorRepository;
         this.doctorMapper = doctorMapper;
-        this.modelMapper = modelMapper;
     }
 
     public DoctorEntity findDoctorById(Long id) {
@@ -34,23 +31,24 @@ public class DoctorService {
     public Doctor addPatient(Long id, String patientName) {
         Optional<DoctorEntity> optionalDoctor = doctorRepository.findById(id);
 
+        // TODO: Custom Exception, átmappelni státuszkóddá
+        if (optionalDoctor.isEmpty()) {
+            throw new NoSuchElementException("No doctor with given ID");
+        }
+
         DoctorEntity doctorEntity = optionalDoctor.get();
-
-
-        Patient patient = new Patient();
-        patient.setName(patientName);
-        PatientEntity patientEntity = new PatientEntity();
-        modelMapper.map(patient, patientEntity);
-
-        doctorEntity.getPatients().add(patientEntity);
+        doctorEntity.add(PatientEntity.of(patientName, doctorEntity));
         DoctorEntity savedEntity = doctorRepository.save(doctorEntity);
-        //return doctorMapper.convertEntityToModel(savedEntity);
+        return doctorMapper.convertEntityToModel(savedEntity);
 
-        return modelMapper.map(savedEntity, Doctor.class);
     }
 
-    public List<DoctorEntity> getAllDoctors() {
-        return doctorRepository.findAll();
+    public List<Doctor> getAllDoctors() {
+        List<DoctorEntity> doctors = doctorRepository.findAll();
+        List<Doctor> doctorList = doctors.stream()
+                .map(doctor -> doctorMapper.convertEntityToModel(doctor))
+                .collect(Collectors.toList());
+        return doctorList;
     }
 
     public DoctorEntity updateDoctorSpecialization(Long id, String specialization) {
@@ -60,24 +58,10 @@ public class DoctorService {
         return doctorRepository.save(doctor);
     }
 
-//    public Doctor createDoctor(Doctor doctor) {
-//        DoctorEntity doctorEntity = new DoctorEntity();
-//        doctorEntity.setName(doctor.getName());
-//        doctorEntity.setPatients(doctorEntity.getPatients());
-//        doctorEntity.setSpecialization(doctor.getSpecialization());
-//
-//        DoctorEntity savedEntity = doctorRepository.save(doctorEntity);
-//        return doctorMapper.convertEntityToModel(savedEntity);
-//    }
-
     public Doctor createDoctor(Doctor doctor) {
-        DoctorEntity doctorEntity = new DoctorEntity();
-        doctorEntity.setName(doctor.getName());
-        doctorEntity.setPatients(doctorEntity.getPatients());
-        doctorEntity.setSpecialization(doctor.getSpecialization());
-
+        DoctorEntity doctorEntity = doctorMapper.convertModelToEntity(doctor);
         DoctorEntity savedEntity = doctorRepository.save(doctorEntity);
-        return modelMapper.map(savedEntity, Doctor.class);
+        return doctorMapper.convertEntityToModel(savedEntity);
     }
 
     public void deleteDoctorById(Long id) {

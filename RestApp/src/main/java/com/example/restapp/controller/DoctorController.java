@@ -11,17 +11,19 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.print.Doc;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/doctor")
+@RequestMapping("/doctors")
 public class DoctorController {
     private final DoctorService doctorService;
     private final DoctorMapper doctorMapper;
     private final ModelMapper modelMapper;
 
+    // TODO: Autowired mindenhová... konzisztensen.
     @Autowired
     public DoctorController(DoctorService doctorService, DoctorMapper doctorMapper, ModelMapper modelMapper) {
         this.doctorService = doctorService;
@@ -35,10 +37,20 @@ public class DoctorController {
         return "Success";
     }
 
-    @GetMapping()
-    public ResponseEntity<List<DoctorEntity>> getAllDoctors() {
-        List<DoctorEntity> doctors = doctorService.getAllDoctors();
-        if(doctors.isEmpty()) {
+//    @GetMapping
+//    public ResponseEntity<List<DoctorEntity>> getAllDoctors() {
+//        List<DoctorEntity> doctors = doctorService.getAllDoctors();
+//        if(doctors.isEmpty()) {
+//            return ResponseEntity.noContent().build();
+//        }
+//        return ResponseEntity.ok(doctors);
+//    }
+
+    @GetMapping
+    public ResponseEntity<List<Doctor>> getAllDoctors() {
+        List<Doctor> doctors = doctorService.getAllDoctors();
+
+        if (doctors.isEmpty()) {
             return ResponseEntity.noContent().build();
         }
         return ResponseEntity.ok(doctors);
@@ -55,7 +67,6 @@ public class DoctorController {
         if (evenIdDoctors.isEmpty()) {
             return ResponseEntity.noContent().build();
         }
-
         return ResponseEntity.ok(evenIdDoctors);
     }
 
@@ -97,13 +108,8 @@ public class DoctorController {
         return ResponseEntity.ok(doctorDto);
     }
 
-    @PostMapping()
+    @PostMapping
     public ResponseEntity<DoctorDto> createDoctor(@RequestBody DoctorDto doctorDto) {
-        Doctor doctor = new Doctor();
-        doctor.setName(doctorDto.getDoctor().getName());
-        doctor.setSpecialization(doctorDto.getDoctor().getSpecialization());
-        doctor.setPatients(doctorDto.getDoctor().getPatients());
-
         Doctor savedDoctor = doctorService.createDoctor(doctorDto.getDoctor());
         DoctorDto convertedDoctor = doctorMapper.convertModelToDto(savedDoctor);
 
@@ -127,6 +133,8 @@ public class DoctorController {
 
     @PatchMapping("/{id}")
     public ResponseEntity<DoctorDto> updateDoctorName(@PathVariable Long id, @RequestBody Map<String, String> requestBody) {
+        // TODO: Rétegek között szintén figyelni...
+
         DoctorEntity doctorEntity = doctorService.findDoctorById(id);
         String newName = requestBody.get("name");
         doctorEntity.setName(newName);
