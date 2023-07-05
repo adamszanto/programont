@@ -12,8 +12,8 @@ public class DoctorEntity {
     private Long id;
     private String name;
     private String specialization;
-    @ElementCollection
-    private List<String> patients;
+    @OneToMany(mappedBy = "doctor", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<PatientEntity> patients;
 
     public DoctorEntity() {
         this.specialization = "General Practitioner";
@@ -45,11 +45,11 @@ public class DoctorEntity {
         this.specialization = specialization;
     }
 
-    public List<String> getPatients() {
+    public List<PatientEntity> getPatients() {
         return patients;
     }
 
-    public void setPatients(List<String> patients) {
+    public void setPatients(List<PatientEntity> patients) {
         this.patients = patients;
     }
 }

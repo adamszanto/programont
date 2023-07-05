@@ -9,10 +9,9 @@ public class Doctor {
     private Long id;
     private String name;
     private String specialization;
-    private List<String> patients;
+    private List<Patient> patients;
 
     public Doctor() {
-
     }
 
     public Long getId() {
@@ -39,11 +38,11 @@ public class Doctor {
         this.specialization = specialization;
     }
 
-    public List<String> getPatients() {
+    public List<Patient> getPatients() {
         return patients;
     }
 
-    public void setPatients(List<String> patients) {
+    public void setPatients(List<Patient> patients) {
         this.patients = patients;
     }
 
