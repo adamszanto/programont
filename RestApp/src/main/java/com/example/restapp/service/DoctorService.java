@@ -18,20 +18,19 @@ public class DoctorService {
     private final DoctorRepository doctorRepository;
     private final DoctorMapper doctorMapper;
 
-    @Autowired
     public DoctorService(DoctorRepository doctorRepository, DoctorMapper doctorMapper) {
         this.doctorRepository = doctorRepository;
         this.doctorMapper = doctorMapper;
     }
 
-    public DoctorEntity findDoctorById(Long id) {
-        return doctorRepository.findById(id).orElseThrow(() -> new NoSuchElementException("Doctor with id " + id + " not found"));
+    public Doctor findDoctorById(Long id) {
+        DoctorEntity doctor = doctorRepository.findById(id).orElseThrow(() -> new NoSuchElementException("Doctor with id " + id + " not found"));
+        return doctorMapper.convertEntityToModel(doctor);
     }
 
     public Doctor addPatient(Long id, String patientName) {
         Optional<DoctorEntity> optionalDoctor = doctorRepository.findById(id);
 
-        // TODO: Custom Exception, átmappelni státuszkóddá
         if (optionalDoctor.isEmpty()) {
             throw new NoSuchElementException("No doctor with given ID");
         }
@@ -51,11 +50,14 @@ public class DoctorService {
         return doctorList;
     }
 
-    public DoctorEntity updateDoctorSpecialization(Long id, String specialization) {
-        DoctorEntity doctor = findDoctorById(id);
+    public Doctor updateDoctorSpecialization(Long id, String specialization) {
+        Doctor doctor = findDoctorById(id);
         doctor.setSpecialization(specialization);
 
-        return doctorRepository.save(doctor);
+        DoctorEntity doctorEntity = doctorMapper.convertModelToEntity(doctor);
+        doctorRepository.save(doctorEntity);
+
+        return doctorMapper.convertEntityToModel(doctorEntity);
     }
 
     public Doctor createDoctor(Doctor doctor) {
@@ -67,4 +69,5 @@ public class DoctorService {
     public void deleteDoctorById(Long id) {
         doctorRepository.deleteById(id);
     }
+
 }
