@@ -1,15 +1,17 @@
 package com.example.restapp.controller;
 
 import com.example.restapp.controller.dto.DoctorDto;
+import com.example.restapp.exception.DoctorValidationException;
 import com.example.restapp.mapper.DoctorMapper;
 import com.example.restapp.repository.entity.DoctorEntity;
 import com.example.restapp.service.DoctorService;
 import com.example.restapp.service.model.Doctor;
 import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.ErrorResponse;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.view.RedirectView;
 
 import javax.print.Doc;
 import java.util.List;
@@ -23,8 +25,6 @@ public class DoctorController {
     private final DoctorMapper doctorMapper;
     private final ModelMapper modelMapper;
 
-    // TODO: Autowired mindenhová... konzisztensen.
-    @Autowired
     public DoctorController(DoctorService doctorService, DoctorMapper doctorMapper, ModelMapper modelMapper) {
         this.doctorService = doctorService;
         this.doctorMapper = doctorMapper;
@@ -37,30 +37,19 @@ public class DoctorController {
         return "Success";
     }
 
-//    @GetMapping
-//    public ResponseEntity<List<DoctorEntity>> getAllDoctors() {
-//        List<DoctorEntity> doctors = doctorService.getAllDoctors();
-//        if(doctors.isEmpty()) {
-//            return ResponseEntity.noContent().build();
-//        }
-//        return ResponseEntity.ok(doctors);
-//    }
-
     @GetMapping
-    public ResponseEntity<List<Doctor>> getAllDoctors() {
+    public ResponseEntity<List<Doctor>> getallDoctors() {
         List<Doctor> doctors = doctorService.getAllDoctors();
 
-        if (doctors.isEmpty()) {
-            return ResponseEntity.noContent().build();
-        }
+
         return ResponseEntity.ok(doctors);
     }
 
     @GetMapping("/even")
-    public ResponseEntity<List<DoctorEntity>> getAllEvenIds() {
-        List<DoctorEntity> doctors = doctorService.getAllDoctors();
+    public ResponseEntity<List<Doctor>> getAllEvenIds() {
+        List<Doctor> doctors = doctorService.getAllDoctors();
 
-        List<DoctorEntity> evenIdDoctors = doctors.stream()
+        List<Doctor> evenIdDoctors = doctors.stream()
                 .filter(doctor -> doctor.getId() % 2 == 0)
                 .collect(Collectors.toList());
 
@@ -70,11 +59,12 @@ public class DoctorController {
         return ResponseEntity.ok(evenIdDoctors);
     }
 
-    @GetMapping("/prime")
-    public ResponseEntity<List<DoctorEntity>> getAllPrimeIds() {
-        List<DoctorEntity> doctors = doctorService.getAllDoctors();
 
-        List<DoctorEntity> primeIdDoctors = doctors.stream()
+    @GetMapping("/prime")
+    public ResponseEntity<List<Doctor>> getAllPrimeIds() {
+        List<Doctor> doctors = doctorService.getAllDoctors();
+
+        List<Doctor> primeIdDoctors = doctors.stream()
                 .filter(doctor -> isPrime(doctor.getId()))
                 .collect(Collectors.toList());
 
@@ -96,17 +86,25 @@ public class DoctorController {
         return true;
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<DoctorDto> getDoctorById(@PathVariable Long id) {
-        DoctorEntity doctorEntity = doctorService.findDoctorById(id);
-        if(doctorEntity == null) {
-            return ResponseEntity.notFound().build();
-        }
 
-        Doctor doctor = doctorMapper.convertEntityToModel(doctorEntity);
-        DoctorDto doctorDto = doctorMapper.convertModelToDto(doctor);
-        return ResponseEntity.ok(doctorDto);
+    @GetMapping("/{id}")
+    public ResponseEntity<?> getDoctorById(@PathVariable Long id) throws DoctorValidationException {
+        try {
+
+            Doctor doctor = doctorService.findDoctorById(id);
+            if (doctor == null) {
+                throw new DoctorValidationException("Cannot find doctor with id: " + id);
+            }
+
+            DoctorDto doctorDto = doctorMapper.convertModelToDto(doctor);
+            return ResponseEntity.ok(doctorDto);
+        } catch (DoctorValidationException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+        }
     }
+
 
     @PostMapping
     public ResponseEntity<DoctorDto> createDoctor(@RequestBody DoctorDto doctorDto) {
@@ -116,12 +114,16 @@ public class DoctorController {
         return ResponseEntity.status(HttpStatus.CREATED).body(convertedDoctor);
     }
 
-    @PostMapping("/{id}/patients")
-    public ResponseEntity<DoctorDto> addPatient(@PathVariable Long id, @RequestBody String patient) {
 
-        Doctor updatedDoctor = doctorService.addPatient(id, patient);
-        return ResponseEntity.ok(modelMapper.map(updatedDoctor, DoctorDto.class));
-      //  return ResponseEntity.ok(doctorMapper.convertModelToDto(updatedDoctor));
+    @PostMapping("/{id}/patients")
+    public ResponseEntity<?> addPatient(@PathVariable Long id, @RequestBody String patient) throws DoctorValidationException {
+        try {
+            Doctor updatedDoctor = doctorService.addPatient(id, patient);
+            return ResponseEntity.ok(modelMapper.map(updatedDoctor, DoctorDto.class));
+        } catch (Exception e) {
+            String errorMessage = "Cannot find Doctor with given id: " + id;
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorMessage);
+        }
     }
 
 
@@ -133,13 +135,9 @@ public class DoctorController {
 
     @PatchMapping("/{id}")
     public ResponseEntity<DoctorDto> updateDoctorName(@PathVariable Long id, @RequestBody Map<String, String> requestBody) {
-        // TODO: Rétegek között szintén figyelni...
-
-        DoctorEntity doctorEntity = doctorService.findDoctorById(id);
+        Doctor doctor = doctorService.findDoctorById(id);
         String newName = requestBody.get("name");
-        doctorEntity.setName(newName);
-
-        Doctor doctor = doctorMapper.convertEntityToModel(doctorEntity);
+        doctor.setName(newName);
 
         Doctor updatedDoctor = doctorService.createDoctor(doctor);
         DoctorDto doctorDto = doctorMapper.convertModelToDto(updatedDoctor);

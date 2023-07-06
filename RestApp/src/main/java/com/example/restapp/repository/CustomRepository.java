@@ -1,14 +1,21 @@
 package com.example.restapp.repository;
 
+import com.example.restapp.exception.DoctorValidationException;
 import com.example.restapp.repository.entity.DoctorEntity;
+import com.example.restapp.service.model.Doctor;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.TypedQuery;
+import jakarta.persistence.criteria.CriteriaBuilder;
+import jakarta.persistence.criteria.CriteriaQuery;
+import jakarta.persistence.criteria.Predicate;
+import jakarta.persistence.criteria.Root;
 import jakarta.transaction.Transactional;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Repository
 public class CustomRepository {
@@ -22,7 +29,6 @@ public class CustomRepository {
 
     @Query
     public List<DoctorEntity> getAllDoctor() {
-        // TODO: NamedQuery entityManager-nek. De legalább kiemelni private final static változóba. Vagy külön final classt tartalmaz ami csak konstansokat, query-ket tárol.
         return entityManager.createQuery("SELECT s FROM DoctorEntity s", DoctorEntity.class).getResultList();
     }
 
@@ -34,11 +40,12 @@ public class CustomRepository {
         if (!results.isEmpty()) {
             return results.get(0);
         } else {
-            //TODO: null ne adj vissza... Optional<Empty> Optional.of(...) ?
+            // TODO: Optional<Empty> ? null check is jó majd a serviceben
             return null;
         }
     }
 
+    // TODO: save metódusba kiszervezni 51-56 közötti sorokat?
     @Transactional
     public DoctorEntity save(DoctorEntity doctorEntity) {
     //    begin();, commit(), rollback();
@@ -50,14 +57,12 @@ public class CustomRepository {
         return doctorEntity;
     }
     @Transactional
-    public void saveTwoDoctors(DoctorEntity doctor1, DoctorEntity doctor2) {
+    public void saveTwoDoctors(DoctorEntity doctor1, DoctorEntity doctor2) throws DoctorValidationException {
         try {
             save(doctor1);
             save(doctor2);
         } catch(Exception e) {
-            entityManager.getTransaction().rollback();
-            // TODO: Custom exceptiont írni... UnableToSaveDoctor
-            throw new RuntimeException("Transaction failed ", e);
+            throw new DoctorValidationException("Cannot create Doctors: " + doctor1.getName() + ", " + doctor2.getName() + " " + e.getMessage());
         }
     }
 }
