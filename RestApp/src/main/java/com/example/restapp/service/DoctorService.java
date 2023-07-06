@@ -8,6 +8,7 @@ import com.example.restapp.service.model.Doctor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
@@ -28,7 +29,7 @@ public class DoctorService {
         return doctorMapper.convertEntityToModel(doctor);
     }
 
-    public Doctor addPatient(Long id, String patientName) {
+    public Doctor addPatient(Long id, String patientName, Date birthDate) {
         Optional<DoctorEntity> optionalDoctor = doctorRepository.findById(id);
 
         if (optionalDoctor.isEmpty()) {
@@ -36,7 +37,7 @@ public class DoctorService {
         }
 
         DoctorEntity doctorEntity = optionalDoctor.get();
-        doctorEntity.add(PatientEntity.of(patientName, doctorEntity));
+        doctorEntity.add(PatientEntity.of(patientName, doctorEntity, birthDate));
         DoctorEntity savedEntity = doctorRepository.save(doctorEntity);
         return doctorMapper.convertEntityToModel(savedEntity);
 

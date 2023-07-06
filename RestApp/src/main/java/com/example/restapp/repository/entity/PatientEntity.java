@@ -2,6 +2,7 @@ package com.example.restapp.repository.entity;
 
 import jakarta.persistence.*;
 
+import java.util.Date;
 import java.util.Objects;
 
 @Entity
@@ -11,20 +12,24 @@ public class PatientEntity {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String name;
+    @Temporal(TemporalType.DATE)
+    private Date birthDate;
+
     @ManyToOne(fetch = FetchType.LAZY, cascade = {})
     @JoinColumn(name = "doctor_id", nullable = false)
     private DoctorEntity doctor;
 
-    public static PatientEntity of(String name, DoctorEntity doctor) {
+    public static PatientEntity of(String name, DoctorEntity doctor, Date birthDate) {
 
-        return PatientEntity.of(name, doctor, null);
+        return PatientEntity.of(name, doctor, birthDate,  null);
     }
 
-    public static PatientEntity of(String name, DoctorEntity doctor, Long id) {
+    public static PatientEntity of(String name, DoctorEntity doctor, Date birthDate, Long id) {
         PatientEntity patientEntity = new PatientEntity();
         patientEntity.setName(name);
         patientEntity.setDoctor(doctor);
         patientEntity.setId(id);
+        patientEntity.setBirthDate(birthDate);
         return patientEntity;
     }
 
@@ -50,6 +55,14 @@ public class PatientEntity {
 
     public void setDoctor(DoctorEntity doctor) {
         this.doctor = doctor;
+    }
+
+    public Date getBirthDate() {
+        return birthDate;
+    }
+
+    public void setBirthDate(Date birthDate) {
+        this.birthDate = birthDate;
     }
 
     @Override

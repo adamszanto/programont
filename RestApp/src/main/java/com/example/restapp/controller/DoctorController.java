@@ -1,6 +1,7 @@
 package com.example.restapp.controller;
 
 import com.example.restapp.controller.dto.DoctorDto;
+import com.example.restapp.controller.dto.PatientDto;
 import com.example.restapp.exception.DoctorValidationException;
 import com.example.restapp.mapper.DoctorMapper;
 import com.example.restapp.repository.entity.DoctorEntity;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.view.RedirectView;
 
 import javax.print.Doc;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -116,9 +118,9 @@ public class DoctorController {
 
 
     @PostMapping("/{id}/patients")
-    public ResponseEntity<?> addPatient(@PathVariable Long id, @RequestBody String patient) throws DoctorValidationException {
+    public ResponseEntity<?> addPatient(@PathVariable Long id, @RequestBody PatientDto patientDto) throws DoctorValidationException {
         try {
-            Doctor updatedDoctor = doctorService.addPatient(id, patient);
+            Doctor updatedDoctor = doctorService.addPatient(id, patientDto.getPatient().getName(), patientDto.getPatient().getBirthDate());
             return ResponseEntity.ok(modelMapper.map(updatedDoctor, DoctorDto.class));
         } catch (Exception e) {
             String errorMessage = "Cannot find Doctor with given id: " + id;

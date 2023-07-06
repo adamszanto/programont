@@ -1,10 +1,12 @@
 package com.example.restapp.service.model;
 
+import java.util.Date;
 import java.util.Objects;
 
 public class Patient {
     private Long id;
     private String name;
+    private Date birthDate;
 
     public Long getId() {
         return id;
@@ -20,6 +22,14 @@ public class Patient {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public Date getBirthDate() {
+        return birthDate;
+    }
+
+    public void setBirthDate(Date birthDate) {
+        this.birthDate = birthDate;
     }
 
     @Override
