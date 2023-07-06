@@ -14,6 +14,7 @@ import jakarta.transaction.Transactional;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -26,6 +27,7 @@ public class CustomRepository {
     public DoctorEntity findById(Long id) {
         return entityManager.find(DoctorEntity.class, id);
     }
+
 
     @Query
     public List<DoctorEntity> getAllDoctor() {
@@ -40,12 +42,10 @@ public class CustomRepository {
         if (!results.isEmpty()) {
             return results.get(0);
         } else {
-            // TODO: Optional<Empty> ? null check is jó majd a serviceben
             return null;
         }
     }
 
-    // TODO: save metódusba kiszervezni 51-56 közötti sorokat?
     @Transactional
     public DoctorEntity save(DoctorEntity doctorEntity) {
     //    begin();, commit(), rollback();
