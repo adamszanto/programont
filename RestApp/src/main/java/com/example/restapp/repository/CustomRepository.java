@@ -2,21 +2,18 @@ package com.example.restapp.repository;
 
 import com.example.restapp.exception.DoctorValidationException;
 import com.example.restapp.repository.entity.DoctorEntity;
-import com.example.restapp.service.model.Doctor;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.TypedQuery;
-import jakarta.persistence.criteria.CriteriaBuilder;
-import jakarta.persistence.criteria.CriteriaQuery;
-import jakarta.persistence.criteria.Predicate;
-import jakarta.persistence.criteria.Root;
 import jakarta.transaction.Transactional;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 
+
 import java.util.List;
-import java.util.stream.Collectors;
+
+import static com.example.restapp.QUERY_LIST.*;
 
 @Repository
 public class CustomRepository {
@@ -28,6 +25,20 @@ public class CustomRepository {
         return entityManager.find(DoctorEntity.class, id);
     }
 
+    public DoctorEntity nativeFindById(Long id) {
+        String nativeQuery = QUERY_FIND_BY_ID;
+        jakarta.persistence.Query query = entityManager.createNativeQuery(nativeQuery, DoctorEntity.class);
+        query.setParameter("id", id);
+        return (DoctorEntity) query.getSingleResult();
+    }
+
+    @Transactional
+    public void nativeDeleteAll() {
+        String nativeQueryPatients = QUERY_DELETE_PATIENTS;
+        String nativeQueryDoctors = QUERY_DELETE_DOCTORS;
+        entityManager.createNativeQuery(nativeQueryPatients).executeUpdate();
+        entityManager.createNativeQuery(nativeQueryDoctors).executeUpdate();
+    }
 
     @Query
     public List<DoctorEntity> getAllDoctor() {
@@ -46,9 +57,13 @@ public class CustomRepository {
         }
     }
 
+
     @Transactional
     public DoctorEntity save(DoctorEntity doctorEntity) {
-    //    begin();, commit(), rollback();
+        // Megkapjuk a tranzakciós objektumot. Mérföldkövek: Megmondhatjuk hol kezdődik, hol végződik, plusz félúton is elmenthetjük
+        // begin(), commit(), rollback()
+        // entityManager.getTransaction().begin();
+
         if(doctorEntity.getId() != null) {
             entityManager.merge(doctorEntity);
         } else {
@@ -64,5 +79,19 @@ public class CustomRepository {
         } catch(Exception e) {
             throw new DoctorValidationException("Cannot create Doctors: " + doctor1.getName() + ", " + doctor2.getName() + " " + e.getMessage());
         }
+    }
+
+    public Long count() {
+        List<Long> result = entityManager.createQuery("SELECT COUNT(s) as cnt FROM DoctorEntity s").getResultList();
+        if(!result.isEmpty()) {
+            return  result.get(0);
+        }
+        return 0L;
+    }
+
+    @Transactional
+    public void deleteAll() {
+        entityManager.createQuery("DELETE FROM PatientEntity ").executeUpdate();
+        entityManager.createQuery("DELETE FROM DoctorEntity ").executeUpdate();
     }
 }

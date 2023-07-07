@@ -1,9 +1,5 @@
 package com.example.restapp.service.model;
 
-import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement;
-import jakarta.xml.bind.annotation.XmlRootElement;
-
-import java.io.Serializable;
 import java.util.List;
 import java.util.Objects;
 

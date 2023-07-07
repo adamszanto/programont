@@ -7,7 +7,9 @@ import com.example.restapp.mapper.DoctorMapper;
 import com.example.restapp.repository.entity.DoctorEntity;
 import com.example.restapp.service.DoctorService;
 import com.example.restapp.service.model.Doctor;
+import com.google.protobuf.Empty;
 import org.modelmapper.ModelMapper;
+import org.springframework.boot.actuate.autoconfigure.observation.ObservationProperties;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -91,7 +93,7 @@ public class DoctorController {
     }
 
 
-    @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_XML_VALUE)
+    @GetMapping(value ="/{id}", produces = MediaType.APPLICATION_XML_VALUE)
     public ResponseEntity<?> getDoctorById(@PathVariable Long id) throws DoctorValidationException {
         try {
 
@@ -107,6 +109,58 @@ public class DoctorController {
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
         }
+    }
+
+    @GetMapping(value = "/customrepo/{id}")
+    public ResponseEntity<?> customGetDoctorById(@PathVariable Long id) throws DoctorValidationException {
+        try {
+
+            Doctor doctor = doctorService.customFindDoctorById(id);
+            if (doctor == null) {
+                throw new DoctorValidationException("Cannot find doctor with id: " + id);
+            }
+
+            DoctorDto doctorDto = doctorMapper.convertModelToDto(doctor);
+            return ResponseEntity.ok(doctorDto);
+        } catch (DoctorValidationException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+        }
+    }
+
+    @GetMapping(value ="/nativequery/{id}")
+    public ResponseEntity<?> nativeGetDoctorById(@PathVariable Long id) throws DoctorValidationException {
+        try {
+
+            Doctor doctor = doctorService.nativeFindDoctorById(id);
+            if (doctor == null) {
+                throw new DoctorValidationException("Cannot find doctor with id: " + id);
+            }
+
+            DoctorDto doctorDto = doctorMapper.convertModelToDto(doctor);
+            return ResponseEntity.ok(doctorDto);
+        } catch (DoctorValidationException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+        }
+    }
+
+    @DeleteMapping(value ="/nativequery")
+    public ResponseEntity<?> nativeDeleteAll(){
+        try {
+            doctorService.nativeDeleteAll();
+            return ResponseEntity.ok("All doctors deleted successfully.");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body("An error occurred while deleting all doctors");
+        }
+    }
+
+    @GetMapping("/count")
+    public ResponseEntity<Long> getDoctorCount() {
+        Long count = doctorService.getDoctorCount();
+        return ResponseEntity.ok(count);
     }
 
 
@@ -135,6 +189,16 @@ public class DoctorController {
     public ResponseEntity<Long> deleteDoctor(@PathVariable Long id) {
         doctorService.deleteDoctorById(id);
         return new ResponseEntity<>(id, HttpStatus.OK);
+    }
+
+    @DeleteMapping
+    public ResponseEntity<?> deleteAllDoctor(){
+        try {
+            doctorService.deleteAllDoctor();
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.EXPECTATION_FAILED);
+        }
     }
 
     @PatchMapping("/{id}")
