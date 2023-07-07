@@ -1,7 +1,16 @@
 spring:
   jackson:
+    dataformat:
+      xml:
+        enabled: true
     deserialization:
       fail-on-unknown-properties: true
+  http:
+    converters:
+      preffered-readers:
+        - org.springframework.http.converter.xml.MappingJackson2XmlHttpMessageConverter
+      preffered-writers:
+          - org.springframework.http.converter.xml.MappingJackson2XmlHttpMessageConverter
   jpa:
     hibernate:
       ddl-auto: update
