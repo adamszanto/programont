@@ -1,11 +1,11 @@
 package com.example.restapp.service;
 
 import com.example.restapp.mapper.DoctorMapper;
+import com.example.restapp.repository.CustomRepository;
 import com.example.restapp.repository.DoctorRepository;
 import com.example.restapp.repository.entity.DoctorEntity;
 import com.example.restapp.repository.entity.PatientEntity;
 import com.example.restapp.service.model.Doctor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
@@ -18,15 +18,32 @@ import java.util.stream.Collectors;
 public class DoctorService {
     private final DoctorRepository doctorRepository;
     private final DoctorMapper doctorMapper;
+    private final CustomRepository customRepository;
 
-    public DoctorService(DoctorRepository doctorRepository, DoctorMapper doctorMapper) {
+    public DoctorService(DoctorRepository doctorRepository, DoctorMapper doctorMapper, CustomRepository customRepository) {
         this.doctorRepository = doctorRepository;
         this.doctorMapper = doctorMapper;
+        this.customRepository = customRepository;
     }
 
     public Doctor findDoctorById(Long id) {
         DoctorEntity doctor = doctorRepository.findById(id).orElseThrow(() -> new NoSuchElementException("Doctor with id " + id + " not found"));
         return doctorMapper.convertEntityToModel(doctor);
+    }
+
+    // EntityManager method:
+    public Doctor customFindDoctorById(Long id) {
+        DoctorEntity doctorEntity = customRepository.findById(id);
+        return doctorMapper.convertEntityToModel(doctorEntity);
+    }
+
+    public Doctor nativeFindDoctorById(Long id) {
+        DoctorEntity doctorEntity = customRepository.nativeFindById(id);
+        return doctorMapper.convertEntityToModel(doctorEntity);
+    }
+
+    public void nativeDeleteAll() {
+        customRepository.nativeDeleteAll();
     }
 
     public Doctor addPatient(Long id, String patientName, Date birthDate) {
@@ -69,6 +86,14 @@ public class DoctorService {
 
     public void deleteDoctorById(Long id) {
         doctorRepository.deleteById(id);
+    }
+
+    public void deleteAllDoctor() {
+        customRepository.deleteAll();
+    }
+
+    public Long getDoctorCount() {
+        return customRepository.count();
     }
 
 }
