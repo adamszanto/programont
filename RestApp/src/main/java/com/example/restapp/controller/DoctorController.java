@@ -202,10 +202,9 @@ public class DoctorController {
     }
 
     @PatchMapping("/{id}")
-    public ResponseEntity<DoctorDto> updateDoctorName(@PathVariable Long id, @RequestBody Map<String, String> requestBody) {
+    public ResponseEntity<DoctorDto> updateDoctorName(@PathVariable Long id, @RequestBody String name) {
         Doctor doctor = doctorService.findDoctorById(id);
-        String newName = requestBody.get("name");
-        doctor.setName(newName);
+        doctor.setName(name);
 
         Doctor updatedDoctor = doctorService.createDoctor(doctor);
         DoctorDto doctorDto = doctorMapper.convertModelToDto(updatedDoctor);

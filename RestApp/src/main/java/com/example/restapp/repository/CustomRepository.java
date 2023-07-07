@@ -13,7 +13,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-import static com.example.restapp.QUERY_LIST.*;
+import static com.example.restapp.repository.QueryList.*;
 
 @Repository
 public class CustomRepository {
@@ -56,7 +56,6 @@ public class CustomRepository {
             return null;
         }
     }
-
 
     @Transactional
     public DoctorEntity save(DoctorEntity doctorEntity) {
