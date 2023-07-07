@@ -164,23 +164,60 @@ public class DoctorController {
     }
 
 
-    @PostMapping
-    public ResponseEntity<DoctorDto> createDoctor(@RequestBody DoctorDto doctorDto) {
+    @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<DoctorDto> createDoctorJson(@RequestBody DoctorDto doctorDto) {
         Doctor savedDoctor = doctorService.createDoctor(doctorDto.getDoctor());
         DoctorDto convertedDoctor = doctorMapper.convertModelToDto(savedDoctor);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(convertedDoctor);
     }
 
+    @PostMapping(produces = MediaType.APPLICATION_XML_VALUE, consumes = MediaType.APPLICATION_XML_VALUE)
+    public ResponseEntity<DoctorDto> createDoctorXml(@RequestBody DoctorDto doctorDto) {
+        Doctor savedDoctor = doctorService.createDoctor(doctorDto.getDoctor());
+        DoctorDto convertedDoctor = doctorMapper.convertModelToDto(savedDoctor);
 
-    @PostMapping("/{id}/patients")
-    public ResponseEntity<?> addPatient(@PathVariable Long id, @RequestBody PatientDto patientDto) throws DoctorValidationException {
+        return ResponseEntity.status(HttpStatus.CREATED).body(convertedDoctor);
+    }
+
+    @PostMapping
+    public ResponseEntity<DoctorDto> createDoctor(@RequestBody DoctorDto doctorDto, @RequestParam(defaultValue = "json") String format) {
+        if(format.equalsIgnoreCase("xml")) {
+            return createDoctorXml(doctorDto);
+        } else {
+            return createDoctorJson(doctorDto);
+        }
+    }
+
+
+    @PostMapping(value = "/{id}/patients", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> addPatientJson(@PathVariable Long id, @RequestBody PatientDto patientDto) throws DoctorValidationException {
         try {
             Doctor updatedDoctor = doctorService.addPatient(id, patientDto.getPatient().getName(), patientDto.getPatient().getBirthDate());
             return ResponseEntity.ok(modelMapper.map(updatedDoctor, DoctorDto.class));
         } catch (Exception e) {
             String errorMessage = "Cannot find Doctor with given id: " + id;
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorMessage);
+        }
+    }
+
+    @PostMapping(value = "/{id}/patients", produces = MediaType.APPLICATION_XML_VALUE, consumes = MediaType.APPLICATION_XML_VALUE)
+    public ResponseEntity<?> addPatientXml(@PathVariable Long id, @RequestBody PatientDto patientDto) throws DoctorValidationException {
+        try {
+            Doctor updatedDoctor = doctorService.addPatient(id, patientDto.getPatient().getName(), patientDto.getPatient().getBirthDate());
+            return ResponseEntity.ok(modelMapper.map(updatedDoctor, DoctorDto.class));
+        } catch (Exception e) {
+            String errorMessage = "Cannot find Doctor with given id: " + id;
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorMessage);
+        }
+    }
+
+    @PostMapping("/{id}/patients")
+    public ResponseEntity<?> addPatient(@PathVariable Long id, @RequestBody PatientDto patientDto, @RequestParam(defaultValue = "json") String format) throws DoctorValidationException {
+        if(format.equalsIgnoreCase("xml")) {
+            return addPatientXml(id, patientDto);
+        } else {
+            return addPatientJson(id, patientDto);
         }
     }
 
