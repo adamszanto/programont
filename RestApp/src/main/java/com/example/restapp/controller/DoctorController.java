@@ -4,24 +4,20 @@ import com.example.restapp.controller.dto.DoctorDto;
 import com.example.restapp.controller.dto.PatientDto;
 import com.example.restapp.exception.DoctorValidationException;
 import com.example.restapp.mapper.DoctorMapper;
-import com.example.restapp.repository.entity.DoctorEntity;
 import com.example.restapp.service.DoctorService;
 import com.example.restapp.service.model.Doctor;
-import com.google.protobuf.Empty;
+import jakarta.servlet.http.HttpServletRequest;
 import org.modelmapper.ModelMapper;
-import org.springframework.boot.actuate.autoconfigure.observation.ObservationProperties;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.ErrorResponse;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
 import javax.print.Doc;
-import java.util.Date;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 @RestController
@@ -31,6 +27,8 @@ public class DoctorController {
     private final DoctorMapper doctorMapper;
     private final ModelMapper modelMapper;
 
+    private final static String EMPTY_LIST_MESSAGE = "There are no doctors currently on the list.";
+
     public DoctorController(DoctorService doctorService, DoctorMapper doctorMapper, ModelMapper modelMapper) {
         this.doctorService = doctorService;
         this.doctorMapper = doctorMapper;
@@ -39,15 +37,25 @@ public class DoctorController {
 
     @GetMapping("/auth")
     public String testRequestHeader (@RequestHeader String authorization) {
-        System.out.println("printing the auth " + authorization);
-        return "Success";
+        String response = "Success! Printing the auth: ";
+        return response + authorization;
     }
 
     @GetMapping
-    public ResponseEntity<List<Doctor>> getallDoctors() {
+    public ResponseEntity<?> getallDoctors() {
         List<Doctor> doctors = doctorService.getAllDoctors();
+        String response = EMPTY_LIST_MESSAGE;
+        HttpStatus status = HttpStatus.NOT_FOUND;
 
+        if(!doctors.isEmpty()) {
+            return ResponseEntity.ok(doctors);
+        }
+        return ResponseEntity.status(status).body(response);
+    }
 
+    @GetMapping("/criteria/{num}")
+    public ResponseEntity<List<Doctor>> getIdGreaterThan(@PathVariable Integer num) {
+        List<Doctor> doctors = doctorService.findByIdGreaterThan(num);
         return ResponseEntity.ok(doctors);
     }
 
@@ -158,9 +166,17 @@ public class DoctorController {
     }
 
     @GetMapping("/count")
-    public ResponseEntity<Long> getDoctorCount() {
+    public ResponseEntity<String> getDoctorCount() {
         Long count = doctorService.getDoctorCount();
-        return ResponseEntity.ok(count);
+        String response = EMPTY_LIST_MESSAGE;
+        HttpStatus status = HttpStatus.NOT_FOUND;
+
+        if(count > 0) {
+            response = "Number of doctors: " + count + ".";
+            status = HttpStatus.OK;
+        }
+
+        return ResponseEntity.status(status).body(response);
     }
 
 

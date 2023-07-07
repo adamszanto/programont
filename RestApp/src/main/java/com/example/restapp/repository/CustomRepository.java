@@ -5,11 +5,12 @@ import com.example.restapp.repository.entity.DoctorEntity;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.TypedQuery;
+import jakarta.persistence.criteria.CriteriaBuilder;
+import jakarta.persistence.criteria.CriteriaQuery;
+import jakarta.persistence.criteria.Root;
 import jakarta.transaction.Transactional;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
-
-
 
 import java.util.List;
 
@@ -30,6 +31,18 @@ public class CustomRepository {
         jakarta.persistence.Query query = entityManager.createNativeQuery(nativeQuery, DoctorEntity.class);
         query.setParameter("id", id);
         return (DoctorEntity) query.getSingleResult();
+    }
+
+    // Criteria API
+    public List<DoctorEntity> findByIdGreaterThan(Integer num) {
+        CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+        CriteriaQuery<DoctorEntity> criteriaQuery = criteriaBuilder.createQuery(DoctorEntity.class);
+        Root<DoctorEntity> root = criteriaQuery.from(DoctorEntity.class);
+
+        criteriaQuery.select(root);
+        criteriaQuery.where(criteriaBuilder.greaterThan(root.get("id"), num));
+
+        return entityManager.createQuery(criteriaQuery).getResultList();
     }
 
     @Transactional
@@ -87,6 +100,7 @@ public class CustomRepository {
         }
         return 0L;
     }
+
 
     @Transactional
     public void deleteAll() {

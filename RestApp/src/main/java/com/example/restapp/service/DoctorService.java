@@ -31,6 +31,15 @@ public class DoctorService {
         return doctorMapper.convertEntityToModel(doctor);
     }
 
+    // Criteria API
+    public List<Doctor> findByIdGreaterThan(Integer num) {
+        List<DoctorEntity> doctors = customRepository.findByIdGreaterThan(num);
+        List<Doctor> doctorList = doctors.stream()
+                .map(doctor -> doctorMapper.convertEntityToModel(doctor))
+                .collect(Collectors.toList());
+        return doctorList;
+    }
+
     // EntityManager method:
     public Doctor customFindDoctorById(Long id) {
         DoctorEntity doctorEntity = customRepository.findById(id);
