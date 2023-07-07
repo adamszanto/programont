@@ -8,7 +8,9 @@ import com.example.restapp.repository.entity.DoctorEntity;
 import com.example.restapp.service.DoctorService;
 import com.example.restapp.service.model.Doctor;
 import org.modelmapper.ModelMapper;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.ErrorResponse;
 import org.springframework.web.bind.annotation.*;
@@ -89,7 +91,7 @@ public class DoctorController {
     }
 
 
-    @GetMapping("/{id}")
+    @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_XML_VALUE)
     public ResponseEntity<?> getDoctorById(@PathVariable Long id) throws DoctorValidationException {
         try {
 

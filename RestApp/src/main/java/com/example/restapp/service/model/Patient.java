@@ -1,5 +1,8 @@
 package com.example.restapp.service.model;
 
+
+import jakarta.xml.bind.annotation.XmlRootElement;
+
 import java.util.Date;
 import java.util.Objects;
 

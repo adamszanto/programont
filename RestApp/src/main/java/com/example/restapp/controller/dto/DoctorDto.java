@@ -1,8 +1,11 @@
 package com.example.restapp.controller.dto;
 import com.example.restapp.service.model.Doctor;
+import jakarta.xml.bind.annotation.XmlRootElement;
 
+import java.io.Serializable;
 import java.util.Objects;
 
+@XmlRootElement
 public class DoctorDto {
     private Doctor doctor;
 
