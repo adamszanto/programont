@@ -6,6 +6,7 @@ import com.example.restapp.repository.DoctorRepository;
 import com.example.restapp.repository.entity.DoctorEntity;
 import com.example.restapp.repository.entity.PatientEntity;
 import com.example.restapp.service.model.Doctor;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
@@ -18,11 +19,13 @@ import java.util.stream.Collectors;
 public class DoctorService {
     private final DoctorRepository doctorRepository;
     private final DoctorMapper doctorMapper;
+    private final ModelMapper modelMapper;
     private final CustomRepository customRepository;
 
-    public DoctorService(DoctorRepository doctorRepository, DoctorMapper doctorMapper, CustomRepository customRepository) {
+    public DoctorService(DoctorRepository doctorRepository, DoctorMapper doctorMapper, ModelMapper modelMapper, CustomRepository customRepository) {
         this.doctorRepository = doctorRepository;
         this.doctorMapper = doctorMapper;
+        this.modelMapper = modelMapper;
         this.customRepository = customRepository;
     }
 
@@ -91,6 +94,12 @@ public class DoctorService {
         DoctorEntity doctorEntity = doctorMapper.convertModelToEntity(doctor);
         DoctorEntity savedEntity = doctorRepository.save(doctorEntity);
         return doctorMapper.convertEntityToModel(savedEntity);
+    }
+
+    public Doctor createDoctorWithModelMapper(Doctor doctor) {
+        DoctorEntity doctorEntity = modelMapper.map(doctor, DoctorEntity.class);
+        DoctorEntity savedEntity = doctorRepository.save(doctorEntity);
+        return modelMapper.map(savedEntity, Doctor.class);
     }
 
     public void deleteDoctorById(Long id) {

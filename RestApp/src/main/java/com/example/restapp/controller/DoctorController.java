@@ -6,22 +6,17 @@ import com.example.restapp.exception.DoctorValidationException;
 import com.example.restapp.mapper.DoctorMapper;
 import com.example.restapp.service.DoctorService;
 import com.example.restapp.service.model.Doctor;
-import jakarta.servlet.http.HttpServletRequest;
 import org.modelmapper.ModelMapper;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.view.RedirectView;
 
-import javax.print.Doc;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/doctors")
+@RequestMapping("/api/doctors")
 public class DoctorController {
     private final DoctorService doctorService;
     private final DoctorMapper doctorMapper;
@@ -42,7 +37,7 @@ public class DoctorController {
     }
 
     @GetMapping
-    public ResponseEntity<?> getallDoctors() {
+    public ResponseEntity<?> getAllDoctors() {
         List<Doctor> doctors = doctorService.getAllDoctors();
         String response = EMPTY_LIST_MESSAGE;
         HttpStatus status = HttpStatus.NOT_FOUND;
@@ -182,8 +177,10 @@ public class DoctorController {
 
     @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<DoctorDto> createDoctorJson(@RequestBody DoctorDto doctorDto) {
-        Doctor savedDoctor = doctorService.createDoctor(doctorDto.getDoctor());
-        DoctorDto convertedDoctor = doctorMapper.convertModelToDto(savedDoctor);
+//        Doctor savedDoctor = doctorService.createDoctor(doctorDto.getDoctor());
+//        DoctorDto convertedDoctor = doctorMapper.convertModelToDto(savedDoctor);
+        Doctor savedDoctor = doctorService.createDoctorWithModelMapper(doctorDto.getDoctor());
+        DoctorDto convertedDoctor = modelMapper.map(savedDoctor, DoctorDto.class);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(convertedDoctor);
     }
