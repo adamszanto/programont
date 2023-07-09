@@ -1,6 +1,7 @@
 package com.example.restapp.service;
 
 import com.example.restapp.mapper.DoctorMapper;
+import com.example.restapp.mapper.mapstruct.MapStructImpl;
 import com.example.restapp.repository.CustomRepository;
 import com.example.restapp.repository.DoctorRepository;
 import com.example.restapp.repository.entity.DoctorEntity;
@@ -21,12 +22,15 @@ public class DoctorService {
     private final DoctorMapper doctorMapper;
     private final ModelMapper modelMapper;
     private final CustomRepository customRepository;
+    private final MapStructImpl mapStructImpl;
 
-    public DoctorService(DoctorRepository doctorRepository, DoctorMapper doctorMapper, ModelMapper modelMapper, CustomRepository customRepository) {
+
+    public DoctorService(DoctorRepository doctorRepository, DoctorMapper doctorMapper, ModelMapper modelMapper, CustomRepository customRepository, MapStructImpl mapStructImpl) {
         this.doctorRepository = doctorRepository;
         this.doctorMapper = doctorMapper;
         this.modelMapper = modelMapper;
         this.customRepository = customRepository;
+        this.mapStructImpl = mapStructImpl;
     }
 
     public Doctor findDoctorById(Long id) {
@@ -100,6 +104,12 @@ public class DoctorService {
         DoctorEntity doctorEntity = modelMapper.map(doctor, DoctorEntity.class);
         DoctorEntity savedEntity = doctorRepository.save(doctorEntity);
         return modelMapper.map(savedEntity, Doctor.class);
+    }
+
+    public Doctor createDoctorWithMapStruct(Doctor doctor) {
+        DoctorEntity doctorEntity = mapStructImpl.convertModelToEntity(doctor);
+        DoctorEntity savedEntity = doctorRepository.save(doctorEntity);
+        return mapStructImpl.convertEntityToModel(savedEntity);
     }
 
     public void deleteDoctorById(Long id) {

@@ -4,6 +4,7 @@ import com.example.restapp.controller.dto.DoctorDto;
 import com.example.restapp.controller.dto.PatientDto;
 import com.example.restapp.exception.DoctorValidationException;
 import com.example.restapp.mapper.DoctorMapper;
+import com.example.restapp.mapper.mapstruct.MapStructImpl;
 import com.example.restapp.service.DoctorService;
 import com.example.restapp.service.model.Doctor;
 import org.modelmapper.ModelMapper;
@@ -21,13 +22,15 @@ public class DoctorController {
     private final DoctorService doctorService;
     private final DoctorMapper doctorMapper;
     private final ModelMapper modelMapper;
+    private final MapStructImpl mapStructImpl;
 
     private final static String EMPTY_LIST_MESSAGE = "There are no doctors currently on the list.";
 
-    public DoctorController(DoctorService doctorService, DoctorMapper doctorMapper, ModelMapper modelMapper) {
+    public DoctorController(DoctorService doctorService, DoctorMapper doctorMapper, ModelMapper modelMapper, MapStructImpl mapStructImpl) {
         this.doctorService = doctorService;
         this.doctorMapper = doctorMapper;
         this.modelMapper = modelMapper;
+        this.mapStructImpl = mapStructImpl;
     }
 
     @GetMapping("/auth")
@@ -187,8 +190,10 @@ public class DoctorController {
 
     @PostMapping(produces = MediaType.APPLICATION_XML_VALUE, consumes = MediaType.APPLICATION_XML_VALUE)
     public ResponseEntity<DoctorDto> createDoctorXml(@RequestBody DoctorDto doctorDto) {
-        Doctor savedDoctor = doctorService.createDoctor(doctorDto.getDoctor());
-        DoctorDto convertedDoctor = doctorMapper.convertModelToDto(savedDoctor);
+//        Doctor savedDoctor = doctorService.createDoctor(doctorDto.getDoctor());
+//        DoctorDto convertedDoctor = doctorMapper.convertModelToDto(savedDoctor);
+        Doctor savedDoctor = doctorService.createDoctorWithMapStruct(doctorDto.getDoctor());
+        DoctorDto convertedDoctor = mapStructImpl.convertModelToDto(savedDoctor);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(convertedDoctor);
     }
