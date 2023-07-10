@@ -25,6 +25,7 @@ public class DoctorController {
     private final MapStructImpl mapStructImpl;
 
     private final static String EMPTY_LIST_MESSAGE = "There are no doctors currently on the list.";
+    private final static String CANNOT_FIND_DOCTOR = "Cannot find doctor with id: ";
 
     public DoctorController(DoctorService doctorService, DoctorMapper doctorMapper, ModelMapper modelMapper, MapStructImpl mapStructImpl) {
         this.doctorService = doctorService;
@@ -105,7 +106,7 @@ public class DoctorController {
 
             Doctor doctor = doctorService.findDoctorById(id);
             if (doctor == null) {
-                throw new DoctorValidationException("Cannot find doctor with id: " + id);
+                throw new DoctorValidationException(CANNOT_FIND_DOCTOR + id);
             }
 
             DoctorDto doctorDto = doctorMapper.convertModelToDto(doctor);
@@ -123,7 +124,7 @@ public class DoctorController {
 
             Doctor doctor = doctorService.customFindDoctorById(id);
             if (doctor == null) {
-                throw new DoctorValidationException("Cannot find doctor with id: " + id);
+                throw new DoctorValidationException(CANNOT_FIND_DOCTOR + id);
             }
 
             DoctorDto doctorDto = doctorMapper.convertModelToDto(doctor);
@@ -141,7 +142,7 @@ public class DoctorController {
 
             Doctor doctor = doctorService.nativeFindDoctorById(id);
             if (doctor == null) {
-                throw new DoctorValidationException("Cannot find doctor with id: " + id);
+                throw new DoctorValidationException(CANNOT_FIND_DOCTOR + id);
             }
 
             DoctorDto doctorDto = doctorMapper.convertModelToDto(doctor);
@@ -170,7 +171,7 @@ public class DoctorController {
         HttpStatus status = HttpStatus.NOT_FOUND;
 
         if(count > 0) {
-            response = "Number of doctors: " + count + ".";
+            response = "Total number of doctors: " + count + ".";
             status = HttpStatus.OK;
         }
 
@@ -214,8 +215,8 @@ public class DoctorController {
             Doctor updatedDoctor = doctorService.addPatient(id, patientDto.getPatient().getName(), patientDto.getPatient().getBirthDate());
             return ResponseEntity.ok(modelMapper.map(updatedDoctor, DoctorDto.class));
         } catch (Exception e) {
-            String errorMessage = "Cannot find Doctor with given id: " + id;
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorMessage);
+            String errorMessage = CANNOT_FIND_DOCTOR + id;
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorMessage);
         }
     }
 
@@ -225,8 +226,8 @@ public class DoctorController {
             Doctor updatedDoctor = doctorService.addPatient(id, patientDto.getPatient().getName(), patientDto.getPatient().getBirthDate());
             return ResponseEntity.ok(modelMapper.map(updatedDoctor, DoctorDto.class));
         } catch (Exception e) {
-            String errorMessage = "Cannot find Doctor with given id: " + id;
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorMessage);
+            String errorMessage = CANNOT_FIND_DOCTOR + id;
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorMessage);
         }
     }
 

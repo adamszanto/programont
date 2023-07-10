@@ -58,6 +58,14 @@ public class DoctorService {
         return doctorMapper.convertEntityToModel(doctorEntity);
     }
 
+    public List<Doctor> findByName(String name) {
+        List<DoctorEntity> doctors = doctorRepository.findByName(name);
+        List<Doctor> doctorList = doctors.stream()
+                .map(doctor -> doctorMapper.convertEntityToModel(doctor))
+                .collect(Collectors.toList());
+        return doctorList;
+    }
+
     public void nativeDeleteAll() {
         customRepository.nativeDeleteAll();
     }

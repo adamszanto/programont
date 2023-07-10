@@ -10,6 +10,7 @@ import org.mapstruct.Mapping;
 
 @Mapper(componentModel = "spring")
 public interface MapStructConfig {
+
     DoctorDto convertModelToDto(Doctor doctor);
     Doctor convertDtoToModel(DoctorDto doctorDto);
     Doctor convertEntityToModel(DoctorEntity doctorEntity);
