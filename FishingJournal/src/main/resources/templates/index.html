@@ -11,13 +11,13 @@
 <h2>Add your last Fish</h2>
 <form action="/addFish" method="post">
     <label for="species">Species:</label>
-    <input type="text" id="species" name="species" required/><br/>
+    <input type="text" id="species" name="species" placeholder="e.g. Carp" required/><br/>
 
     <label for="length">Length:</label>
-    <input type="text" id="length" name="length" required/><br/>
+    <input type="text" id="length" name="length" placeholder="in cm" required/><br/>
 
     <label for="weight">Weight:</label>
-    <input type="text" id="weight" name="weight" required/><br/>
+    <input type="text" id="weight" name="weight" placeholder="in g" required/><br/>
 
     <button type="submit">Add Fish</button>
 </form>
@@ -27,8 +27,8 @@
     <tr>
         <th>Date</th>
         <th>Species</th>
-        <th>Length</th>
-        <th>Weight</th>
+        <th>Length (cm)</th>
+        <th>Weight (g)</th>
         <th>Location</th>
         <th></th>
     </tr>
@@ -46,6 +46,10 @@
         </td>
     </tr>
 </table>
+
+<div th:if="${fishes.isEmpty()}">
+    <p>No recent fishes.</p>
+</div>
 </body>
 </html>
 </title>
