@@ -6,6 +6,7 @@ import jakarta.xml.bind.annotation.XmlRootElement;
 import java.util.Objects;
 
 @XmlRootElement
+// Refactor it, no need Doctor Model only Dto + Entity
 public class DoctorDto {
     private Doctor doctor;
 
