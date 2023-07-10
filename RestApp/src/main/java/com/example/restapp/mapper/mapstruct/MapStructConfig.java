@@ -6,7 +6,6 @@ import com.example.restapp.repository.entity.PatientEntity;
 import com.example.restapp.service.model.Doctor;
 import com.example.restapp.service.model.Patient;
 import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
 
 @Mapper(componentModel = "spring")
 public interface MapStructConfig {

@@ -1,6 +1,5 @@
 package com.example.restapp.mapper.mapstruct;
 
-import com.example.restapp.controller.dto.DoctorDto;
 import com.example.restapp.repository.entity.DoctorEntity;
 import com.example.restapp.repository.entity.PatientEntity;
 import com.example.restapp.service.model.Doctor;
@@ -12,24 +11,6 @@ import java.util.stream.Collectors;
 
 @Component
 public class MapStructImpl implements MapStructConfig {
-    @Override
-    public DoctorDto convertModelToDto(Doctor doctor) {
-        DoctorDto doctorDto = new DoctorDto();
-        doctorDto.setDoctor(doctor);
-
-        return doctorDto;
-    }
-
-    @Override
-    public Doctor convertDtoToModel(DoctorDto doctorDto) {
-        Doctor doctor = new Doctor();
-        doctor.setId(doctorDto.getDoctor().getId());
-        doctor.setName(doctorDto.getDoctor().getName());
-        doctor.setSpecialization(doctorDto.getDoctor().getSpecialization());
-        doctor.setPatients(doctorDto.getDoctor().getPatients());
-
-        return doctor;
-    }
 
     @Override
     public Doctor convertEntityToModel(DoctorEntity doctorEntity) {
