@@ -1,6 +1,6 @@
 package com.example.restapp.config;
 
-// To achieve XML response view
+// To achieve full app XML response view
 //@Configuration
 //public class WebConfig implements WebMvcConfigurer {
 //    @Override

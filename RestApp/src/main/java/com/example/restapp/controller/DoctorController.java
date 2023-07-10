@@ -1,12 +1,11 @@
 package com.example.restapp.controller;
 
-import com.example.restapp.controller.dto.DoctorDto;
-import com.example.restapp.controller.dto.PatientDto;
 import com.example.restapp.exception.DoctorValidationException;
 import com.example.restapp.mapper.DoctorMapper;
 import com.example.restapp.mapper.mapstruct.MapStructImpl;
 import com.example.restapp.service.DoctorService;
 import com.example.restapp.service.model.Doctor;
+import com.example.restapp.service.model.Patient;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -25,6 +24,7 @@ public class DoctorController {
     private final MapStructImpl mapStructImpl;
 
     private final static String EMPTY_LIST_MESSAGE = "There are no doctors currently on the list.";
+    private final static String CANNOT_FIND_DOCTOR = "Cannot find doctor with id: ";
 
     public DoctorController(DoctorService doctorService, DoctorMapper doctorMapper, ModelMapper modelMapper, MapStructImpl mapStructImpl) {
         this.doctorService = doctorService;
@@ -105,11 +105,10 @@ public class DoctorController {
 
             Doctor doctor = doctorService.findDoctorById(id);
             if (doctor == null) {
-                throw new DoctorValidationException("Cannot find doctor with id: " + id);
+                throw new DoctorValidationException(CANNOT_FIND_DOCTOR + id);
             }
 
-            DoctorDto doctorDto = doctorMapper.convertModelToDto(doctor);
-            return ResponseEntity.ok(doctorDto);
+            return ResponseEntity.ok(doctor);
         } catch (DoctorValidationException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         } catch (Exception e) {
@@ -123,11 +122,10 @@ public class DoctorController {
 
             Doctor doctor = doctorService.customFindDoctorById(id);
             if (doctor == null) {
-                throw new DoctorValidationException("Cannot find doctor with id: " + id);
+                throw new DoctorValidationException(CANNOT_FIND_DOCTOR + id);
             }
 
-            DoctorDto doctorDto = doctorMapper.convertModelToDto(doctor);
-            return ResponseEntity.ok(doctorDto);
+            return ResponseEntity.ok(doctor);
         } catch (DoctorValidationException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         } catch (Exception e) {
@@ -141,11 +139,10 @@ public class DoctorController {
 
             Doctor doctor = doctorService.nativeFindDoctorById(id);
             if (doctor == null) {
-                throw new DoctorValidationException("Cannot find doctor with id: " + id);
+                throw new DoctorValidationException(CANNOT_FIND_DOCTOR + id);
             }
 
-            DoctorDto doctorDto = doctorMapper.convertModelToDto(doctor);
-            return ResponseEntity.ok(doctorDto);
+            return ResponseEntity.ok(doctor);
         } catch (DoctorValidationException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         } catch (Exception e) {
@@ -170,7 +167,7 @@ public class DoctorController {
         HttpStatus status = HttpStatus.NOT_FOUND;
 
         if(count > 0) {
-            response = "Number of doctors: " + count + ".";
+            response = "Total number of doctors: " + count + ".";
             status = HttpStatus.OK;
         }
 
@@ -179,63 +176,60 @@ public class DoctorController {
 
 
     @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<DoctorDto> createDoctorJson(@RequestBody DoctorDto doctorDto) {
+    public ResponseEntity<Doctor> createDoctorJson(@RequestBody Doctor doctor) {
 //        Doctor savedDoctor = doctorService.createDoctor(doctorDto.getDoctor());
 //        DoctorDto convertedDoctor = doctorMapper.convertModelToDto(savedDoctor);
-        Doctor savedDoctor = doctorService.createDoctorWithModelMapper(doctorDto.getDoctor());
-        DoctorDto convertedDoctor = modelMapper.map(savedDoctor, DoctorDto.class);
 
-        return ResponseEntity.status(HttpStatus.CREATED).body(convertedDoctor);
+        Doctor savedDoctor = doctorService.createDoctor(doctor);
+        return ResponseEntity.status(HttpStatus.CREATED).body(savedDoctor);
     }
 
     @PostMapping(produces = MediaType.APPLICATION_XML_VALUE, consumes = MediaType.APPLICATION_XML_VALUE)
-    public ResponseEntity<DoctorDto> createDoctorXml(@RequestBody DoctorDto doctorDto) {
+    public ResponseEntity<Doctor> createDoctorXml(@RequestBody Doctor doctor) {
 //        Doctor savedDoctor = doctorService.createDoctor(doctorDto.getDoctor());
 //        DoctorDto convertedDoctor = doctorMapper.convertModelToDto(savedDoctor);
-        Doctor savedDoctor = doctorService.createDoctorWithMapStruct(doctorDto.getDoctor());
-        DoctorDto convertedDoctor = mapStructImpl.convertModelToDto(savedDoctor);
-
-        return ResponseEntity.status(HttpStatus.CREATED).body(convertedDoctor);
+        Doctor savedDoctor = doctorService.createDoctor(doctor);
+        return ResponseEntity.status(HttpStatus.CREATED).body(savedDoctor);
     }
 
     @PostMapping
-    public ResponseEntity<DoctorDto> createDoctor(@RequestBody DoctorDto doctorDto, @RequestParam(defaultValue = "json") String format) {
+    public ResponseEntity<Doctor> createDoctor(@RequestBody Doctor doctor, @RequestParam(defaultValue = "json") String format) {
         if(format.equalsIgnoreCase("xml")) {
-            return createDoctorXml(doctorDto);
+            return createDoctorXml(doctor);
         } else {
-            return createDoctorJson(doctorDto);
+            return createDoctorJson(doctor);
         }
     }
 
 
     @PostMapping(value = "/{id}/patients", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> addPatientJson(@PathVariable Long id, @RequestBody PatientDto patientDto) throws DoctorValidationException {
+    public ResponseEntity<?> addPatientJson(@PathVariable Long id, @RequestBody Patient patient) throws DoctorValidationException {
         try {
-            Doctor updatedDoctor = doctorService.addPatient(id, patientDto.getPatient().getName(), patientDto.getPatient().getBirthDate());
-            return ResponseEntity.ok(modelMapper.map(updatedDoctor, DoctorDto.class));
+            Doctor updatedDoctor = doctorService.addPatient(id, patient.getName(), patient.getBirthDate());
+            return ResponseEntity.ok(updatedDoctor);
         } catch (Exception e) {
-            String errorMessage = "Cannot find Doctor with given id: " + id;
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorMessage);
+            String errorMessage = CANNOT_FIND_DOCTOR + id;
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorMessage);
         }
     }
 
     @PostMapping(value = "/{id}/patients", produces = MediaType.APPLICATION_XML_VALUE, consumes = MediaType.APPLICATION_XML_VALUE)
-    public ResponseEntity<?> addPatientXml(@PathVariable Long id, @RequestBody PatientDto patientDto) throws DoctorValidationException {
+    public ResponseEntity<?> addPatientXml(@PathVariable Long id, @RequestBody Patient patient) throws DoctorValidationException {
         try {
-            Doctor updatedDoctor = doctorService.addPatient(id, patientDto.getPatient().getName(), patientDto.getPatient().getBirthDate());
-            return ResponseEntity.ok(modelMapper.map(updatedDoctor, DoctorDto.class));
+            Doctor updatedDoctor = doctorService.addPatient(id, patient.getName(), patient.getBirthDate());
+            return ResponseEntity.ok(updatedDoctor);
         } catch (Exception e) {
-            String errorMessage = "Cannot find Doctor with given id: " + id;
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorMessage);
+            String errorMessage = CANNOT_FIND_DOCTOR + id;
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorMessage);
         }
     }
 
     @PostMapping("/{id}/patients")
-    public ResponseEntity<?> addPatient(@PathVariable Long id, @RequestBody PatientDto patientDto, @RequestParam(defaultValue = "json") String format) throws DoctorValidationException {
+    public ResponseEntity<?> addPatient(@PathVariable Long id, @RequestBody Patient patient, @RequestParam(defaultValue = "json") String format) throws DoctorValidationException {
         if(format.equalsIgnoreCase("xml")) {
-            return addPatientXml(id, patientDto);
+            return addPatientXml(id, patient);
         } else {
-            return addPatientJson(id, patientDto);
+            return addPatientJson(id, patient);
         }
     }
 
@@ -257,13 +251,12 @@ public class DoctorController {
     }
 
     @PatchMapping("/{id}")
-    public ResponseEntity<DoctorDto> updateDoctorName(@PathVariable Long id, @RequestBody String name) {
+    public ResponseEntity<Doctor> updateDoctorName(@PathVariable Long id, @RequestBody String name) {
         Doctor doctor = doctorService.findDoctorById(id);
         doctor.setName(name);
 
         Doctor updatedDoctor = doctorService.createDoctor(doctor);
-        DoctorDto doctorDto = doctorMapper.convertModelToDto(updatedDoctor);
-        return ResponseEntity.ok(doctorDto);
+        return ResponseEntity.ok(updatedDoctor);
     }
 
     // TODO
