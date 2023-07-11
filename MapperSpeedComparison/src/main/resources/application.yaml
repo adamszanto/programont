@@ -1,0 +1,34 @@
+spring:
+  jackson:
+    dataformat:
+      xml:
+        enabled: true
+    deserialization:
+      fail-on-unknown-properties: true
+  http:
+    converters:
+      preffered-readers:
+        - org.springframework.http.converter.xml.MappingJackson2XmlHttpMessageConverter
+      preffered-writers:
+        - org.springframework.http.converter.xml.MappingJackson2XmlHttpMessageConverter
+  jpa:
+    hibernate:
+      ddl-auto: create
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL8Dialect
+    show-sql: true
+  datasource:
+    url: jdbc:mysql://127.0.0.1:3306/nodes
+    username: testuser
+    password : test1990%%
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  logging:
+    level:
+      org.hibernate.SQL: DEBUG
+      org.hibernate.type.descriptor.sql.BasicBinder: TRACE
+      springframework:
+        jdbc:
+          core:
+            JdbcTemplate: DEBUG
+            StatementCreatorUtils: TRACE
