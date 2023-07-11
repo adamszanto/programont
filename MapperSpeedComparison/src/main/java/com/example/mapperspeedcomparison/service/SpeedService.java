@@ -10,6 +10,7 @@ import java.util.List;
 
 @Service
 public class SpeedService {
+    private final static int RACE_LAPS = 1000;
     private final SpeedRepository speedRepository;
     private final ModelMapper modelMapper;
 
@@ -19,7 +20,7 @@ public class SpeedService {
     }
 
     public void raceModelMapper(List<Node> nodes) {
-        for(int i = 0; i < 1000; i++){
+        for(int i = 0; i < RACE_LAPS; i++){
             Node node = new Node();
             NodeEntity nodeEntity = modelMapper.map(node, NodeEntity.class);
             speedRepository.save(nodeEntity);
@@ -27,7 +28,7 @@ public class SpeedService {
     }
 
     public void raceMapStruct(List<Node> nodes) {
-        for(int i = 0; i < 1000; i++) {
+        for(int i = 0; i < RACE_LAPS; i++) {
             Node node = new Node();
             NodeEntity nodeEntity = MapStructConfig.MAPSTRUCT.convertModelToEntity(node);
             speedRepository.save(nodeEntity);
