@@ -21,6 +21,7 @@ public class DoctorController {
     private final DoctorService doctorService;
     private final DoctorMapper doctorMapper;
     private final ModelMapper modelMapper;
+
     private final MapStructImpl mapStructImpl;
 
     private final static String EMPTY_LIST_MESSAGE = "There are no doctors currently on the list.";

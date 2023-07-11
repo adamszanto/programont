@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Fishing Journal🎣</title>
+    <link href='https://fonts.googleapis.com/css?family=Nunito:400,300' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" type="text/css" href="/styles.css">
 </head>
 <body>
@@ -11,13 +12,13 @@
 <h2>Add your last Fish</h2>
 <form action="/addFish" method="post">
     <label for="species">Species:</label>
-    <input type="text" id="species" name="species" placeholder="e.g. Carp" required/><br/>
+    <input type="text" id="species" name="species" placeholder="e.g. Carp" autocomplete="off" required/><br/>
 
     <label for="length">Length:</label>
-    <input type="text" id="length" name="length" placeholder="in cm" required/><br/>
+    <input type="text" id="length" name="length" placeholder="in cm" autocomplete="off" required/><br/>
 
     <label for="weight">Weight:</label>
-    <input type="text" id="weight" name="weight" placeholder="in g" required/><br/>
+    <input type="text" id="weight" name="weight" placeholder="in g" autocomplete="off" required/><br/>
 
     <button type="submit">Add Fish</button>
 </form>
@@ -50,11 +51,5 @@
 <div th:if="${fishes.isEmpty()}">
     <p>No recent fishes.</p>
 </div>
-</body>
-</html>
-</title>
-</head>
-<body>
-
 </body>
 </html>

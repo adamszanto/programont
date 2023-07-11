@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Fishing Journal🎣 - Authentication</title>
+  <link href='https://fonts.googleapis.com/css?family=Nunito:400,300' rel='stylesheet' type='text/css'>
+  <link rel="stylesheet" type="text/css" href="/styles.css">
+</head>
+<body>
+<h1>Fishing Journal🎣 - Authentication</h1>
+
+<!-- <form action="#" th:action="@{/register}" method="post" th:object="${user}"> -->
+
+<form th:action="@{/auth}" method="post">
+  <label for="code">Authentication Code:</label>
+  <input type="password" id="code" name="code" required/><br/>
+
+  <button type="submit">Authenticate</button>
+</form>
+</body>
+</html>
