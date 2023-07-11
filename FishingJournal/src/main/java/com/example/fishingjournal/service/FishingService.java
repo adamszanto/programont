@@ -6,14 +6,26 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Service
 public class FishingService {
     private final Logger logger = LoggerFactory.getLogger(FishingService.class);
     private List<Fish> fishes = new ArrayList<>();
-    private final static String TOKEN_VALUE = "1234";
-    public boolean isValidAuth(String tokenValue) {
-        return tokenValue.equals(TOKEN_VALUE);
+
+    public List<Fish> getFishes() {
+        return fishes;
+    }
+
+    public void addFish(Fish fish) {
+        fish.setTimestamp(new Date());
+        fishes.add(fish);
+    }
+
+    public void deleteFish(int index) {
+        if(index >= 0 && index < fishes.size()) {
+            fishes.remove(index);
+        }
     }
 }
