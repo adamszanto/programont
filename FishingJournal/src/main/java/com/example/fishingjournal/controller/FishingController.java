@@ -33,7 +33,7 @@ public class FishingController {
             model.addAttribute("fishes", fishes);
             return "index";
         } else {
-            return "redirect:/auth";
+            return "/auth";
         }
     }
 
@@ -43,7 +43,7 @@ public class FishingController {
         if(!auth) {
             return "auth";
         } else {
-            return "redirect:/";
+            return "index";
         }
     }
 
@@ -52,25 +52,27 @@ public class FishingController {
         if(fishingService.isValidAuth(code)) {
             auth = true;
             logger.info("- Custom log: Auth successful.");
-            return "redirect:/";
+            return "index";
         } else {
             return "auth-failed";
         }
     }
 
     @PostMapping("/addFish")
-    public String addFish(@ModelAttribute Fish fish) {
+    public String addFish(@ModelAttribute Fish fish, Model model) {
         fish.setTimestamp(new Date());
         fishes.add(fish);
-        return "redirect:/";
+        model.addAttribute("fishes", fishes);
+        return "index";
     }
 
     @PostMapping("/deleteFish")
-    public String deleteFish(@RequestParam("index") int index) {
+    public String deleteFish(@RequestParam("index") int index, Model model) {
         if(index >= 0 && index < fishes.size()) {
             fishes.remove(index);
         }
-        return "redirect:/";
+        model.addAttribute("fishes", fishes);
+        return "index";
     }
 
 //    @GetMapping("/auth")
