@@ -1,6 +1,7 @@
 package com.example.mapperspeedcomparison.service;
 
 import com.example.mapperspeedcomparison.mapper.mapstruct.MapStructConfig;
+import com.example.mapperspeedcomparison.repository.NodeChildEntity;
 import com.example.mapperspeedcomparison.repository.NodeEntity;
 import com.example.mapperspeedcomparison.repository.SpeedRepository;
 import org.modelmapper.ModelMapper;
@@ -10,9 +11,13 @@ import java.util.List;
 
 @Service
 public class SpeedService {
-    private final static int RACE_LAPS = 1000;
+    private final static int RACE_LAPS = 10000;
     private final SpeedRepository speedRepository;
     private final ModelMapper modelMapper;
+
+    public List<NodeEntity> getAllNodes() {
+        return speedRepository.findAll();
+    }
 
     public SpeedService(SpeedRepository speedRepository, ModelMapper modelMapper) {
         this.speedRepository = speedRepository;
@@ -23,6 +28,12 @@ public class SpeedService {
         for(int i = 0; i < RACE_LAPS; i++){
             Node node = new Node();
             NodeEntity nodeEntity = modelMapper.map(node, NodeEntity.class);
+
+            NodeChild nodeChild = new NodeChild();
+            NodeChildEntity nodeChildEntity = modelMapper.map(nodeChild, NodeChildEntity.class);
+            nodeChildEntity.setNode(nodeEntity);
+            nodeEntity.getNodeChildEntities().add(nodeChildEntity);
+
             speedRepository.save(nodeEntity);
         }
     }
@@ -31,6 +42,12 @@ public class SpeedService {
         for(int i = 0; i < RACE_LAPS; i++) {
             Node node = new Node();
             NodeEntity nodeEntity = MapStructConfig.MAPSTRUCT.convertModelToEntity(node);
+
+            NodeChild nodeChild = new NodeChild();
+            NodeChildEntity nodeChildEntity = MapStructConfig.MAPSTRUCT.convertChildModeltoEntity(nodeChild);
+            nodeChildEntity.setNode(nodeEntity);
+            nodeEntity.getNodeChildEntities().add(nodeChildEntity);
+
             speedRepository.save(nodeEntity);
         }
     }

@@ -28,8 +28,10 @@ public class SpeedController {
         speedService.raceModelMapper(modelMapperNodes);
         Instant finish = Instant.now();
         Duration duration = Duration.between(start, finish);
+        long seconds = duration.getSeconds();
+        long millis = duration.toMillis() % 1000;
 
-        return "Model Mapper's race completed in " + duration.toMillis() + " milliseconds";
+        return "ModelMapper's speed test completed in " + seconds + "." + millis + " seconds";
     }
 
     @PostMapping("/mapstructrace")
@@ -40,7 +42,9 @@ public class SpeedController {
         speedService.raceMapStruct(mapStructNodes);
         Instant finish = Instant.now();
         Duration duration = Duration.between(start, finish);
+        long seconds = duration.getSeconds();
+        long millis = duration.toMillis() % 1000;
 
-        return "MapStruct's race completed in " + duration.toMillis() + " milliseconds";
+        return "MapStruct's speed test completed in " + seconds + "." + millis + " seconds";
     }
 }
