@@ -1,10 +1,15 @@
 package com.example.mapperspeedcomparison.service;
 
+import com.example.mapperspeedcomparison.repository.NodeChildEntity;
+
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 public class Node {
     private Long id;
     private String data;
+    private List<NodeChild> nodeChilds = new ArrayList<>();
 
     public Node() {
         this.data = "Traveling mock data inside of the Node instance";
@@ -24,6 +29,14 @@ public class Node {
 
     public void setData(String data) {
         this.data = data;
+    }
+
+    public List<NodeChild> getNodeChilds() {
+        return nodeChilds;
+    }
+
+    public void setNodeChilds(List<NodeChild> nodeChilds) {
+        this.nodeChilds = nodeChilds;
     }
 
     @Override

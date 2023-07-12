@@ -1,6 +1,9 @@
 package com.example.mapperspeedcomparison.repository;
 
 import jakarta.persistence.*;
+
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -10,6 +13,8 @@ public class NodeEntity {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String dataEntity;
+    @OneToMany(mappedBy = "node", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    private List<NodeChildEntity> nodeChildEntities = new ArrayList<>();
 
     public NodeEntity() {
         this.dataEntity = "Traveling mock data inside of the Node instance";
@@ -29,6 +34,14 @@ public class NodeEntity {
 
     public void setDataEntity(String dataEntity) {
         this.dataEntity = dataEntity;
+    }
+
+    public List<NodeChildEntity> getNodeChildEntities() {
+        return nodeChildEntities;
+    }
+
+    public void setNodeChildEntities(List<NodeChildEntity> nodeChildEntities) {
+        this.nodeChildEntities = nodeChildEntities;
     }
 
     @Override
