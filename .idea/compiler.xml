@@ -6,19 +6,19 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
+        <module name="programont" />
         <module name="RestApp (2)" />
         <module name="RestApp (1)" />
+        <module name="RestApp" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel>
-      <module name="RestApp" target="17" />
-    </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="RestApp" options="-parameters" />
       <module name="RestApp (1)" options="-parameters" />
       <module name="RestApp (2)" options="-parameters" />
+      <module name="programont" options="-parameters" />
     </option>
   </component>
 </project>
