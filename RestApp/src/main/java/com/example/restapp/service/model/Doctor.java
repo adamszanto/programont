@@ -1,5 +1,6 @@
 package com.example.restapp.service.model;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -10,7 +11,9 @@ public class Doctor {
     private List<Patient> patients;
 
     public Doctor() {
+
     }
+
 
     public Long getId() {
         return id;
@@ -43,6 +46,7 @@ public class Doctor {
     public void setPatients(List<Patient> patients) {
         this.patients = patients;
     }
+
 
     @Override
     public boolean equals(Object o) {

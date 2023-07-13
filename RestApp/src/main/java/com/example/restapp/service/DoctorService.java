@@ -16,7 +16,6 @@ import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-// Frontend incoming
 @Service
 public class DoctorService {
     private final DoctorRepository doctorRepository;
@@ -81,6 +80,7 @@ public class DoctorService {
         DoctorEntity doctorEntity = optionalDoctor.get();
         doctorEntity.add(PatientEntity.of(patientName, doctorEntity, birthDate));
         DoctorEntity savedEntity = doctorRepository.save(doctorEntity);
+
         return doctorMapper.convertEntityToModel(savedEntity);
 
     }
@@ -119,6 +119,11 @@ public class DoctorService {
         DoctorEntity doctorEntity = mapStructImpl.convertModelToEntity(doctor);
         DoctorEntity savedEntity = doctorRepository.save(doctorEntity);
         return mapStructImpl.convertEntityToModel(savedEntity);
+    }
+
+    public Integer getNumberOfPatients(Long id) {
+        Doctor doctor = findDoctorById(id);
+        return doctor.getPatients().size();
     }
 
     public void deleteDoctorById(Long id) {
