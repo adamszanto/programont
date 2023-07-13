@@ -8,10 +8,12 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.io.FileWriter;
+import java.io.IOException;
 
 @Service
 public class SpeedService {
-    private final static int RACE_LAPS = 10000;
+    public final static int RACE_LAPS = 100000;
     private final SpeedRepository speedRepository;
     private final ModelMapper modelMapper;
 
@@ -33,8 +35,6 @@ public class SpeedService {
             NodeChildEntity nodeChildEntity = modelMapper.map(nodeChild, NodeChildEntity.class);
             nodeChildEntity.setNode(nodeEntity);
             nodeEntity.getNodeChildEntities().add(nodeChildEntity);
-
-            speedRepository.save(nodeEntity);
         }
     }
 
@@ -47,8 +47,19 @@ public class SpeedService {
             NodeChildEntity nodeChildEntity = MapStructConfig.MAPSTRUCT.convertChildModeltoEntity(nodeChild);
             nodeChildEntity.setNode(nodeEntity);
             nodeEntity.getNodeChildEntities().add(nodeChildEntity);
-
-            speedRepository.save(nodeEntity);
         }
     }
+
+    public void deleteAllEntries() {
+        speedRepository.deleteAll();
+    }
+
+    public void writeResultToFile(String fileName, String result) {
+        try (FileWriter fileWriter = new FileWriter(fileName)) {
+            fileWriter.write(result);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
 }

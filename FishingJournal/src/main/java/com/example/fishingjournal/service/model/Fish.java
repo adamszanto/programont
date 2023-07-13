@@ -1,7 +1,12 @@
 package com.example.fishingjournal.service.model;
 
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
+
 import java.util.Date;
 
+@Component
+@Scope("session")
 public class Fish {
     private String species;
     private int length;

@@ -15,6 +15,7 @@ public class NodeChildEntity {
     @JoinColumn(name="nodes_id", nullable = false)
     private NodeEntity node;
 
+
     public Long getId() {
         return id;
     }

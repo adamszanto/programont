@@ -10,6 +10,10 @@ import java.time.Duration;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
+import java.io.FileWriter;
+import java.io.IOException;
+
+import static com.example.mapperspeedcomparison.service.SpeedService.RACE_LAPS;
 
 @RestController
 @RequestMapping("/api/speed")
@@ -30,8 +34,10 @@ public class SpeedController {
         Duration duration = Duration.between(start, finish);
         long seconds = duration.getSeconds();
         long millis = duration.toMillis() % 1000;
-
-        return "ModelMapper's speed test completed in " + seconds + "." + millis + " seconds";
+        String result = "ModelMapper's speed test for " + RACE_LAPS + " mapping completed in " + seconds + "." + millis + " seconds";
+        speedService.writeResultToFile("modelmapper_result.txt", result);
+        speedService.deleteAllEntries();
+        return result;
     }
 
     @PostMapping("/mapstructrace")
@@ -44,7 +50,9 @@ public class SpeedController {
         Duration duration = Duration.between(start, finish);
         long seconds = duration.getSeconds();
         long millis = duration.toMillis() % 1000;
-
-        return "MapStruct's speed test completed in " + seconds + "." + millis + " seconds";
+        String result = "MapStruct's speed test for " + RACE_LAPS + " mapping completed in " + seconds + "." + millis + " seconds";
+        speedService.writeResultToFile("mapstruct_result.txt", result);
+        speedService.deleteAllEntries();
+        return result;
     }
 }

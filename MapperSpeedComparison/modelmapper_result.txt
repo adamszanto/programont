@@ -1,0 +1,1 @@
+ModelMapper's speed test for 100000 mapping completed in 1.29 seconds
