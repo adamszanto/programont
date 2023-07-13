@@ -62,6 +62,7 @@ public class DoctorEntity {
         this.patients = patients;
     }
 
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

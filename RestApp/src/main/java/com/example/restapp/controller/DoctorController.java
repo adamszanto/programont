@@ -233,6 +233,15 @@ public class DoctorController {
         }
     }
 
+    @GetMapping("/{id}/patientcount")
+    public ResponseEntity<?> getNumberOfPatients(@PathVariable Long id) throws DoctorValidationException {
+        Integer count = doctorService.getNumberOfPatients(id);
+        String response = EMPTY_LIST_MESSAGE;
+        HttpStatus status = HttpStatus.NOT_FOUND;
+
+        return ResponseEntity.status(status).body(count);
+    }
+
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Long> deleteDoctor(@PathVariable Long id) {
