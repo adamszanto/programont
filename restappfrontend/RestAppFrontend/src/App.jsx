@@ -1,22 +1,35 @@
-import React, { useState } from 'react';
-import DoctorTable from './DoctorTable.jsx';
-import DoctorDetails from './DoctorDetails.jsx';
-
+import React, { useEffect, useState } from 'react'
+import axios from 'axios';
 
 const App = () => {
-    const [selectedDoctor, setSelectedDoctor] = useState(null);
+    axios.defaults.withCredentials = true;
+    const [users, setUsers] = useState([])
 
-    const handleSelectDoctor = doctor => {
-        setSelectedDoctor(doctor);
-    };
+    const fetchUserData = () => {
+        fetch("https://jsonplaceholder.typicode.com/users")
+            .then(response => {
+                return response.json()
+            })
+            .then(data => {
+                setUsers(data)
+            })
+    }
+
+    useEffect(() => {
+        fetchUserData()
+    }, [])
 
     return (
         <div>
-            <h1>List of Doctors</h1>
-            <DoctorTable onSelectDoctor={handleSelectDoctor} />
-            {selectedDoctor && <DoctorDetails doctor={selectedDoctor} />}
+            {users.length > 0 && (
+                <ul>
+                    {users.map(user => (
+                        <li key={user.id}>{user.name}</li>
+                    ))}
+                </ul>
+            )}
         </div>
     );
-};
+}
 
 export default App;
