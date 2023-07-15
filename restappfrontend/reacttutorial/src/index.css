@@ -9,7 +9,15 @@ body {
   margin: auto;
 }
 
+.container {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
 
 footer {
+  padding: 50px 20px;
+  position: sticky;
+  bottom: 0;
   float: right;
 }

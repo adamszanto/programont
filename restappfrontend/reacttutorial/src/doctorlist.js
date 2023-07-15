@@ -1,23 +1,21 @@
 import {Contactheader} from "./contactheader";
 import Contact from "./contact";
 import React from "react";
+import doctorData from "./DoctorData";
+import DoctorData from "./DoctorData";
 
 export function Doctorlist() {
+    const doctorElements = DoctorData.map(doctor => {
+        return <Contact
+            doctorId={doctor.doctorId}
+            name={doctor.name}
+            specialization={doctor.specialization}
+            patientNum={doctor.patientNum} />
+    })
     return(
         <div className="doctorList">
             <Contactheader />
-            <Contact
-                doctorId="1"
-                name="Petőfi Doktor"
-                specialization="Surgeon"
-                patientNum="2"
-            />
-            <Contact
-                doctorId="2"
-                name="Arany Doktor"
-                specialization="General Practitioner"
-                patientNum="1"
-            />
+            {doctorElements}
         </div>
     )
 }
