@@ -12,7 +12,6 @@
     padding: 5px;
     border-radius: 10px;
     transition: transform 0.3s ease;
-    max-width: 100%;
 }
 
 .tableRowHeader {
@@ -36,20 +35,12 @@
 }
 
 .tableCell {
-    flex-basis: 25%;
+    flex-basis: 10%;
     padding: 5px;
     text-align: center;
     float: left;
 }
 
-.tableCell:first-child {
-    flex-basis: 10%;
-}
-
-.tableCell:last-child {
-    flex-basis: 20%;
-    text-align: right;
-}
 
 .patientRow {
     padding-left: 55px;
