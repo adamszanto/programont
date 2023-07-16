@@ -1,7 +1,6 @@
 body {
   margin: 0;
   font-family: sans-serif;
-  font-color: teal;
 }
 
 .main-div {
@@ -20,4 +19,20 @@ footer {
   position: sticky;
   bottom: 0;
   float: right;
+}
+
+.back-button {
+  border:none;
+  border-radius: 3px;
+  display:block;
+  margin:auto;
+  color:white;
+  padding: 10px 40px;
+  cursor: pointer;
+  text-align: center;
+  text-decoration: none;
+}
+
+a {
+  text-decoration: none;
 }
