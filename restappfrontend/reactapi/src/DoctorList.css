@@ -1,0 +1,49 @@
+.doctor-list {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.doctor-list h1 {
+    margin-bottom: 20px;
+}
+
+.doctor-list ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.doctor-list li {
+    padding: 10px;
+    cursor: pointer;
+    background-color: #f2f2f2;
+    margin-bottom: 5px;
+}
+
+.doctor-list li.selected {
+    background-color: #d3d3d3;
+}
+
+.doctor-details {
+    margin-top: 20px;
+}
+
+.doctor-details h2 {
+    margin-bottom: 10px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+table th,
+table td {
+    padding: 8px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+table th {
+    background-color: #f2f2f2;
+}
