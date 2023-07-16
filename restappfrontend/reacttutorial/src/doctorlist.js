@@ -11,7 +11,9 @@ export function Doctorlist() {
             doctorId={doctor.doctorId}
             name={doctor.name}
             specialization={doctor.specialization}
-            patientNum={doctor.patients.length} />
+            patientNum={doctor.patients.length}
+            patients={doctor.patients}
+        />
     })
     return(
         <div className="doctorList">
