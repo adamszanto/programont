@@ -57,7 +57,7 @@ export default [
         patients: [
             {
                 id: 1,
-                name: 'Micike nagymamájája',
+                name: 'Micike mamája',
                 birthDate: '1974-03-02',
             },
             {

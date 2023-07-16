@@ -1,6 +1,7 @@
 import React from "react"
 import {useState} from "react"
 import PatientContact from "./patient";
+import {Patientheader} from "./patientheader";
 
 export default function Contact({doctorId, name, specialization, patients, patientNum}) {
     const [isShown, setIsShown] = useState(false);
@@ -21,8 +22,10 @@ export default function Contact({doctorId, name, specialization, patients, patie
             </div>
             {isShown && (
                 <div className="patientRow">
+                    <Patientheader />
                     {patients.map((patient) => (
                         <div key={patient.id} className="tableRow">
+
                         <PatientContact
                             name={patient.name}
                             birthDate={patient.birthDate}
