@@ -1,18 +1,34 @@
 import {Contactheader} from "./contactheader";
 import Contact from "./contact";
-import React from "react";
-import doctorData from "./DoctorData";
+import React, {useEffect, useState} from "react";
 import DoctorData from "./DoctorData";
 
 export function Doctorlist() {
-    const doctorElements = DoctorData.map(doctor => {
+    const [doctors, setDoctors] = useState([]);
+
+    useEffect(()=> {
+        const fetchData = async () => {
+            try {
+                const response = await fetch("http://localhost:8080/api/doctors");
+                if(!response.ok) {
+                    throw new Error("Couldn't process request");
+                }
+                const data = await response.json();
+                setDoctors(data);
+            } catch (error) {
+                console.error("Error happened", error);
+            }
+        };
+        fetchData();
+    }, []);
+
+    const doctorElements = doctors.map(doctor => {
         return <Contact
-            key={doctor.doctorId}
-            doctorId={doctor.doctorId}
+            key={doctor.id}
+            doctorId={doctor.id}
             name={doctor.name}
             specialization={doctor.specialization}
             patientNum={doctor.patients.length}
-            patients={doctor.patients}
         />
     })
     return(
