@@ -5,7 +5,7 @@ export function Contactheader() {
         <div>
             <h2>Happy Patient CRM</h2>
             <hr/>
-            <h3>Select Doctor</h3>
+            <h3>Select Doctor for patient list</h3>
             <div className="tableRowHeader">
                 <div className="tableCell"><strong>Id</strong></div>
                 <div className="tableCell"><strong>Name</strong></div>

@@ -7,10 +7,13 @@ import DoctorData from "./DoctorData";
 export function Doctorlist() {
     const doctorElements = DoctorData.map(doctor => {
         return <Contact
+            key={doctor.doctorId}
             doctorId={doctor.doctorId}
             name={doctor.name}
             specialization={doctor.specialization}
-            patientNum={doctor.patientNum} />
+            patientNum={doctor.patients.length}
+            patients={doctor.patients}
+        />
     })
     return(
         <div className="doctorList">
