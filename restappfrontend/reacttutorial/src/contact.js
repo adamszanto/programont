@@ -4,36 +4,17 @@ import PatientContact from "./patient";
 import {Patientheader} from "./patientheader";
 
 export default function Contact({doctorId, name, specialization, patients, patientNum}) {
-    const [isShown, setIsShown] = useState(false);
-    const handleClick = event => {
-        setIsShown(current => !current);
-    };
-
 
     return (
+        <a href={`http://localhost:3000/doctor/${doctorId}`}>
         <div>
-
-
-            <div className="tableRow" onClick={handleClick}>
+            <div className="tableRow" >
                 <div className="tableCell">{doctorId}</div>
                 <div className="tableCell">{name}</div>
                 <div className="tableCell">{specialization}</div>
                 <div className="tableCell">{patientNum}</div>
             </div>
-            {isShown && (
-                <div className="patientRow">
-                    <Patientheader />
-                    {patients.map((patient) => (
-                        <div key={patient.id} className="tableRow">
-
-                        <PatientContact
-                            name={patient.name}
-                            birthDate={patient.birthDate}
-                        />
-                        </div>
-                    ))}
-                </div>
-            )}
         </div>
+        </a>
     )
 }

@@ -2,8 +2,10 @@ import {Contactheader} from "./contactheader";
 import Contact from "./contact";
 import React, {useEffect, useState} from "react";
 import DoctorData from "./DoctorData";
+import PatientContact from "./patient";
+import {Patientheader} from "./patientheader";
 
-export function Doctorlist() {
+export function DoctorDetailList() {
     const [doctors, setDoctors] = useState([]);
 
     useEffect(()=> {
@@ -23,13 +25,25 @@ export function Doctorlist() {
     }, []);
 
     const doctorElements = doctors.map(doctor => {
-        return <Contact
+        return
+        <div>
+        <Contact
             key={doctor.id}
             doctorId={doctor.id}
             name={doctor.name}
             specialization={doctor.specialization}
             patientNum={doctor.patients.length}
         />
+            <Patientheader />
+            {doctor.patients.map((patient) => (
+                <PatientContact
+                    key={patient.id}
+                    name={patient.name}
+                    birthDate={patient.birthDate}
+                />
+            ))}
+
+        </div>
     })
     return(
         <div className="doctorList">
