@@ -1,13 +1,27 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { BrowserRouter } from 'react-router-dom'; // Új import
 import './index.css';
 import './contact.css'
-import App from './App';
+import Contact from './contact';
+import { Doctorlist } from "./doctorlist";
+import { Footer } from "./footer";
 
-ReactDOM.render(
-    <BrowserRouter>
-        <App />
-    </BrowserRouter>,
-    document.getElementById("root")
-);
+import { BrowserRouter } from 'react-router-dom';
+import ReactRoutes from './routes';
+
+function App() {
+
+    return (
+        <BrowserRouter>
+            <ReactRoutes />
+        </BrowserRouter>
+    )
+}
+
+ReactDOM.render(<App />, document.getElementById("root"));
+
+// const root = ReactDOM.createRoot(document.getElementById('root'));
+// root.render(
+//     temporaryName
+// );
+

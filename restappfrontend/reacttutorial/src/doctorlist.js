@@ -7,6 +7,7 @@ export function Doctorlist() {
     const [doctors, setDoctors] = useState([]);
 
     useEffect(()=> {
+        console.log(DoctorData)
         const fetchData = async () => {
             try {
                 const response = await fetch("http://localhost:8080/api/doctors");
@@ -22,19 +23,18 @@ export function Doctorlist() {
         fetchData();
     }, []);
 
-    const doctorElements = doctors.map(doctor => {
-        return <Contact
-            key={doctor.id}
-            doctorId={doctor.id}
-            name={doctor.name}
-            specialization={doctor.specialization}
-            patientNum={doctor.patients.length}
-        />
-    })
     return(
         <div className="doctorList">
             <Contactheader />
-            {doctorElements}
+            {doctors.map((doctor) => (
+                <Contact
+                    key={doctor.id}
+                    doctorId={doctor.id}
+                    name={doctor.name}
+                    specialization={doctor.specialization}
+                    patientNum={doctor.patients.length}
+                />
+            ))}
         </div>
-    )
+    );
 }

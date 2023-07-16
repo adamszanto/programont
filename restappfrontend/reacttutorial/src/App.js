@@ -1,21 +1,23 @@
 import React from 'react';
-import { Routes, Route } from 'react-router-dom';
+import ReactDOM from 'react-dom';
+import './index.css';
+import './contact.css'
+import Contact from './contact';
 import { Doctorlist } from "./doctorlist";
-import { DoctorDetailList } from "./DoctorDetailList";
-import {Footer} from "./footer";
+import { Footer } from "./footer";
+
 
 function App() {
+
     return (
         <div className="container">
             <div className="main-div">
-                <Routes>
-                    <Route exact path="/" element={<Doctorlist />} />
-                    <Route path="/doctors/:doctorId" element={<DoctorDetailList />} />
-                </Routes>
+                <Doctorlist />
                 <Footer />
             </div>
         </div>
-    );
+    )
 }
 
 export default App;
+

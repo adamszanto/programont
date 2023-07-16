@@ -100,7 +100,7 @@ public class DoctorController {
     }
 
 
-    @GetMapping(value ="/{id}", produces = MediaType.APPLICATION_XML_VALUE)
+    @GetMapping(value ="/{id}")
     public ResponseEntity<?> getDoctorById(@PathVariable Long id) throws DoctorValidationException {
         try {
 
