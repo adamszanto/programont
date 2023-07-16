@@ -2,11 +2,12 @@ import React from "react"
 import {useState} from "react"
 import PatientContact from "./patient";
 import {Patientheader} from "./patientheader";
+import { Link } from 'react-router-dom';
 
 export default function Contact({doctorId, name, specialization, patients, patientNum}) {
 
     return (
-        <a href={`http://localhost:3000/doctor/${doctorId}`}>
+        <Link to={`/doctors/${doctorId}`}>
         <div>
             <div className="tableRow" >
                 <div className="tableCell">{doctorId}</div>
@@ -15,6 +16,6 @@ export default function Contact({doctorId, name, specialization, patients, patie
                 <div className="tableCell">{patientNum}</div>
             </div>
         </div>
-        </a>
+        </Link>
     )
 }
