@@ -1,14 +1,16 @@
 import React from 'react';
-import { Route, Routes } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import DoctorList from './DoctorList';
-import Doctor from './Doctor';
+import DoctorDetails from './DoctorDetails';
 
 const App = () => {
     return (
-        <Routes>
-            <Route path="/" element={<DoctorList />} />
-            <Route path="/doctor/:id" element={<Doctor />} />
-        </Routes>
+        <Router>
+            <Routes>
+                <Route path="/" element={<DoctorList />} />
+                <Route path="/doctor/:id" element={<DoctorDetails />} />
+            </Routes>
+        </Router>
     );
 };
 

@@ -10,12 +10,12 @@ const DoctorList = () => {
             try {
                 const response = await fetch('http://localhost:8080/api/doctors');
                 if (!response.ok) {
-                    throw new Error('A kérés feldolgozása sikertelen volt.');
+                    throw new Error("Couldn't process request");
                 }
                 const data = await response.json();
                 setDoctors(data);
             } catch (error) {
-                console.error('Hiba történt az adatok lekérése során:', error);
+                console.error("Error happened", error);
             }
         };
 
@@ -40,10 +40,10 @@ const DoctorList = () => {
                             <strong>ID:</strong> {doctor.id}
                         </div>
                         <div>
-                            <strong>Név:</strong> {doctor.name}
+                            <strong>Name:</strong> {doctor.name}
                         </div>
                         <div>
-                            <strong>Specializáció:</strong> {doctor.specialization}
+                            <strong>Specialization:</strong> {doctor.specialization}
                         </div>
                         <div>
                             <strong>Páciensek száma:</strong> {doctor.patients.length}
