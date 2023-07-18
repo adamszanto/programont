@@ -21,7 +21,6 @@ public class FishingController {
         this.fishingService = fishingService;
     }
 
-
     @GetMapping("/")
     public String index(Model model, HttpSession session) {
         List<Fish> fishes = fishingService.getFishes(session);

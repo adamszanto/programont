@@ -7,11 +7,12 @@ import PatientContact from "./patient";
 import { Patientheader } from "./patientheader";
 import {Footer} from "./footer";
 import BackTo from "./BackTo";
+import ContactDetail from "./contactdetail";
 
 export function DoctorDetailList() {
     const params = useParams();
     const location = useLocation();
-    const [doctor, setDoctor] = useState({ patients: [] });
+    const [doctor, setDoctor] = React.useState({ patients: [] });
 
     useEffect(() => {
         console.log('Doctor id: ', location.state.doctorId);
@@ -34,8 +35,10 @@ export function DoctorDetailList() {
 
     return (
         <div className="main-div">
-            <Contactheader />
-            <Contact
+            <h2>Happy Patient CRM</h2>
+            <hr/>
+            <h4>List of doctors & their patients</h4>
+            <ContactDetail
                 key={doctor.id}
                 doctorId={doctor.id}
                 name={doctor.name}

@@ -6,7 +6,6 @@
 .tableRow {
     display: flex;
     cursor: pointer;
-    background-color: #f8f8f8;
     border: 0px solid #ccc;
     margin-bottom: 5px;
     padding: 5px;
@@ -56,9 +55,7 @@
     flex-basis: 10%;
     display: flex;
     background-color: #f8f8f8;
-    padding-left: 55px;
-    padding-right: 55px;
-    padding-bottom: 30px;
+    padding: 10px 55px;
 }
 
 .patientTableHeader {
@@ -69,5 +66,33 @@
 .patientTable {
     margin:auto;
     width: 60%;
+}
+
+.card {
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 16px;
+    margin-bottom: 16px;
+}
+
+.cardContent {
+    display: flex;
+    flex-direction: column;
+}
+
+.cardField {
+    display: flex;
+    margin-bottom: 8px;
+}
+
+.cardFieldLabel {
+    font-weight: bold;
+    width: 120px;
+}
+
+.cardFieldValue {
+    flex-grow: 1;
 }
 
