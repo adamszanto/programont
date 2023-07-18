@@ -16,10 +16,11 @@ body {
 
 footer {
   padding: 50px 20px;
-  position: sticky;
   bottom: 0;
   float: right;
+  margin-top: auto;
 }
+
 
 .back-button {
   border:none;

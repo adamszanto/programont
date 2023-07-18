@@ -23,7 +23,7 @@ export function DoctorDetailList() {
                     throw new Error("Couldn't process request");
                 }
                 const data = await response.json();
-                
+                console.log("Data: " + data);
                 setDoctor(data);
             } catch (error) {
                 console.error("Error happened", error);

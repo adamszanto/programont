@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Fishing Journal🎣</title>
+  <link href='https://fonts.googleapis.com/css?family=Nunito:400,300' rel='stylesheet' type='text/css'>
+  <link rel="stylesheet" type="text/css" href="/styles.css">
+</head>
+<body>
+<h1>Fishing Journal🎣</h1>
+
+<h2>Add your last Fish</h2>
+<form th:action="@{/addFish}" method="post">
+  <label for="species">Species:</label>
+  <input type="text" id="species" name="species" placeholder="e.g. Carp" autocomplete="off" required/><br/>
+
+  <label for="length">Length:</label>
+  <input type="text" id="length" name="length" placeholder="in cm" autocomplete="off" required/><br/>
+
+  <label for="weight">Weight:</label>
+  <input type="text" id="weight" name="weight" placeholder="in g" autocomplete="off" required/><br/>
+
+  <button type="submit">Add Fish</button>
+</form>
+
+
+<h2>Recent Catches</h2>
+<table>
+  <tr>
+    <th>Date</th>
+    <th>Species</th>
+    <th>Length (cm)</th>
+    <th>Weight (g)</th>
+    <th>Location</th>
+    <th></th>
+  </tr>
+  <tr th:each="fish, fishInfo : ${fishes}">
+    <td th:text="${#dates.format(fish.timestamp, 'yyyy-MM-dd')}"></td>
+    <td th:text="${fish.species}"></td>
+    <td th:text="${fish.length}"></td>
+    <td th:text="${fish.weight}"></td>
+    <td>Favorite fishing spot</td>
+    <td>
+      <form th:action="@{/deleteFish}" method="post">
+        <input type="hidden" th:name="index" th:value="${fishInfo.index}"/>
+        <button type="submit">Delete</button>
+      </form>
+    </td>
+  </tr>
+</table>
+
+<div th:if="${fishes == null or fishes.isEmpty()}">
+  <p>No recent fishes.</p>
+</div>
+</body>
+</html>

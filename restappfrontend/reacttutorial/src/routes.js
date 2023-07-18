@@ -3,7 +3,7 @@ import {
     Route
 } from "react-router";
 
-import App from "./app";
+import App from "./App";
 import Doctor from "./Doctor";
 
 

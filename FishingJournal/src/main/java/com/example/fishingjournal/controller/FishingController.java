@@ -5,8 +5,7 @@ import com.example.fishingjournal.service.model.Fish;
 import jakarta.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.boot.actuate.autoconfigure.observation.ObservationProperties;
-import org.springframework.context.annotation.Scope;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -22,6 +21,7 @@ public class FishingController {
         this.fishingService = fishingService;
     }
 
+
     @GetMapping("/")
     public String index(Model model, HttpSession session) {
         List<Fish> fishes = fishingService.getFishes(session);
@@ -32,6 +32,7 @@ public class FishingController {
     }
 
     @PostMapping("/addFish")
+    @Secured("ROLE_USER")
     public String addFish(@ModelAttribute Fish fish, Model model, HttpSession session) {
         fish.setTimestamp(new Date());
         fishingService.addFish(fish, session);
@@ -43,6 +44,7 @@ public class FishingController {
     }
 
     @PostMapping("/deleteFish")
+    @Secured("ROLE_ADMIN")
     public String deleteFish(@RequestParam("index") int index, Model model, HttpSession session) {
         fishingService.deleteFish(index, session);
         model.addAttribute("fishes", fishingService.getFishes(session));
