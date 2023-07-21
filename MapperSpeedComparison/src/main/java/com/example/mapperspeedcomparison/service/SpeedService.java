@@ -13,7 +13,7 @@ import java.io.IOException;
 
 @Service
 public class SpeedService {
-    public final static int RACE_LAPS = 100000;
+    public final static int RACE_LAPS = 500000;
     private final SpeedRepository speedRepository;
     private final ModelMapper modelMapper;
 

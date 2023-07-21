@@ -1,1 +1,1 @@
-MapStruct's speed test for 100000 mapping completed in 0.22 seconds
+MapStruct's speed test for 500000 mapping completed in 0.69 seconds
