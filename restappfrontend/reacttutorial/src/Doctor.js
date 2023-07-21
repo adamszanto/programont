@@ -6,7 +6,7 @@ function Doctor() {
 
     return (
         <div className="hooked-data">
-            {JSON.stringify(location.state)}
+            {/*{JSON.stringify(location.state)}*/}
 
             <DoctorDetailList />
         </div>

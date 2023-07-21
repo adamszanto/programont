@@ -7,6 +7,8 @@ import PatientContact from "./patient";
 import { Patientheader } from "./patientheader";
 import {Footer} from "./footer";
 import BackTo from "./BackTo";
+import DoctorCard from "./DoctorCard";
+import {DoctorCardHeader} from "./DoctorCardHeader";
 
 export function DoctorDetailList() {
     const params = useParams();
@@ -34,8 +36,8 @@ export function DoctorDetailList() {
 
     return (
         <div className="main-div">
-            <Contactheader />
-            <Contact
+            <DoctorCardHeader />
+            <DoctorCard
                 key={doctor.id}
                 doctorId={doctor.id}
                 name={doctor.name}
