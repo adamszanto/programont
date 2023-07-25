@@ -28,6 +28,5 @@ public class SignupUserController {
         } else {
             return new ResponseEntity<>(createdUser, HttpStatus.CREATED);
         }
-
     }
 }
