@@ -3,12 +3,13 @@
 <%@ attribute name="value" required="true" description="Value for the row" %>
 
 <tr>
-    <custom:tableCell>
+    <custom:tableRow>
+        <h1>This is a table row</h1>
         <jsp:attribute name="label">
             <c:out value="${label}" />
         </jsp:attribute>
         <jsp:attribute name="value">
             <c:out value="${value}" />
         </jsp:attribute>
-    </custom:tableCell>
+    </custom:tableRow>
 </tr>

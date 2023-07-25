@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" isELIgnored="false" %>
-<%@ taglib prefix="custom" uri="/WEB-INF/tags/custom.tld" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="custom" uri="/WEB-INF/tags/implicit.tld" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -17,20 +18,20 @@
         <th>Price</th>
         <th>Stock</th>
     </tr>
-    <c:forEach var="roller" items="${rollerList}">
-        <custom:tableRow>
-            <jsp:attribute name="label">Name</jsp:attribute>
-            <jsp:attribute name="value"><c:out value="${roller.name}" /></jsp:attribute>
-        </custom:tableRow>
-        <custom:tableRow>
-            <jsp:attribute name="label">Price</jsp:attribute>
-            <jsp:attribute name="value"><c:out value="${roller.price}" /></jsp:attribute>
-        </custom:tableRow>
-        <custom:tableRow>
-            <jsp:attribute name="label">Stock</jsp:attribute>
-            <jsp:attribute name="value"><c:out value="${roller.stock}" /></jsp:attribute>
-        </custom:tableRow>
-    </c:forEach>
+<%--    <c:forEach var="roller" items="${rollerList}">--%>
+<%--        <custom:tableRow>--%>
+<%--            <jsp:attribute name="label">Name</jsp:attribute>--%>
+<%--            <jsp:attribute name="value"><c:out value="${roller.name}" /></jsp:attribute>--%>
+<%--        </custom:tableRow>--%>
+<%--        <custom:tableRow>--%>
+<%--            <jsp:attribute name="label">Price</jsp:attribute>--%>
+<%--            <jsp:attribute name="value"><c:out value="${roller.price}" /></jsp:attribute>--%>
+<%--        </custom:tableRow>--%>
+<%--        <custom:tableRow>--%>
+<%--            <jsp:attribute name="label">Stock</jsp:attribute>--%>
+<%--            <jsp:attribute name="value"><c:out value="${roller.stock}" /></jsp:attribute>--%>
+<%--        </custom:tableRow>--%>
+<%--    </c:forEach>--%>
 </table>
 </body>
 </html>
