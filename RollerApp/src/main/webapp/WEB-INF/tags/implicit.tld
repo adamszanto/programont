@@ -40,4 +40,9 @@
             <rtexprvalue>true</rtexprvalue>
         </attribute>
     </tag>
+    <tag>
+        <name>HelloTag</name>
+        <tag-class>com.example.Roller.HelloTag</tag-class>
+        <body-content>empty</body-content>
+    </tag>
 </taglib>

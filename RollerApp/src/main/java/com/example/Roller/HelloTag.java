@@ -6,9 +6,15 @@ import jakarta.servlet.jsp.*;
 import java.io.IOException;
 
 
-public class HelloTag extends SimpleTagSupport {
-    public void doTag() throws JspException, IOException {
-        JspWriter out = getJspContext().getOut();
-        out.print("Hello");
+public class HelloTag extends TagSupport {
+
+    @Override
+    public int doStartTag() throws JspException {
+        try {
+            pageContext.getOut().write("Hello, this is a custom JSP tag!");
+        } catch (Exception e) {
+            throw new JspException(e);
+        }
+        return SKIP_BODY;
     }
 }

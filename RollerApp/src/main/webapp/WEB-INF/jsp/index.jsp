@@ -11,7 +11,7 @@
 <h1>Roller List</h1>
 
 <a href="${pageContext.request.contextPath}/add">Add New Roller</a>
-
+<custom:HelloTag />
 <table>
     <tr>
         <th>Name</th>
