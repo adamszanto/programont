@@ -2,12 +2,12 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import './contact.css'
-import Contact from './contact';
-import { Doctorlist } from "./doctorlist";
-import { Footer } from "./footer";
+import Contact from './Contact';
+import { DoctorList } from "./DoctorList";
+import { Footer } from "./Footer";
 
 import { BrowserRouter } from 'react-router-dom';
-import ReactRoutes from './routes';
+import ReactRoutes from './Routes';
 
 function App() {
 

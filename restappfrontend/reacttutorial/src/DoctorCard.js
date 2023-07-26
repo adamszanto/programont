@@ -1,11 +1,11 @@
-import { Contactheader } from "./contactheader";
-import Contact from "./contact";
+import { ContactHeader } from "./ContactHeader";
+import Contact from "./Contact";
 import React, { useEffect, useState } from "react";
-import DoctorData from "./DoctorData";
+import DoctorData from "./MockDoctorData";
 import { useLocation, useParams } from "react-router-dom";
-import PatientContact from "./patient";
-import { Patientheader } from "./patientheader";
-import {Footer} from "./footer";
+import PatientContact from "./PatientContact";
+import { Patientheader } from "./PatientHeader";
+import {Footer} from "./Footer";
 import BackTo from "./BackTo";
 
 export default function DoctorCard({ doctorId, name, specialization, patients, patientNum }) {

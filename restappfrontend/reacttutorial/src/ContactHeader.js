@@ -1,6 +1,6 @@
 import React from "react";
 import './index.css';
-export function Contactheader() {
+export function ContactHeader() {
     return(
         <div>
             <h2>Happy Patient CRM</h2>

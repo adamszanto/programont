@@ -1,11 +1,11 @@
-import { Contactheader } from "./contactheader";
-import Contact from "./contact";
+import { ContactHeader } from "./ContactHeader";
+import Contact from "./Contact";
 import React, { useEffect, useState } from "react";
-import DoctorData from "./DoctorData";
+import DoctorData from "./MockDoctorData";
 import { useLocation, useParams } from "react-router-dom";
-import PatientContact from "./patient";
-import { Patientheader } from "./patientheader";
-import {Footer} from "./footer";
+import PatientContact from "./PatientContact";
+import { PatientHeader } from "./PatientHeader";
+import {Footer} from "./Footer";
 import BackTo from "./BackTo";
 import DoctorCard from "./DoctorCard";
 import {DoctorCardHeader} from "./DoctorCardHeader";
@@ -45,7 +45,7 @@ export function DoctorDetailList() {
                 patientNum={doctor.patients.length}
             />
             <div>
-            <Patientheader />
+            <PatientHeader />
             {doctor.patients.map((patient) => (
                 <PatientContact
                     key={patient.id}

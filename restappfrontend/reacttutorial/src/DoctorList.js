@@ -1,9 +1,9 @@
-import {Contactheader} from "./contactheader";
-import Contact from "./contact";
+import {ContactHeader} from "./ContactHeader";
+import Contact from "./Contact";
 import React, {useEffect, useState} from "react";
-import DoctorData from "./DoctorData";
+import DoctorData from "./MockDoctorData";
 
-export function Doctorlist() {
+export function DoctorList() {
     const [doctors, setDoctors] = useState([]);
 
     useEffect(()=> {
@@ -25,7 +25,7 @@ export function Doctorlist() {
 
     return(
         <div className="doctorList">
-            <Contactheader />
+            <ContactHeader />
             {doctors.map((doctor) => (
                 <Contact
                     key={doctor.id}

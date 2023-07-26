@@ -1,10 +1,11 @@
 import React from "react"
 import { useState } from "react"
-import PatientContact from "./patient";
-import { Patientheader } from "./patientheader";
+import PatientContact from "./PatientContact";
+import { Patientheader } from "./PatientHeader";
 
 
 import { Link } from "react-router-dom";
+import {ContactTemplate} from "./ContactTemplate";
 
 
 export default function Contact({ doctorId, name, specialization, patients, patientNum }) {
@@ -19,14 +20,12 @@ export default function Contact({ doctorId, name, specialization, patients, pati
                 patients,
                 patientNum
             }}>
-            <div>
-                <div className="tableRow" >
-                    <div className="tableCell">{doctorId}</div>
-                    <div className="tableCell">{name}</div>
-                    <div className="tableCell">{specialization}</div>
-                    <div className="tableCell">{patientNum}</div>
-                </div>
-            </div>
+            <ContactTemplate
+                doctorId={doctorId}
+                name={name}
+                specialization={specialization}
+                patientNum={patientNum}
+            />
         </Link>
     )
 }

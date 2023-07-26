@@ -1,6 +1,6 @@
 import React from "react";
 import './index.css';
-export function Patientheader() {
+export function PatientHeader() {
     return(
         <div className="patientTableHeader">
             <div className="tableRowHeader">
