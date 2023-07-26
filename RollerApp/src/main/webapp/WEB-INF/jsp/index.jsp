@@ -2,44 +2,29 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="custom" uri="/WEB-INF/tags/implicit.tld" %>
 <!DOCTYPE html>
+
 <html>
 <head>
     <meta charset="UTF-8">
     <title>Roller List</title>
 </head>
 <body>
+<custom:HelloTag />
 <h1>Roller List</h1>
 
 <a href="${pageContext.request.contextPath}/add">Add New Roller</a>
-<custom:HelloTag />
-<table>
-    <tr>
-        <th>Name</th>
-        <th>Price</th>
-        <th>Stock</th>
-    </tr>
+
+<table style="border: 1px solid grey;">
+    <custom:tableHeader label1="Item name" label2="Price (HUF)" label3="Available (pcs)"></custom:tableHeader>
     <c:forEach var="roller" items="${rollerList}">
-        <custom:tableRow label="Name" value="${roller.name}" />
-        <custom:tableRow label="Price" value="${roller.price}" />
-        <custom:tableRow label="Stock" value="${roller.stock}" />
+        <custom:tableRow
+                value1="${roller.name}"
+                value2="${roller.price}"
+                value3="${roller.stock}">
+        </custom:tableRow>
     </c:forEach>
-
-
-
-    <%--    <c:forEach var="roller" items="${rollerList}">--%>
-    <%--        <custom:tableRow>--%>
-    <%--            <jsp:attribute name="label">Name</jsp:attribute>--%>
-    <%--            <jsp:attribute name="value"><c:out value="${roller.name}" /></jsp:attribute>--%>
-    <%--        </custom:tableRow>--%>
-    <%--        <custom:tableRow>--%>
-    <%--            <jsp:attribute name="label">Price</jsp:attribute>--%>
-    <%--            <jsp:attribute name="value"><c:out value="${roller.price}" /></jsp:attribute>--%>
-    <%--        </custom:tableRow>--%>
-    <%--        <custom:tableRow>--%>
-    <%--            <jsp:attribute name="label">Stock</jsp:attribute>--%>
-    <%--            <jsp:attribute name="value"><c:out value="${roller.stock}" /></jsp:attribute>--%>
-    <%--        </custom:tableRow>--%>
-    <%--    </c:forEach>--%>
 </table>
+
+    <h6>Logged out: ${rollerList.size()}</h6>
 </body>
 </html>
