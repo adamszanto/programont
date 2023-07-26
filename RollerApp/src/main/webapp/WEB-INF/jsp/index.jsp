@@ -14,16 +14,23 @@
 <a href="${pageContext.request.contextPath}/add">Add New Roller</a>
 <custom:HelloTag />
 
-
+<table>
+    <tr>
+        <th>Item name</th>
+        <th>Price</th>
+        <th>On stock</th>
+    </tr>
     <c:forEach var="roller" items="${rollerList}">
         <custom:tableRow
                 label1="Item name"
                 value1="${roller.name}"
-                label2="Price" value2="${roller.price}"
+                label2="Price"
+                value2="${roller.price}"
                 label3="On stock"
                 value3="${roller.stock}">
         </custom:tableRow>
     </c:forEach>
+</table>
 
     <h6>Logged out: ${rollerList.size()}</h6>
 </body>
