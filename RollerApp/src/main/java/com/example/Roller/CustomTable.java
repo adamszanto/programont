@@ -65,21 +65,12 @@ public class CustomTable extends TagSupport {
     @Override
     public int doStartTag() throws JspException {
         try {
-            pageContext.getOut().write("<table>");
-
-            pageContext.getOut().write("<tr>");
-            pageContext.getOut().write("<th>" + label1 + "</th>");
-            pageContext.getOut().write("<th>" + label2 + "</th>");
-            pageContext.getOut().write("<th>" + label3 + "</th>");
-            pageContext.getOut().write("</tr>");
-
             pageContext.getOut().write("<tr>");
             pageContext.getOut().write("<td>" + value1 + "</td>");
             pageContext.getOut().write("<td>" + value2 + CURRENCIES.CURRENCY_HUF + "</td>");
             pageContext.getOut().write("<td>" + value3 + "</td>");
             pageContext.getOut().write("</tr>");
 
-            pageContext.getOut().write("</table>");
         } catch (Exception e) {
             throw new JspException(e);
         }

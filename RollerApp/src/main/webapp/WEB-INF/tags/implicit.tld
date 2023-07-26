@@ -13,6 +13,25 @@
     <uri>/WEB-INF/tags/implicit.tld</uri>
 
     <tag>
+        <name>tableHeader</name>
+        <tag-class>com.example.Roller.CustomTableHeader</tag-class>
+        <body-content>JSP</body-content>
+        <attribute>
+            <name>label1</name>
+            <required>true</required>
+        </attribute>
+        <attribute>
+            <name>label2</name>
+            <required>true</required>
+        </attribute>
+        <attribute>
+            <name>label3</name>
+            <required>true</required>
+        </attribute>
+    </tag>
+
+
+    <tag>
         <name>tableCell</name>
         <tag-class>com.example.Roller.HelloTag</tag-class>
         <body-content>JSP</body-content>
@@ -29,21 +48,6 @@
         <name>tableRow</name>
         <tag-class>com.example.Roller.CustomTable</tag-class>
         <body-content>JSP</body-content>
-        <attribute>
-            <name>label1</name>
-            <required>true</required>
-            <rtexprvalue>true</rtexprvalue>
-        </attribute>
-        <attribute>
-            <name>label2</name>
-            <required>true</required>
-            <rtexprvalue>true</rtexprvalue>
-        </attribute>
-        <attribute>
-            <name>label3</name>
-            <required>true</required>
-            <rtexprvalue>true</rtexprvalue>
-        </attribute>
         <attribute>
             <name>value1</name>
             <required>true</required>
