@@ -8,7 +8,7 @@
 </head>
 <body>
 <h1>Add Roller</h1>
-<form action="${pageContext.request.contextPath}/save" method="post">
+<form action="${pageContext.request.contextPath}/save" method="post" commandName="index">
     <label for="name">Name:</label>
     <input type="text" id="name" name="name" required/><br/>
     <label for="price">Price:</label>
