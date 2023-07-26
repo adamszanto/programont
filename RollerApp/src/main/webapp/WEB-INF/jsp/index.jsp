@@ -9,10 +9,10 @@
     <title>Roller List</title>
 </head>
 <body>
+<custom:HelloTag />
 <h1>Roller List</h1>
 
 <a href="${pageContext.request.contextPath}/add">Add New Roller</a>
-<custom:HelloTag />
 
 <table style="border: 1px solid grey;">
     <custom:tableHeader label1="Item name" label2="Price (HUF)" label3="Available (pcs)"></custom:tableHeader>
