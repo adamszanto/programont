@@ -3,32 +3,26 @@ package com.example.retro;
 import java.util.Objects;
 
 public class Game {
-    private String name;
-    private int year;
-    private String releasedPlatform;
+    private final String name;
+    private final int year;
+    private final String releasedPlatform;
+    private final String coverImageURL;
     private boolean isRentable;
 
-    public Game(String name, int year, String publisher, boolean isRentable) {
+    public Game(String name, int year, String releasedPlatform, String coverImageURL, boolean isRentable) {
         this.name = name;
         this.year = year;
-        this.releasedPlatform = publisher;
+        this.releasedPlatform = releasedPlatform;
         this.isRentable = isRentable;
+        this.coverImageURL = coverImageURL;
     }
 
     public String getName() {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
     public int getYear() {
         return year;
-    }
-
-    public void setYear(int year) {
-        this.year = year;
     }
 
 
@@ -39,6 +33,15 @@ public class Game {
     public void setRentable(boolean rentable) {
         isRentable = rentable;
     }
+
+    public String getReleasedPlatform() {
+        return releasedPlatform;
+    }
+
+    public String getCoverImageURL() {
+        return coverImageURL;
+    }
+
 
     @Override
     public boolean equals(Object o) {
@@ -51,5 +54,16 @@ public class Game {
     @Override
     public int hashCode() {
         return Objects.hash(name, year, releasedPlatform, isRentable);
+    }
+
+    @Override
+    public String toString() {
+        return "Game{" +
+                "name='" + name + '\'' +
+                ", year=" + year +
+                ", releasedPlatform='" + releasedPlatform + '\'' +
+                ", coverImageURL='" + coverImageURL + '\'' +
+                ", isRentable=" + isRentable +
+                '}';
     }
 }
