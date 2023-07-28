@@ -13,8 +13,6 @@ public class GameEntity {
     private int year;
     private String releasedPlatform;
     private String coverImageURL;
-    @Column(columnDefinition = "boolean default true")
-    private boolean rentable;
 
     public GameEntity() {
     }
@@ -59,11 +57,4 @@ public class GameEntity {
         this.coverImageURL = coverImageURL;
     }
 
-    public boolean isRentable() {
-        return rentable;
-    }
-
-    public void setRentable(boolean rentable) {
-        this.rentable = rentable;
-    }
 }

@@ -3,14 +3,22 @@ package com.example.retro.service;
 import java.util.Objects;
 
 public class Game {
+    private Long id;
     private String name;
     private int year;
     private String releasedPlatform;
     private String coverImageURL;
-    private boolean rentable;
 
 
     public Game() {
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -43,37 +51,5 @@ public class Game {
 
     public void setCoverImageURL(String coverImageURL) {
         this.coverImageURL = coverImageURL;
-    }
-
-    public boolean isRentable() {
-        return rentable;
-    }
-
-    public void setRentable(boolean rentable) {
-        this.rentable = rentable;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Game game = (Game) o;
-        return year == game.year && rentable == game.rentable && Objects.equals(name, game.name) && Objects.equals(releasedPlatform, game.releasedPlatform) && Objects.equals(coverImageURL, game.coverImageURL);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(name, year, releasedPlatform, coverImageURL, rentable);
-    }
-
-    @Override
-    public String toString() {
-        return "Game{" +
-                "name='" + name + '\'' +
-                ", year=" + year +
-                ", releasedPlatform='" + releasedPlatform + '\'' +
-                ", coverImageURL='" + coverImageURL + '\'' +
-                ", rentable=" + rentable +
-                '}';
     }
 }

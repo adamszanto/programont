@@ -1,8 +1,10 @@
 package com.example.retro.controller;
 
 import com.example.retro.exception.GameRentingException;
+import com.example.retro.repository.CurrentlyRentingEntity;
 import com.example.retro.repository.GameEntity;
 import com.example.retro.repository.RentingRepository;
+import com.example.retro.service.CurrentlyRenting;
 import com.example.retro.service.Game;
 import com.example.retro.service.RentingService;
 import org.springframework.http.HttpStatus;
@@ -36,10 +38,21 @@ public class RentingController {
     }
 
     @PostMapping("/rent/{id}")
-    public ResponseEntity<?> rentGame(@PathVariable Long id) throws GameRentingException{
-        rentingService.rentGame(id);
-        return new ResponseEntity<>("Game successfully rented: " + gameList().toString(), HttpStatus.OK);
+    public ResponseEntity<?> rentGame(@PathVariable Long id, @RequestBody String email) throws GameRentingException{
+        CurrentlyRentingEntity currentlyRentingEntity = rentingService.rentGame(id, email);
+        if(currentlyRentingEntity != null) {
+            return new ResponseEntity<>("Game successfully rented. ID: " + currentlyRentingEntity.getGameId(), HttpStatus.OK);
+
+        }
+            return new ResponseEntity<>("Game cannot be rented. Either not found or already rented.", HttpStatus.BAD_REQUEST);
     }
+
+    @GetMapping("/rentings")
+    public ResponseEntity<List<CurrentlyRenting>> allRentingList() {
+        List<CurrentlyRenting> allRentings = rentingService.getAllRenting();
+        return new ResponseEntity<>(allRentings, HttpStatus.OK);
+    }
+
 
     @PostMapping("/add")
     public ResponseEntity<?> addGame(@RequestBody Game game) {
