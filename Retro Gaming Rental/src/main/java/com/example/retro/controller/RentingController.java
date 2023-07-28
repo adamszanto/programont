@@ -2,6 +2,7 @@ package com.example.retro.controller;
 
 import com.example.retro.exception.GameRentingException;
 import com.example.retro.repository.entity.CurrentlyRentingEntity;
+import com.example.retro.repository.entity.GameEntity;
 import com.example.retro.service.model.CurrentlyRenting;
 import com.example.retro.service.model.Game;
 import com.example.retro.service.RentingService;
@@ -51,15 +52,6 @@ public class RentingController {
         return new ResponseEntity<>(availableGames, HttpStatus.OK);
     }
 
-//    @PostMapping("/rent/{id}")
-//    public ResponseEntity<?> rentGame(@PathVariable Long id, @RequestBody String email) throws GameRentingException{
-//        CurrentlyRentingEntity currentlyRentingEntity = rentingService.rentGame(id, email);
-//        if(currentlyRentingEntity != null) {
-//            return new ResponseEntity<>("Game successfully rented. ID: " + currentlyRentingEntity.getGameId(), HttpStatus.OK);
-//
-//        }
-//            return new ResponseEntity<>("Game cannot be rented. Either not found or already rented.", HttpStatus.BAD_REQUEST);
-//    }
 
     @PostMapping("/rent/{id}")
     public ResponseEntity<?> rentGame(@PathVariable Long id, @RequestBody String email) throws GameRentingException{
@@ -87,5 +79,41 @@ public class RentingController {
     public ResponseEntity<?> addGame(@RequestBody Game game) {
         Game savedGame = rentingService.addGame(game);
         return ResponseEntity.status(HttpStatus.CREATED).body(savedGame);
+    }
+
+    @GetMapping("/platforms/snes")
+    public ResponseEntity<?> getGamesSNESPlatform() {
+        List<Game> games = rentingService.findReleasedByPlatform("Super Nintendo Entertainment System");
+        return new ResponseEntity<>(games, HttpStatus.OK);
+    }
+
+    @GetMapping("/platforms/n64")
+    public ResponseEntity<?> getGamesN64Platform() {
+        List<Game> games = rentingService.findReleasedByPlatform("Nintendo 64");
+        return new ResponseEntity<>(games, HttpStatus.OK);
+    }
+
+    @GetMapping("/platforms/pc")
+    public ResponseEntity<?> getGamesPCPlatform() {
+        List<Game> games = rentingService.findReleasedByPlatform("PC");
+        return new ResponseEntity<>(games, HttpStatus.OK);
+    }
+
+    @GetMapping("/platforms/playstation")
+    public ResponseEntity<?> getGamesPSPlatform() {
+        List<Game> games = rentingService.findReleasedByPlatform("PlayStation");
+        return new ResponseEntity<>(games, HttpStatus.OK);
+    }
+
+    @GetMapping("/platforms/playstation2")
+    public ResponseEntity<?> getGamesPS2Platform() {
+        List<Game> games = rentingService.findReleasedByPlatform("PlayStation 2");
+        return new ResponseEntity<>(games, HttpStatus.OK);
+    }
+
+    @GetMapping("/platforms/gamecube")
+    public ResponseEntity<?> getGamesGCPlatform() {
+        List<Game> games = rentingService.findReleasedByPlatform("Nintendo GameCube");
+        return new ResponseEntity<>(games, HttpStatus.OK);
     }
 }

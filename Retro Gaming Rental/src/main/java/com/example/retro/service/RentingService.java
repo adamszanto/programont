@@ -79,23 +79,6 @@ public class RentingService {
         return modelMapper.map(game, Game.class);
     }
 
-//    public CurrentlyRentingEntity rentGame(Long id, String email) {
-//        Optional<GameEntity> optionalGame = rentingRepository.findById(id);
-//        Optional<CurrentlyRentingEntity> optionalCurrentRenting = currentlyRentingRepository.findById(id);
-//
-//
-//        if(optionalGame.isPresent() && !optionalCurrentRenting.isPresent()) {
-//            GameEntity game = optionalGame.get();
-//
-//            CurrentlyRentingEntity currentlyRentingEntity = new CurrentlyRentingEntity();
-//            currentlyRentingEntity.setGameId(game.getId());
-//            currentlyRentingEntity.setEmail(email);
-//            currentlyRentingEntity.setName(game.getName());
-//            return currentlyRentingRepository.save(currentlyRentingEntity);
-//        } else {
-//            return null;
-//        }
-//    }
 
     public User rentGame(Long id, String email) {
         Optional<GameEntity> optionalGame = rentingRepository.findById(id);
@@ -132,5 +115,12 @@ public class RentingService {
         GameEntity gameEntity = modelMapper.map(game, GameEntity.class);
         GameEntity savedEntity= rentingRepository.save(gameEntity);
         return modelMapper.map(savedEntity, Game.class);
+    }
+
+    public List<Game> findReleasedByPlatform(String platform) {
+        List<GameEntity> result = rentingRepository.findByReleasedPlatform(platform);
+        return result.stream()
+                .map(renting -> modelMapper.map(renting, Game.class))
+                .collect(Collectors.toList());
     }
 }
