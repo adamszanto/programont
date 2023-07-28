@@ -7,6 +7,7 @@ import com.example.retro.repository.RentingRepository;
 import com.example.retro.service.CurrentlyRenting;
 import com.example.retro.service.Game;
 import com.example.retro.service.RentingService;
+import org.springframework.boot.actuate.autoconfigure.observation.ObservationProperties;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -30,6 +31,22 @@ public class RentingController {
         List<Game> allGames = rentingService.getAllGames();
         return new ResponseEntity<>(allGames, HttpStatus.OK);
     }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<?> getGameById(@PathVariable Long id) {
+        try {
+            Game game = rentingService.findGameById(id);
+            if(game == null) {
+                throw new GameRentingException(GameRentingException.CANNOT_RENT + id);
+            }
+            return ResponseEntity.ok(game);
+        } catch (GameRentingException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+        }
+    }
+
 
     @GetMapping("/rentable")
     public ResponseEntity<List<Game>> availableGameList() {

@@ -3,9 +3,18 @@ package com.example.retro.service;
 public class CurrentlyRenting {
     private Long id;
     private Long gameId;
+    private String name;
     private String email;
 
     public CurrentlyRenting() {
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public Long getId() {
