@@ -1,4 +1,4 @@
-package com.example.retro.service;
+package com.example.retro.service.model;
 
 import java.util.Objects;
 

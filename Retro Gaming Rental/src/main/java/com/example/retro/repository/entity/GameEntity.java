@@ -1,4 +1,4 @@
-package com.example.retro.repository;
+package com.example.retro.repository.entity;
 
 import jakarta.persistence.*;
 

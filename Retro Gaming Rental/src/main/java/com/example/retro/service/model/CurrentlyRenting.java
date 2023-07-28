@@ -1,18 +1,12 @@
-package com.example.retro.repository;
+package com.example.retro.service.model;
 
-import jakarta.persistence.*;
-
-@Entity
-public class CurrentlyRentingEntity {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class CurrentlyRenting {
     private Long id;
-
     private Long gameId;
     private String name;
     private String email;
 
-    public CurrentlyRentingEntity() {
+    public CurrentlyRenting() {
     }
 
     public String getName() {
