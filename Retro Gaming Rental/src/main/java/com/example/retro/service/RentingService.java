@@ -39,12 +39,6 @@ public class RentingService {
                 .map(game -> modelMapper.map(game, Game.class))
                 .collect(Collectors.toList());
 
-//        return availableGameIds.stream()
-//                .map(gameId -> rentingRepository.findById(gameId))
-//                .filter(Optional::isPresent)
-//                .map(Optional::get)
-//                .map(game -> modelMapper.map(game, Game.class))
-//                .collect(Collectors.toList());
     }
 
     public List<Game> getAllGames() {
@@ -77,6 +71,7 @@ public class RentingService {
             CurrentlyRentingEntity currentlyRentingEntity = new CurrentlyRentingEntity();
             currentlyRentingEntity.setGameId(game.getId());
             currentlyRentingEntity.setEmail(email);
+            currentlyRentingEntity.setName(game.getName());
             return currentlyRentingRepository.save(currentlyRentingEntity);
         } else {
             return null;
