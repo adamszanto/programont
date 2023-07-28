@@ -1,6 +1,6 @@
 package com.example.retro;
 
-public class Platform {
+public class Platforms {
     public final static String PC = "PC";
     public final static String ATARI2600 = "Atari 2600";
     public final static String NES = "Nintendo Entertainment System";

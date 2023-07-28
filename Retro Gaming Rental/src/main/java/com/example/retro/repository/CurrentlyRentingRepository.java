@@ -1,5 +1,6 @@
 package com.example.retro.repository;
 
+import com.example.retro.repository.entity.CurrentlyRentingEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
