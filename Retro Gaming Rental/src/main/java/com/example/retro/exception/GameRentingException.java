@@ -1,7 +1,7 @@
 package com.example.retro.exception;
 
 public class GameRentingException extends Exception {
-    public final static String CANNOT_RENT = "Cannot found or rent game with given id";
+    public final static String CANNOT_RENT = "Error: Cannot found or rent game with given id";
     public GameRentingException() {
 
     }
