@@ -57,9 +57,9 @@ public class RentingController {
     public ResponseEntity<?> rentGame(@PathVariable Long id, @RequestBody String email) throws GameRentingException{
         User user = rentingService.rentGame(id, email);
         if(user != null) {
-            return new ResponseEntity<>("Game successfully rented by: " + email, HttpStatus.OK);
+            return new ResponseEntity<>(rentingService.findGameById(id).getName() + " (game id: " + id + ") successfully rented by: " + email, HttpStatus.OK);
         }
-        return new ResponseEntity<>("Game cannot be rented. Either not found or already rented.", HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>("Game cannot be rented: Game not found or already rented.", HttpStatus.BAD_REQUEST);
     }
 
     @GetMapping("/rentings")
