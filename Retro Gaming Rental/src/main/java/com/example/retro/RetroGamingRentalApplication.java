@@ -12,13 +12,4 @@ public class RetroGamingRentalApplication {
     public static void main(String[] args) {
         SpringApplication.run(RetroGamingRentalApplication.class, args);
     }
-
-    @Bean
-    CommandLineRunner commandLineRunner(KafkaTemplate<String, String> kafkaTemplate) {
-        return args -> {
-            for (int i = 0; i < 10; i++) {
-                kafkaTemplate.send("retroRental", "hello Retro Gaming Rental :) " + i);
-            }
-        };
-    }
 }
