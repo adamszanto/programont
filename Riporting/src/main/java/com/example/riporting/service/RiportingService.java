@@ -7,6 +7,7 @@ import com.example.riporting.repository.entity.Product;
 import com.example.riporting.repository.entity.QueryType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
@@ -33,7 +34,7 @@ public class RiportingService {
         this.customRepository = customRepository;
     }
 
-    @Scheduled(fixedRate = 10000)
+  //  @Scheduled(fixedRate = 10000)
     public void generateProductReportEveryTenSeconds() {
 
         LocalTime currentTime = LocalTime.now();
@@ -52,7 +53,7 @@ public class RiportingService {
         logger.info("Product Report has been generated.");
     }
 
-    @Scheduled(cron = "0 * * * * *")
+  //  @Scheduled(cron = "0 * * * * *")
     public void generateCustomerReportEveryMinute() {
         generateCustomReport(QueryType.DEFAULT, logger);
     }
@@ -94,7 +95,7 @@ public class RiportingService {
     }
 
 
-    @Scheduled(fixedRateString = "${riport.emailReportRate}")
+ //   @Scheduled(fixedRateString = "${riport.emailReportRate}")
     public void generateEmailReportOnCustom() {
         LocalTime currentTime = LocalTime.now();
         DecimalFormat df = new DecimalFormat("00");
