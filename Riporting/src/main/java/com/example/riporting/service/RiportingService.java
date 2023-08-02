@@ -85,13 +85,13 @@ public class RiportingService {
                 break;
         }
 
-        for(Customer customer : customers) {
-            logger.info("Customer ID:\t\t {}", customer.getId());
-            logger.info("Name:\t\t\t {}", customer.getName());
-            logger.info("Birthdate:\t\t {}", customer.getBirthdate());
+        for (Customer customer : customers) {
+            logger.info("Customer ID:   {}", customer.getId());
+            logger.info("Name:          {}", customer.getName());
+            logger.info("Birthdate:     {}", customer.getBirthdate());
 
             EmailAddress emailAddress = emailAddressRepository.findFirstByCustomer(customer);
-            logger.info("Email:\t\t\t {}", emailAddress);
+            logger.info("Email:         {}", (emailAddress != null) ? emailAddress.toString() : "");
         }
         logger.info("Customer report has been generated.");
     }
@@ -106,7 +106,7 @@ public class RiportingService {
         logger.info("Generating Email Report at: {}", time);
         List<EmailAddress> emailAddresses = emailAddressRepository.findAll();
         for(EmailAddress email : emailAddresses) {
-            logger.info("Email address:\t\t\t {}", email.getAddress());
+            logger.info("Email address:     {}", email.getAddress());
         }
     }
 

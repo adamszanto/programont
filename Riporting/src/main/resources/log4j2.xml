@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--        https://betterstack.com/community/guides/logging/how-to-start-logging-with-log4j/-->
+<Configuration status="INFO">
+    <Properties>
+        <Property name="basePath">C:\Users\AdamPC\Documents\Programont\programont\Riporting\src\main\resources\logs</Property>
+    </Properties>
+    <Appenders>
+        <File name="jpaReportAppender"
+              fileName="${basePath}/jpa_riport.log"
+              filePattern="${basePath}/jpa_riport-%d{yyyy-MM-dd}.log">
+            <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n" />
+        </File>
+
+        <File name="jpqlReportAppender"
+              fileName="${basePath}/jpql_riport.log"
+              filePattern="${basePath}/jpql_riport-%d{yyyy-MM-dd}.log">
+            <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n" />
+        </File>
+
+        <File name="nativeSqlReportAppender"
+              fileName="${basePath}/nativesql_riport.log"
+              filePattern="${basePath}/nativesql_riport-%d{yyyy-MM-dd}.log">
+            <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n" />
+        </File>
+    </Appenders>
+
+    <Loggers>
+        <Logger name="JpaReport" level="debug" additivity="false">
+            <AppenderRef ref="jpaReportAppender" />
+        </Logger>
+
+        <Logger name="JpqlReport" level="debug" additivity="false">
+            <AppenderRef ref="jpqlReportAppender" />
+        </Logger>
+
+        <Logger name="NativeSqlReport" level="debug" additivity="false">
+            <AppenderRef ref="nativeSqlReportAppender" />
+        </Logger>
+    </Loggers>
+</Configuration>
