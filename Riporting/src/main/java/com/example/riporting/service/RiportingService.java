@@ -17,6 +17,8 @@ import java.time.Instant;
 import java.time.LocalTime;
 import java.util.List;
 
+import static com.example.riporting.ReportInit.GENERATE_REPORTS_HOW_MANY_TIMES;
+
 @Service
 public class RiportingService {
     private final ProductRepository productRepository;
@@ -112,9 +114,11 @@ public class RiportingService {
         Logger loggerJpa = LoggerFactory.getLogger("JpaReport");
         loggerJpa.info("Running init report (jpa) on startup");
         Instant start = Instant.now();
-        generateCustomReport(QueryType.JPA, loggerJpa);
-        Instant finish = Instant.now();
 
+        for (int i = 0; i < GENERATE_REPORTS_HOW_MANY_TIMES; i++) {
+            generateCustomReport(QueryType.JPA, loggerJpa);
+        }
+        Instant finish = Instant.now();
         Duration duration = Duration.between(start, finish);
         long seconds = duration.getSeconds();
         long millis = duration.toMillis() % 1000;
@@ -126,9 +130,11 @@ public class RiportingService {
         Logger loggerJpql = LoggerFactory.getLogger("JpqlReport");
         loggerJpql.info("Running init report (jpql) on startup");
         Instant start = Instant.now();
-        generateCustomReport(QueryType.JPQL, loggerJpql);
-        Instant finish = Instant.now();
 
+        for (int i = 0; i < GENERATE_REPORTS_HOW_MANY_TIMES; i++) {
+            generateCustomReport(QueryType.JPQL, loggerJpql);
+        }
+        Instant finish = Instant.now();
         Duration duration = Duration.between(start, finish);
         long seconds = duration.getSeconds();
         long millis = duration.toMillis() % 1000;
@@ -138,16 +144,18 @@ public class RiportingService {
 
     public void generateRiportOnStartupNativeSql() {
         Logger loggerNativeSql = LoggerFactory.getLogger("NativeSqlReport");
-        logger.info("Running init report (native sql) on startup.");
+        loggerNativeSql.info("Running init report (native sql) on startup.");
         Instant start = Instant.now();
-        generateCustomReport(QueryType.NATIVE_SQL, loggerNativeSql);
-        Instant finish = Instant.now();
 
+        for (int i = 0; i < GENERATE_REPORTS_HOW_MANY_TIMES; i++) {
+            generateCustomReport(QueryType.NATIVE_SQL, loggerNativeSql);
+        }
+        Instant finish = Instant.now();
         Duration duration = Duration.between(start, finish);
         long seconds = duration.getSeconds();
         long millis = duration.toMillis() % 1000;
 
-        logger.info("---- Native SQL speed is: " + seconds  +" seconds, " + millis +" miliseconds ----");
+        loggerNativeSql.info("---- Native SQL speed is: " + seconds  +" seconds, " + millis +" miliseconds ----");
     }
 
     public void runInitRiports() {
