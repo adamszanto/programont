@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="INFO">
+    <Appenders>
+        <RollingFile name="jpaReportAppender" fileName="jpa_report.log" filePattern="jpa_report-%d{MM-dd-yyyy}.log">
+            <PatternLayout pattern="%d %-5level %logger{36} - %msg%n" />
+            <Policies>
+                <TimeBasedTriggeringPolicy />
+            </Policies>
+        </RollingFile>
+
+        <RollingFile name="jpqlReportAppender" fileName="jpql_report.log" filePattern="jpql_report-%d{MM-dd-yyyy}.log">
+            <PatternLayout pattern="%d %-5level %logger{36} - %msg%n" />
+            <Policies>
+                <TimeBasedTriggeringPolicy />
+            </Policies>
+        </RollingFile>
+
+        <RollingFile name="nativeSqlReportAppender" fileName="native_sql_report.log" filePattern="native_sql_report-%d{MM-dd-yyyy}.log">
+            <PatternLayout pattern="%d %-5level %logger{36} - %msg%n" />
+            <Policies>
+                <TimeBasedTriggeringPolicy />
+            </Policies>
+        </RollingFile>
+    </Appenders>
+
+    <Loggers>
+        <Logger name="JpaReport" level="info" additivity="false">
+            <AppenderRef ref="jpaReportAppender" />
+        </Logger>
+
+        <Logger name="JpqlReport" level="info" additivity="false">
+            <AppenderRef ref="jpqlReportAppender" />
+        </Logger>
+
+        <Logger name="NativeSqlReport" level="info" additivity="false">
+            <AppenderRef ref="nativeSqlReportAppender" />
+        </Logger>
+
+        <Root level="error">
+            <AppenderRef ref="Console" />
+        </Root>
+    </Loggers>
+</Configuration>
