@@ -32,8 +32,6 @@ public class CustomRepository {
         return customers;
     }
 
-
-
     public List<Customer> findAllCustomersNativeSql() {
         return entityManager.createNativeQuery(
                 "SELECT c.*, e.address AS email FROM customer c LEFT JOIN email_address e ON c.id = e.customer_id;", Customer.class

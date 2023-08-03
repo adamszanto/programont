@@ -1,5 +1,4 @@
 package com.example.riporting.service;
-
 import com.example.riporting.repository.*;
 import com.example.riporting.repository.entity.Customer;
 import com.example.riporting.repository.entity.EmailAddress;
@@ -7,10 +6,7 @@ import com.example.riporting.repository.entity.Product;
 import com.example.riporting.repository.entity.QueryType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
-
 import java.text.DecimalFormat;
 import java.time.Duration;
 import java.time.Instant;
@@ -46,10 +42,10 @@ public class RiportingService {
         logger.info("Generating Product List Riport at: {}", time);
         List<Product> products = productRepository.findAll();
         for(Product product : products) {
-            logger.info("Product ID:\t\t {}", product.getId());
-            logger.info("SKU:\t\t\t {}", product.getSku());
-            logger.info("Name:\t\t\t {}", product.getName());
-            logger.info("Price:\t\t\t {}", product.getPrice());
+            logger.info("Product ID:    {}", product.getId());
+            logger.info("SKU:           {}", product.getSku());
+            logger.info("Name:          {}", product.getName());
+            logger.info("Price:         {}", product.getPrice());
             logger.info("----");
         }
         logger.info("Product Report has been generated.");
@@ -66,7 +62,6 @@ public class RiportingService {
         String time = currentTime.getHour() + ":" + df.format(currentTime.getMinute()) + ":" + currentTime.getSecond();
 
         logger.info("Generating Customer Report at: {}", time);
-        // Alap query:
         List<Customer> customers;
 
         switch (queryType) {
@@ -80,7 +75,6 @@ public class RiportingService {
                 customers = customRepository.findAllCustomersNativeSql();
                 break;
             default:
-                // Alap query:
                 customers = customerRepository.findAll();
                 break;
         }
@@ -89,7 +83,6 @@ public class RiportingService {
             logger.info("Customer ID:   {}", customer.getId());
             logger.info("Name:          {}", customer.getName());
             logger.info("Birthdate:     {}", customer.getBirthdate());
-
             EmailAddress emailAddress = emailAddressRepository.findFirstByCustomer(customer);
             logger.info("Email:         {}", (emailAddress != null) ? emailAddress.toString() : "");
         }
@@ -106,7 +99,7 @@ public class RiportingService {
         logger.info("Generating Email Report at: {}", time);
         List<EmailAddress> emailAddresses = emailAddressRepository.findAll();
         for(EmailAddress email : emailAddresses) {
-            logger.info("Email address:     {}", email.getAddress());
+            logger.info("Email:     {}", email.getAddress());
         }
     }
 
@@ -122,8 +115,7 @@ public class RiportingService {
         Duration duration = Duration.between(start, finish);
         long seconds = duration.getSeconds();
         long millis = duration.toMillis() % 1000;
-
-        loggerJpa.info("---- JPA speed is: " + seconds  +" seconds, " + millis +" miliseconds ----");
+        loggerJpa.info("---- JPA query finished in: " + seconds  +" seconds, " + millis +" miliseconds ----");
     }
 
     public void generateRiportOnStartupJpql() {
@@ -138,8 +130,7 @@ public class RiportingService {
         Duration duration = Duration.between(start, finish);
         long seconds = duration.getSeconds();
         long millis = duration.toMillis() % 1000;
-
-        loggerJpql.info("---- JPQL speed is: " + seconds  +" seconds, " + millis +" miliseconds ----");
+        loggerJpql.info("---- JPQL query finished in: " + seconds  +" seconds, " + millis +" miliseconds ----");
     }
 
     public void generateRiportOnStartupNativeSql() {
@@ -154,8 +145,7 @@ public class RiportingService {
         Duration duration = Duration.between(start, finish);
         long seconds = duration.getSeconds();
         long millis = duration.toMillis() % 1000;
-
-        loggerNativeSql.info("---- Native SQL speed is: " + seconds  +" seconds, " + millis +" miliseconds ----");
+        loggerNativeSql.info("---- Native SQL query finished in: " + seconds  +" seconds, " + millis +" miliseconds ----");
     }
 
     public void runInitRiports() {
