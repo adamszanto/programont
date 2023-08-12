@@ -1,0 +1,15 @@
+{
+  "header" : {
+    "messageId": "1013123",
+    "timestamp": 13232,
+    "type": "add",
+    "ownerId": "kiskacsa"
+  },
+  "payload": "Hello World Kiskacsa"
+},
+
+{
+  "owner": ,
+  "action": ,
+  "data":
+}
