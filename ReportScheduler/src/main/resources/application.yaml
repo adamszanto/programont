@@ -1,0 +1,29 @@
+spring:
+  autoconfigure:
+    exclude: org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration
+  h2:
+    console:
+      enabled: true
+      path: =/h2
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+      properties:
+        hibernate:
+          dialect: org.hibernate.dialect.H2Dialect
+      show-sql: true
+      datasource:
+        url: jdbc:h2:mem:testdb
+        username: sa
+        password:
+        driver-class-name: org.h2.Driver
+        schema: classpath:sample.sql
+      logging:
+        level:
+          org.hibernate.SQL: DEBUG
+          org.hibernate.type.descriptor.sql.BasicBinder: TRACE
+          springframework:
+            jdbc:
+              core:
+                JdbcTemplate: DEBUG
+                StatementCreatorUtils: TRACE

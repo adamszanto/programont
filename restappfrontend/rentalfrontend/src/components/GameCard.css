@@ -1,0 +1,36 @@
+/* GameCardGrid.css */
+
+.game-card-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr); /* Négy egyenlő szélességű oszlop */
+    gap: 20px; /* Térköz a kártyák között */
+}
+
+.game-card {
+    background-color: #ffffff;
+    border: 1px solid #ccc;
+    padding: 20px;
+    text-align: center;
+    /* További kártya stílusok */
+}
+
+/* A kártya tartalmának stílusai (példa) */
+.game-card img {
+    max-width: 100%;
+    height: auto;
+}
+
+.game-card h2 {
+    font-size: 18px;
+    margin: 10px 0;
+}
+
+.game-card p {
+    font-size: 14px;
+    margin: 5px 0;
+}
+
+/* Kikölcsönzött kártya stílusa */
+.game-card.rented {
+    opacity: 0.6;
+}

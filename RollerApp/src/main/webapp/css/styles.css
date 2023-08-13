@@ -1,0 +1,19 @@
+body {
+    width: 60%;
+    margin: auto;
+    background-color: aliceblue;
+}
+
+tr {
+    border-radius: 20px;
+    border: 1px solid cornflowerblue;
+}
+
+th {
+    border: 1px solid cornflowerblue;
+    background-color: cornflowerblue;
+}
+
+td {
+    border: 1px solid cornflowerblue;
+}

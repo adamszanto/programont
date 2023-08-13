@@ -1,0 +1,57 @@
+<configuration>
+
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+        <appender name="jpaReportAppender" class="ch.qos.logback.core.rolling.RollingFileAppender">
+            <file>/logs/jpa_report.txt</file>
+            <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+                <fileNamePattern>/logs/logger-%d{yyyy-MM-dd}.%i.txt</fileNamePattern>
+                <maxFileSize>10MB</maxFileSize>
+                <maxHistory>10</maxHistory>
+                <totalSizeCap>100MB</totalSizeCap>
+            </rollingPolicy>
+            <encoder>
+                <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
+            </encoder>
+        </appender>
+
+        <appender name="jpqlReportAppender" class="ch.qos.logback.core.rolling.RollingFileAppender">
+            <file>/logs/jpql_report.txt</file>
+            <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+                <fileNamePattern>/logs/jpa_report-%d{yyyy-MM-dd}.%i.txt</fileNamePattern>
+                <maxFileSize>10MB</maxFileSize>
+                <maxHistory>10</maxHistory>
+                <totalSizeCap>100MB</totalSizeCap>
+            </rollingPolicy>
+            <encoder>
+                <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
+            </encoder>
+        </appender>
+
+    <appender name="nativeSqlReportAppender" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>/logs/nativesql_report.txt</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <fileNamePattern>/logs/jpa_report-%d{yyyy-MM-dd}.%i.txt</fileNamePattern>
+            <maxFileSize>10MB</maxFileSize>
+            <maxHistory>10</maxHistory>
+            <totalSizeCap>100MB</totalSizeCap>
+        </rollingPolicy>
+        <encoder>
+            <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+        <root level="INFO">
+            <appender-ref ref="jpaReportAppender"/>
+            <appender-ref ref="jpqlReportAppender"/>
+            <appender-ref ref="nativeSqlReportAppender"/>
+        </root>
+    </configuration>
+
+<!--//TODO: ROOT level: Debug, a többi appender1, 2,3 lehet. Külön kapnának 1-1 filtert hogy más levelen legyenek
+    https://stackoverflow.com/questions/5653062/how-can-i-configure-logback-to-log-different-levels-for-a-logger-to-different-de
+-->
