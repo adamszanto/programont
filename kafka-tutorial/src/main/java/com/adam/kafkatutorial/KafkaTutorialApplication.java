@@ -1,6 +1,5 @@
 package com.adam.kafkatutorial;
 
-import com.adam.kafkatutorial.kafka.KafkaProducer;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
