@@ -18,8 +18,10 @@ public class PlaylistController {
         this.playlistProvider = playlistProvider;
     }
 
+
     @GetMapping
-    public ResponseEntity<List<String>>  currentPlayList() {
-        return ResponseEntity.ok(playlistProvider.retrievePlaylist());
+    public ResponseEntity<List<String>> currentPlayList() {
+        List<String> playlist = playlistProvider.retrievePlaylist(); // Adatok helyi lekérdezése
+        return ResponseEntity.ok(playlist);
     }
 }

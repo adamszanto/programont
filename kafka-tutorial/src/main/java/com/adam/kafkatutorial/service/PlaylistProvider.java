@@ -7,9 +7,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 
 @Service
 public class PlaylistProvider {
-    // TODO: updatePlaylist, retrievePlaylist metódus...
     private final List<String> fetchCurrentList = new CopyOnWriteArrayList<>();
-
 
     public void updatePlaylist(List<String> playlist) {
         fetchCurrentList.clear();

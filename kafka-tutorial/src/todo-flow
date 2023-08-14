@@ -1,0 +1,3 @@
+PlaylistController: // TODO: Visszaadni a playlistet (Kafkából frissül a háttérben)
+KafkaConsumerService: // TODO: Hallgatni a topicot & payload-ot add át a PlaylistProvider osztálynak.
+PlaylistProvider: // TODO: updatePlaylist, retrievePlaylist metódus...
