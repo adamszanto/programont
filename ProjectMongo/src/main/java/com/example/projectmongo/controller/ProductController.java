@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 
 @RestController
 public class ProductController {
@@ -43,9 +44,29 @@ public class ProductController {
         }
     }
 
-    @GetMapping("/products")
-    public ResponseEntity<List<Product>> receiveProductSearchResult(@RequestParam String name) {
-        List<Product> searchResult = productService.searchProductByName(name);
-        return new ResponseEntity<>(searchResult, HttpStatus.OK);
+//    @GetMapping("/products")
+//    public ResponseEntity<List<Product>> receiveProductSearchResult(@RequestParam String name) {
+//        List<Product> searchResult = productService.searchProductByName(name);
+//        return new ResponseEntity<>(searchResult, HttpStatus.OK);
+//    }
+
+    @DeleteMapping("/products/{productId}")
+    public ResponseEntity<?> deleteProduct(@PathVariable String productId) {
+        try {
+            productService.deleteProductById(productId);
+            return ResponseEntity.ok("Product with ID " + productId + " deleted successfully.");
+        } catch (NoSuchElementException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        }
+    }
+
+    @PutMapping("/products/{productId}")
+    public ResponseEntity<?> updateProduct(@PathVariable String productId, @RequestBody Product updatedProduct) {
+        try {
+            Product product = productService.updateProduct(productId, updatedProduct);
+            return ResponseEntity.ok(product);
+        } catch (NoSuchElementException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        }
     }
 }
