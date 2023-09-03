@@ -1,4 +1,4 @@
-//package com.example.projectmongo.repository;
+//package com.example.projectmongo.repository.elastic;
 //
 //import com.example.projectmongo.repository.entity.ProductEntity;
 //import org.springframework.data.elasticsearch.repository.ElasticsearchRepository;
@@ -7,7 +7,7 @@
 //import java.util.List;
 //
 //
-//@Repository("elasticsearchRepository")
-//public interface SearchMotor extends ElasticsearchRepository<ProductEntity, String> {
+//@Repository
+//public interface ElasticsearchMotor extends ElasticsearchRepository<ProductEntity, String> {
 //    List<ProductEntity> findAllByName(String productName);
 //}

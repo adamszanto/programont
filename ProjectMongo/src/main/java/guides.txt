@@ -1,0 +1,2 @@
+https://hevodata.com/learn/elasticsearch-mongodb-nodejs/
+https://github.com/Cepr0/sb-mongo-elastic-demo
