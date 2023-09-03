@@ -1,8 +1,6 @@
 package com.example.projectmongo.controller;
 
-import co.elastic.clients.elasticsearch.nodes.Http;
 import com.example.projectmongo.service.model.Product;
-import com.example.projectmongo.repository.ProductRepository;
 import com.example.projectmongo.service.ProductService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,6 +24,12 @@ public class ProductController {
         return new ResponseEntity<>(product, HttpStatus.OK);
     }
 
+    @PostMapping("/products/elasticsearch")
+    public ResponseEntity<Product> sendProductToElasticsearch(@RequestBody final Product product) {
+//        productService.addProductToElasticsearch(product);
+        return new ResponseEntity<>(product, HttpStatus.OK);
+    }
+
     @GetMapping("/products")
     public ResponseEntity<List<Product>> receiveProduct() {
         return new ResponseEntity<>(productService.getAllProduct(), HttpStatus.OK);
@@ -44,11 +48,12 @@ public class ProductController {
         }
     }
 
-//    @GetMapping("/products")
-//    public ResponseEntity<List<Product>> receiveProductSearchResult(@RequestParam String name) {
+    @GetMapping("/products/search")
+    public ResponseEntity<List<Product>> receiveProductSearchResult(@RequestParam String name) {
 //        List<Product> searchResult = productService.searchProductByName(name);
 //        return new ResponseEntity<>(searchResult, HttpStatus.OK);
-//    }
+        return null;
+    }
 
     @DeleteMapping("/products/{productId}")
     public ResponseEntity<?> deleteProduct(@PathVariable String productId) {
