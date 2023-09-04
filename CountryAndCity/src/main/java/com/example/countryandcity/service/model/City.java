@@ -5,7 +5,6 @@ import java.util.Objects;
 public class City {
     private Long id;
     private String name;
-    private Country country;
 
     public Long getId() {
         return id;
@@ -23,25 +22,17 @@ public class City {
         this.name = name;
     }
 
-    public Country getCountry() {
-        return country;
-    }
-
-    public void setCountry(Country country) {
-        this.country = country;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         City city = (City) o;
-        return Objects.equals(id, city.id) && Objects.equals(name, city.name) && Objects.equals(country, city.country);
+        return Objects.equals(id, city.id) && Objects.equals(name, city.name);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, country);
+        return Objects.hash(id, name);
     }
 
     @Override
@@ -49,7 +40,6 @@ public class City {
         return "City{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                ", country=" + country +
                 '}';
     }
 }
