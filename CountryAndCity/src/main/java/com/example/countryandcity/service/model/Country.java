@@ -11,6 +11,9 @@ public class Country {
     private String name;
     private List<City> cities = new ArrayList<>();
 
+    public Country() {
+    }
+
     public Long getId() {
         return id;
     }
@@ -48,12 +51,4 @@ public class Country {
         return Objects.hash(id, name, cities);
     }
 
-    @Override
-    public String toString() {
-        return "Country{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", cities=" + cities +
-                '}';
-    }
 }
