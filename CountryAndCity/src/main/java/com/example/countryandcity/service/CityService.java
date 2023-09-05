@@ -32,6 +32,22 @@ public class CityService {
         CityEntity savedEntity = cityRepository.save(cityEntity);
 
         return CityMapper.INSTANCE.cityEntityToCity(savedEntity);
+    }
 
+    public void deleteCity(Long id) {
+        cityRepository.deleteById(id);
+    }
+
+    public City updateCity(Long id, String newName) {
+        Optional<CityEntity> city = cityRepository.findById(id);
+        if(city.isPresent()) {
+            CityEntity current = city.get();
+            current.setName(newName);
+
+            CityEntity savedEntity = cityRepository.save(current);
+
+            return CityMapper.INSTANCE.cityEntityToCity(current);
+        }
+        return null;
     }
 }

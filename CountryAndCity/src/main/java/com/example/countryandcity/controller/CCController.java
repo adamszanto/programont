@@ -46,4 +46,25 @@ public class CCController {
 
         return ResponseEntity.ok().body(result);
     }
+
+    @PatchMapping("/city/{id}")
+    public ResponseEntity<?> updateCityName(@PathVariable Long id, @RequestBody City city) {
+        City updatedCity = cityService.updateCity(id, city.getName());
+
+        return ResponseEntity.ok(updatedCity);
+    }
+
+    @DeleteMapping("/city/{id}")
+    public ResponseEntity<?> deleteCity(@PathVariable Long id) {
+        cityService.deleteCity(id);
+
+        return new ResponseEntity<>("City with id " +id + " deleted", HttpStatus.OK);
+    }
+
+    @GetMapping("/highest")
+    public ResponseEntity<?> findCityWithHighestNumOfCity() {
+        Country result = countryService.findCountryHighestNumOfCities();
+        return ResponseEntity.ok(result);
+    }
+
 }

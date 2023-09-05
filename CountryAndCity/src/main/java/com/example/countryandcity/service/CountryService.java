@@ -10,6 +10,7 @@ import com.example.countryandcity.service.model.Country;
 import org.springframework.stereotype.Service;
 
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -41,6 +42,20 @@ public class CountryService {
         CountryEntity foundCountry = result.get();
 
         return CountryMapper.INSTANCE.countryEntityToCountry(foundCountry);
+    }
+
+    public Country findCountryHighestNumOfCities() {
+        List<CountryEntity> countries = countryRepository.findAll();
+
+        CountryEntity countryWithMostCities = countries.stream()
+                .max(Comparator.comparingInt(country -> country.getCityEntities().size()))
+                .orElse(null);
+
+        if (countryWithMostCities != null) {
+            return CountryMapper.INSTANCE.countryEntityToCountry(countryWithMostCities);
+        } else {
+            return null;
+        }
     }
 
 
