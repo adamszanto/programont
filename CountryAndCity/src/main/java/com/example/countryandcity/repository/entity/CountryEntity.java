@@ -14,14 +14,10 @@ public class CountryEntity {
     private Long id;
     private String name;
     @OneToMany(mappedBy = "country", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    private List<CityEntity> cityEntities = new ArrayList<>();
+    private List<CityEntity> cityEntities;
 
-//    public void add(CityEntity city) {
-//        if(cityEntities == null) {
-//            cityEntities = new ArrayList<>();
-//        }
-//        cityEntities.add(city);
-//    }
+    public CountryEntity() {
+    }
 
     public void add(CityEntity city) {
         cityEntities.add(city);

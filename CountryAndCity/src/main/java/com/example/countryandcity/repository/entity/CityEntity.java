@@ -12,20 +12,15 @@ public class CityEntity {
     private String name;
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = {})
-    @JoinColumn(name = "countries_id", nullable = false)
+    @JoinColumn(name = "countries_id")
     private CountryEntity country;
 
-    public static CityEntity of(String cityName, CountryEntity country) {
-        return CityEntity.of(cityName, country, null);
+    public CityEntity(String name, CountryEntity country) {
+        this.name = name;
+        this.country = country;
     }
 
-    public static CityEntity of(String cityName, CountryEntity country, Long id) {
-        CityEntity cityEntity = new CityEntity();
-        cityEntity.setName(cityName);
-        cityEntity.setCountry(country);
-        cityEntity.setId(id);
-
-        return cityEntity;
+    public CityEntity() {
     }
 
     public Long getId() {
