@@ -13,13 +13,17 @@ public class CountryEntity {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String name;
-    @OneToMany(mappedBy = "country", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<CityEntity> cityEntities;
+    @OneToMany(mappedBy = "country", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    private List<CityEntity> cityEntities = new ArrayList<>();
+
+//    public void add(CityEntity city) {
+//        if(cityEntities == null) {
+//            cityEntities = new ArrayList<>();
+//        }
+//        cityEntities.add(city);
+//    }
 
     public void add(CityEntity city) {
-        if(cityEntities == null) {
-            cityEntities = new ArrayList<>();
-        }
         cityEntities.add(city);
     }
 

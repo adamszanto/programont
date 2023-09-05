@@ -1,5 +1,6 @@
 package com.example.countryandcity.repository.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 @Entity
@@ -10,7 +11,7 @@ public class CityEntity {
     private Long id;
     private String name;
 
-    @ManyToOne(fetch = FetchType.EAGER, cascade = {})
+    @ManyToOne(fetch = FetchType.LAZY, cascade = {})
     @JoinColumn(name = "countries_id", nullable = false)
     private CountryEntity country;
 
