@@ -60,22 +60,22 @@ public class CountryService {
 
 
 
-//    public List<City> getCitiesByCountryName(String countryName) {
-//        Iterable<CountryEntity> countries = countryRepository.findAll();
-//
-//        List<CountryEntity> matchingCountries = StreamSupport.stream(countries.spliterator(), false)
-//                .filter(country -> country.getName().equalsIgnoreCase(countryName))
-//                .collect(Collectors.toList());
-//
-//        if (!matchingCountries.isEmpty()) {
-//            List<CityEntity> cityEntities = matchingCountries.get(0).getCityEntities();
-//
-//            List<City> cities = cityEntities.stream()
-//                    .map(cityEntity -> CityMapper.INSTANCE.cityEntityToCity(cityEntity))
-//                    .collect(Collectors.toList());
-//
-//            return cities;
-//        }
-//        return Collections.emptyList();
-//    }
+    public List<City> getCitiesByCountryName(String countryName) {
+        Iterable<CountryEntity> countries = countryRepository.findAll();
+
+        List<CountryEntity> matchingCountries = StreamSupport.stream(countries.spliterator(), false)
+                .filter(country -> country.getName().equalsIgnoreCase(countryName))
+                .collect(Collectors.toList());
+
+        if (!matchingCountries.isEmpty()) {
+            List<CityEntity> cityEntities = matchingCountries.get(0).getCityEntities();
+
+            List<City> cities = cityEntities.stream()
+                    .map(cityEntity -> CityMapper.INSTANCE.cityEntityToCity(cityEntity))
+                    .collect(Collectors.toList());
+
+            return cities;
+        }
+        return Collections.emptyList();
+    }
 }

@@ -47,6 +47,13 @@ public class CCController {
         return ResponseEntity.ok().body(result);
     }
 
+    @GetMapping("/{country}/cities")
+    public ResponseEntity<?> getCitiesByCountry(@PathVariable String country) {
+        List<City> result = countryService.getCitiesByCountryName(country);
+
+        return ResponseEntity.ok(result);
+    }
+
     @PatchMapping("/city/{id}")
     public ResponseEntity<?> updateCityName(@PathVariable Long id, @RequestBody City city) {
         City updatedCity = cityService.updateCity(id, city.getName());
