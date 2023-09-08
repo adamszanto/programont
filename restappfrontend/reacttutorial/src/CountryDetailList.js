@@ -6,17 +6,20 @@ import CountryCard from "./CountryCard";
 import {CountryCardHeader} from "./CountryCardHeader";
 import {CityHeader} from "./CityHeader";
 import CityDisplay from "./CityDisplay";
+import CountryAddForm from "./CountryAddForm";
 
 export function CountryDetailList() {
     const params = useParams();
     const location = useLocation();
     const [country, setCountry] = useState({ cities: [] });
 
+
     useEffect(() => {
         console.log('Country id: ', location.state.countryId);
         console.log('Params: ', params);
 
         const countryId = location?.state?.countryId;
+
 
         const fetchData = async () => {
             try {
@@ -36,7 +39,6 @@ export function CountryDetailList() {
     }, []);
 
     const handleRemoveCity = (cityIdToRemove) => {
-        // Send a DELETE request to remove the city with the specified ID
         fetch(`http://localhost:8080/api/cc/city/${cityIdToRemove}`, {
             method: "DELETE",
         })
@@ -55,6 +57,7 @@ export function CountryDetailList() {
     };
 
 
+
     return (
         <div className="main-div">
             <CountryCardHeader />
@@ -67,12 +70,7 @@ export function CountryDetailList() {
             <div>
                 <CityHeader />
                 {country.cities.map((city) => (
-                    <CityDisplay
-                        key={city.id}
-                        id={city.id}
-                        name={city.name}
-                        onDelete={() => handleRemoveCity(city.id)}
-                    />
+                    <CityDisplay key={city.id} id={city.id} name={city.name} />
                 ))}
             </div>
             <BackTo />

@@ -2,11 +2,13 @@ import {DisplayHeader} from "./DisplayHeader";
 import Display from "./Display";
 import React, {useEffect, useState} from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
+import CountryAddForm from "./CountryAddForm";
 
 export function FetchList() {
     const [countries, setCountries] = useState([]);
     const navigate = useNavigate();
     const { countryId } = useParams();
+    const [countryList, setCountryList] = useState([]); // Példa a useState használatára
 
     useEffect(()=> {
         const fetchData = async () => {
@@ -49,6 +51,27 @@ export function FetchList() {
 
     };
 
+    const handleCountryAdd = async (newCountryName) => {
+        try {
+            const response = await fetch("http://localhost:8080/api/cc", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ name: newCountryName }),
+            });
+
+            if (!response.ok) {
+                throw new Error("Couldn't add country");
+            }
+
+            const data = await response.json();
+            setCountryList([...countryList, data]); // Hozzáadott ország
+        } catch (error) {
+            console.error("Error adding country", error);
+        }
+    };
+
     console.log("FetchList.js countryId: " + countryId);
     console.log("FetchList.js country.id: " + countries.id);
     return(
@@ -64,6 +87,7 @@ export function FetchList() {
                     onDelete={handleRemoveCountry}
                 />
             ))}
+            <CountryAddForm onCountryAdd={handleCountryAdd} />
         </div>
     );
 }

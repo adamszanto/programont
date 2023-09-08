@@ -3,10 +3,12 @@ import { useState } from "react"
 
 import { Link } from "react-router-dom";
 import {DisplayTemplate} from "./DisplayTemplate";
+import CountryAddForm from "./CountryAddForm";
 
 
 export default function Display({ countryId, name, cities, cityNum, onDelete, onView }) {
     const [data, setData] = useState([]);
+
     const handleRemoveClick = async () => {
         try {
             const response = await fetch(`http://localhost:8080/api/cc/country/${countryId}`, {
@@ -26,7 +28,10 @@ export default function Display({ countryId, name, cities, cityNum, onDelete, on
         }
     };
 
+
+
     return (
+        <div>
                 <DisplayTemplate
                     countryId={countryId}
                     name={name}
@@ -34,5 +39,6 @@ export default function Display({ countryId, name, cities, cityNum, onDelete, on
                     onView={onView}
                     onDelete={handleRemoveClick}
                 />
+        </div>
     )
 }
