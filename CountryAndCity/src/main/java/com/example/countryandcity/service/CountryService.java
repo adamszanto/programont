@@ -58,7 +58,11 @@ public class CountryService {
         }
     }
 
+    public Country getCountryById(Long id) {
+        CountryEntity foundCountry = countryRepository.findCountryById(id);
 
+        return CountryMapper.INSTANCE.countryEntityToCountry(foundCountry);
+    }
 
     public List<City> getCitiesByCountryName(String countryName) {
         Iterable<CountryEntity> countries = countryRepository.findAll();

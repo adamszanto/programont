@@ -8,7 +8,9 @@ export function FetchList() {
     const [countries, setCountries] = useState([]);
     const navigate = useNavigate();
     const { countryId } = useParams();
-    const [countryList, setCountryList] = useState([]); // Példa a useState használatára
+    const [countryList, setCountryList] = useState([]);
+    const [showHighestCities, setShowHighestCities] = useState(false);
+
 
     useEffect(()=> {
         const fetchData = async () => {
@@ -72,6 +74,24 @@ export function FetchList() {
         }
     };
 
+    const handleShowHighestCities = async () => {
+        try {
+            // Elküldjük a GET kérést a legtöbb city-vel rendelkező országok lekérdezéséhez
+            const response = await fetch("http://localhost:8080/api/cc/highest");
+
+            if (!response.ok) {
+                throw new Error("Couldn't fetch highest city count countries");
+            }
+
+            const data = await response.json();
+
+            // Itt beállítjuk az állapotot, hogy megjelenítsük az ablakot
+            setShowHighestCities(data);
+        } catch (error) {
+            console.error("Error fetching highest city count countries", error);
+        }
+    };
+
     console.log("FetchList.js countryId: " + countryId);
     console.log("FetchList.js country.id: " + countries.id);
     return(
@@ -89,6 +109,16 @@ export function FetchList() {
             ))}
             <div className="addCountryField">
                 <CountryAddForm onCountryAdd={handleCountryAdd} />
+                <button onClick={handleShowHighestCities}>Show Top Country</button>
+                {showHighestCities && (
+                    <div className="popup">
+                        <div key={showHighestCities.id}>
+                            {showHighestCities.name}: {showHighestCities.cities.length} cities
+                        </div>
+                        <button onClick={() => setShowHighestCities(false)}>Close</button>
+                    </div>
+                )}
+
             </div>
         </div>
     );

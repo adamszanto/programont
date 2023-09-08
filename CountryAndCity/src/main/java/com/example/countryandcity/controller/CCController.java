@@ -13,6 +13,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/cc")
+@CrossOrigin(origins = "http://localhost:3000", allowCredentials = "true")
 public class CCController {
     public final static String CANNOT_FIND_COUNTRY = "Cannot find country with id: ";
     public final static String CANNOT_FIND_CITY = "Cannot find city with id: ";
@@ -71,6 +72,12 @@ public class CCController {
     @GetMapping("/highest")
     public ResponseEntity<?> findCityWithHighestNumOfCity() {
         Country result = countryService.findCountryHighestNumOfCities();
+        return ResponseEntity.ok(result);
+    }
+
+    @GetMapping("/country/{id}")
+    public ResponseEntity<?> getCountryById(@PathVariable Long id) {
+        Country result = countryService.getCountryById(id);
         return ResponseEntity.ok(result);
     }
 
