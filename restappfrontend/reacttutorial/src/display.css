@@ -1,4 +1,4 @@
-.doctorList {
+.countryList {
     width: 100%;
     border-collapse: collapse;
 }
@@ -40,19 +40,18 @@
     padding: 5px;
     text-align: center;
     float: left;
-
     flex-direction: column;
     justify-content: center;
     align-items: flex-start;
     flex-grow: 1;
 }
 
-.patientTableRow {
+.cityTableRow {
     display: flex;
     flex-basis: 25%;
 }
 
-.patientRow {
+.cityRow {
     flex-basis: 10%;
     display: flex;
     background-color: #f8f8f8;
@@ -61,20 +60,19 @@
     padding-bottom: 30px;
 }
 
-.patientTableHeader {
+.cityTableHeader {
     margin:auto;
     width: 60%;
 }
 
-.patientTable {
+.cityTable {
     margin:auto;
     width: 60%;
 }
 
-.doctorCard {
+.countryCard {
     display: flex;
     background-color: #f8f8f8;
-    border-radius: 10px;
     padding: 20px;
     margin: 10px;
 }

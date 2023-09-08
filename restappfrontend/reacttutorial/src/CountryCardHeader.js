@@ -1,9 +1,9 @@
 import React from "react";
 import './index.css';
-export function DoctorCardHeader() {
+export function CountryCardHeader() {
     return(
         <div>
-            <h2>Happy Patient CRM</h2>
+            <h2>Country x City</h2>
             <hr/>
         </div>
     )

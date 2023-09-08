@@ -1,16 +1,16 @@
 import { useLocation } from "react-router";
-import { DoctorDetailList } from "./DoctorDetailList";
+import { CountryDetailList } from "./CountryDetailList";
 
-function Doctor() {
+function Country() {
     const location = useLocation();
 
     return (
         <div className="hooked-data">
             {/*{JSON.stringify(location.state)}*/}
 
-            <DoctorDetailList />
+            <CountryDetailList />
         </div>
     )
 }
 
-export default Doctor;
+export default Country;

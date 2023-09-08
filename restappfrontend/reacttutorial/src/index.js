@@ -1,9 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import './contact.css'
-import Contact from './Contact';
-import { DoctorList } from "./DoctorList";
+import './display.css'
+import Display from './Display';
+import { FetchList } from "./FetchList";
 import { Footer } from "./Footer";
 
 import { BrowserRouter } from 'react-router-dom';
