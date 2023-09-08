@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 export default function CountryCard({ countryId, name, cities }) {
     return(
         <div className="doctorCard">
-            <div class="doctorCardLeft">
+            <div className="doctorCardLeft">
                 <div className="doctorCardItem">
                     <span className="label">Country ID: </span>
                     <span className="value">{countryId}</span>

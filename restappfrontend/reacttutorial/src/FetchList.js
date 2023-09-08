@@ -33,7 +33,6 @@ export function FetchList() {
                 if (!response.ok) {
                     throw new Error("Couldn't delete country");
                 }
-                // Update the list of countries in your state after successful deletion
                 setCountries((prevCountries) =>
                     prevCountries.filter((country) => country.id !== countryIdToRemove)
                 );

@@ -4,6 +4,8 @@ import {Footer} from "./Footer";
 import BackTo from "./BackTo";
 import CountryCard from "./CountryCard";
 import {CountryCardHeader} from "./CountryCardHeader";
+import {CityHeader} from "./CityHeader";
+import CityDisplay from "./CityDisplay";
 
 export function CountryDetailList() {
     const params = useParams();
@@ -33,6 +35,26 @@ export function CountryDetailList() {
         fetchData();
     }, []);
 
+    const handleRemoveCity = (cityIdToRemove) => {
+        // Send a DELETE request to remove the city with the specified ID
+        fetch(`http://localhost:8080/api/cc/city/${cityIdToRemove}`, {
+            method: "DELETE",
+        })
+            .then((response) => {
+                if (!response.ok) {
+                    throw new Error("Couldn't delete city");
+                }
+                setCountry((prevCountry) => ({
+                    ...prevCountry,
+                    cities: prevCountry.cities.filter((city) => city.id !== cityIdToRemove),
+                }));
+            })
+            .catch((error) => {
+                console.error("Error deleting city", error);
+            });
+    };
+
+
     return (
         <div className="main-div">
             <CountryCardHeader />
@@ -42,8 +64,33 @@ export function CountryDetailList() {
                 name={country.name}
                 cities={country.cities}
             />
+            <div>
+                <CityHeader />
+                {country.cities.map((city) => (
+                    <CityDisplay
+                        key={city.id}
+                        id={city.id}
+                        name={city.name}
+                        onDelete={() => handleRemoveCity(city.id)}
+                    />
+                ))}
+            </div>
             <BackTo />
             <Footer />
         </div>
     );
+
+    // return (
+    //     <div className="main-div">
+    //         <CountryCardHeader />
+    //         <CountryCard
+    //             key={country.id}
+    //             countryId={country.id}
+    //             name={country.name}
+    //             cities={country.cities}
+    //         />
+    //         <BackTo />
+    //         <Footer />
+    //     </div>
+    // );
 }
