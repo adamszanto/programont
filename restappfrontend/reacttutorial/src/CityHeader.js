@@ -6,7 +6,7 @@ export function CityHeader() {
             <div className="tableRowHeader">
                 <div className="tableCell">City Id</div>
                 <div className="tableCell">City Name</div>
-                <div className="tableCell"> </div>
+                <div className="tableCell"></div>
             </div>
         </div>
     )

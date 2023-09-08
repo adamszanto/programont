@@ -8,9 +8,7 @@ export default function CountryAddForm({ onCountryAdd }) {
     };
 
     const handleAddCountry = () => {
-        // Továbbítsd az új ország nevét az onCountryAdd callback függvénynek
         onCountryAdd(newCountryName);
-        // Töröld a mező tartalmát
         setNewCountryName("");
     };
 

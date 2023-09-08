@@ -6,7 +6,7 @@ import CountryCard from "./CountryCard";
 import {CountryCardHeader} from "./CountryCardHeader";
 import {CityHeader} from "./CityHeader";
 import CityDisplay from "./CityDisplay";
-import CountryAddForm from "./CountryAddForm";
+import CityAddForm from "./addForm/CityAddForm";
 
 export function CountryDetailList() {
     const params = useParams();
@@ -56,9 +56,60 @@ export function CountryDetailList() {
             });
     };
 
+    const handleCityAdd = async (newCityName) => {
+        try {
+            const response = await fetch(`http://localhost:8080/api/cc/${country.id}/city`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ name: newCityName }),
+            });
+
+            if (!response.ok) {
+                throw new Error("Couldn't add city");
+            }
+
+            // Frissítsd az állapotot a hozzáadott városokkal
+            const data = await response.json();
+            setCountry((prevCountry) => ({
+                ...prevCountry,
+                cities: [...prevCountry.cities, data], // Hozzáadott város
+            }));
+        } catch (error) {
+            console.error("Error adding city", error);
+        }
+    };
+
+    const handleCityEdit = async (cityId, editedName) => {
+        try {
+            const response = await fetch(`http://localhost:8080/api/cc/city/${cityId}`, {
+                method: "PATCH",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ name: editedName }),
+            });
+
+            if (!response.ok) {
+                throw new Error("Couldn't edit city");
+            }
+
+            // Frissítsd az állapotot az új város névvel
+            setCountry((prevCountry) => ({
+                ...prevCountry,
+                cities: prevCountry.cities.map((city) =>
+                    city.id === cityId ? { ...city, name: editedName } : city
+                ),
+            }));
+        } catch (error) {
+            console.error("Error editing city", error);
+        }
+    };
 
 
     return (
+        <div>
         <div className="main-div">
             <CountryCardHeader />
             <CountryCard
@@ -67,14 +118,16 @@ export function CountryDetailList() {
                 name={country.name}
                 cities={country.cities}
             />
-            <div>
-                <CityHeader />
-                {country.cities.map((city) => (
-                    <CityDisplay key={city.id} id={city.id} name={city.name} />
-                ))}
-            </div>
+            <div className="cityList">
+                    <CityHeader />
+                    {country.cities.map((city) => (
+                        <CityDisplay key={city.id} id={city.id} name={city.name} onCityEdit={handleCityEdit} />
+                    ))}
+                    <CityAddForm className="countryInput" onCityAdd={handleCityAdd} />
+                    </div>
             <BackTo />
             <Footer />
+        </div>
         </div>
     );
 

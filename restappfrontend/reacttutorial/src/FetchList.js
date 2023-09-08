@@ -2,7 +2,7 @@ import {DisplayHeader} from "./DisplayHeader";
 import Display from "./Display";
 import React, {useEffect, useState} from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import CountryAddForm from "./CountryAddForm";
+import CountryAddForm from "./addForm/CountryAddForm";
 
 export function FetchList() {
     const [countries, setCountries] = useState([]);
@@ -87,7 +87,9 @@ export function FetchList() {
                     onDelete={handleRemoveCountry}
                 />
             ))}
-            <CountryAddForm onCountryAdd={handleCountryAdd} />
+            <div className="addCountryField">
+                <CountryAddForm onCountryAdd={handleCountryAdd} />
+            </div>
         </div>
     );
 }
