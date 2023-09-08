@@ -4,18 +4,18 @@ import {
 } from "react-router";
 
 import App from "./App";
-import Doctor from "./Doctor";
+import Country from "./Country";
 
 
 function ReactRoutes() {
     return (
         <Routes>
             <Route
-                path={`/`}
+                path={"/"}
                 element={<App />} />
             <Route
-                path={`/doctor/:doctorId`}
-                element={<Doctor />} />
+                path={"/country/:countryId"}
+                element={<Country />} />
         </Routes>
     )
 }
