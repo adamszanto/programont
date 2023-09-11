@@ -34,6 +34,7 @@ export default function CityDisplay({id, name, onCityEdit, onCityRemove }) {
                             type="text"
                             value={editedCityName}
                             onChange={(e) => setEditedCityName(e.target.value)}
+                            className="editCity"
                         />
                     </div>
                 ) : (

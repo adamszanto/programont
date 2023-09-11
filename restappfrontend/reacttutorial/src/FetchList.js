@@ -47,7 +47,7 @@ export function FetchList() {
     };
 
     const handleViewCountry = (countryId) => {
-        navigate("/country/${countryId}", {
+        navigate(`/country/${countryId}`, {
             state: { countryId }
         });
 
@@ -68,7 +68,7 @@ export function FetchList() {
             }
 
             const data = await response.json();
-            setCountryList([...countryList, data]); // Hozzáadott ország
+            setCountryList([...countryList, data]);
         } catch (error) {
             console.error("Error adding country", error);
         }
@@ -84,7 +84,6 @@ export function FetchList() {
 
             const data = await response.json();
 
-            // Itt beállítjuk az állapotot, hogy megjelenítsük az ablakot
             setShowHighestCities(data);
         } catch (error) {
             console.error("Error fetching highest city count countries", error);

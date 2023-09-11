@@ -73,11 +73,10 @@ export function CountryDetailList() {
                 throw new Error("Couldn't add city");
             }
 
-            // Frissítsd az állapotot a hozzáadott városokkal
             const data = await response.json();
             setCountry((prevCountry) => ({
                 ...prevCountry,
-                cities: [...prevCountry.cities, data], // Hozzáadott város
+                cities: [...prevCountry.cities, data],
             }));
         } catch (error) {
             console.error("Error adding city", error);
@@ -98,7 +97,6 @@ export function CountryDetailList() {
                 throw new Error("Couldn't edit city");
             }
 
-            // Frissítsd az állapotot az új város névvel
             setCountry((prevCountry) => ({
                 ...prevCountry,
                 cities: prevCountry.cities.map((city) =>
@@ -114,7 +112,6 @@ export function CountryDetailList() {
         const query = e.target.value.toLowerCase();
         setSearchQuery(query);
 
-        // Filter cities based on the search query
         const filtered = country.cities.filter((city) =>
             city.name.toLowerCase().includes(query)
         );
