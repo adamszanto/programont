@@ -108,3 +108,23 @@ h2 {
     padding: 20px;
     margin: 10px;
 }
+
+/* Style for the search input */
+.search-input {
+    width: 80%;
+    max-width: 300px; /* Adjust the width as needed */
+    padding: 5px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    outline: none;
+    transition: border-color 0.2s;
+}
+
+.search-input:focus {
+    border-color: #007bff;
+}
+
+.search-container {
+    margin-bottom: 20px;
+}

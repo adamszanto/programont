@@ -1,6 +1,6 @@
 import React from 'react';
-import './index.css';
-import './display.css'
+import './style/index.css';
+import './style/display.css'
 import { FetchList } from "./FetchList";
 import { Footer } from "./Footer";
 

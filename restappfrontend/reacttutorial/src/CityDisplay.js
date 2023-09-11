@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 
 
-export default function CityDisplay({id, name, onCityEdit }) {
+export default function CityDisplay({id, name, onCityEdit, onCityRemove }) {
     const [cityIdToDelete, setCityIdToDelete] = useState(null);
     const [isEditing, setIsEditing] = useState(false);
     const [editedCityName, setEditedCityName] = useState(name);
@@ -12,30 +12,16 @@ export default function CityDisplay({id, name, onCityEdit }) {
 
     const handleCancelEdit = () => {
         setIsEditing(false);
-        setEditedCityName(name); // Visszaállítjuk az eredeti nevet
+        setEditedCityName(name);
     };
 
     const handleSaveEdit = () => {
-        // Elküldjük az új nevet a szülő komponensnek
         onCityEdit(id, editedCityName);
         setIsEditing(false);
     };
 
     const handleRemoveClick = () => {
-        if (cityIdToDelete) {
-            fetch(`http://localhost:8080/api/cc/city/${cityIdToDelete}`, {
-                method: "DELETE",
-            })
-                .then((response) => {
-                    if (!response.ok) {
-                        throw new Error("Couldn't delete city");
-                    }
-                    // Handle deletion in your parent component (CountryDetailList)
-                })
-                .catch((error) => {
-                    console.error("Error deleting city", error);
-                });
-        }
+        onCityRemove(id);
     };
 
     return (
@@ -62,6 +48,9 @@ export default function CityDisplay({id, name, onCityEdit }) {
                     ) : (
                         <button onClick={handleEditClick}>Edit</button>
                     )}
+                </div>
+                <div className="tableCell">
+                    <button onClick={handleRemoveClick}>Remove</button>
                 </div>
             </div>
         </div>

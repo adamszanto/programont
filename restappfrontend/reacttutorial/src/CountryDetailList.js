@@ -12,6 +12,9 @@ export function CountryDetailList() {
     const params = useParams();
     const location = useLocation();
     const [country, setCountry] = useState({ cities: [] });
+    const [searchQuery, setSearchQuery] = useState("");
+    const [filteredCities, setFilteredCities] = useState([]);
+
 
 
     useEffect(() => {
@@ -107,6 +110,17 @@ export function CountryDetailList() {
         }
     };
 
+    const handleSearchInputChange = (e) => {
+        const query = e.target.value.toLowerCase();
+        setSearchQuery(query);
+
+        // Filter cities based on the search query
+        const filtered = country.cities.filter((city) =>
+            city.name.toLowerCase().includes(query)
+        );
+        setFilteredCities(filtered);
+    };
+
 
     return (
         <div>
@@ -118,11 +132,29 @@ export function CountryDetailList() {
                 name={country.name}
                 cities={country.cities}
             />
+
+            <div className="search-container">
+                <input
+                    type="text"
+                    placeholder="Search city"
+                    value={searchQuery}
+                    onChange={handleSearchInputChange}
+                    className="search-input"
+                />
+            </div>
+
+
             <div className="cityList">
-                    <CityHeader />
-                    {country.cities.map((city) => (
-                        <CityDisplay key={city.id} id={city.id} name={city.name} onCityEdit={handleCityEdit} />
-                    ))}
+                <CityHeader />
+                {(searchQuery ? filteredCities : country.cities).map((city) => (
+                    <CityDisplay
+                        key={city.id}
+                        id={city.id}
+                        name={city.name}
+                        onCityEdit={handleCityEdit}
+                        onCityRemove={handleRemoveCity}
+                    />
+                ))}
                     <CityAddForm className="countryInput" onCityAdd={handleCityAdd} />
                     </div>
             <BackTo />
@@ -130,18 +162,4 @@ export function CountryDetailList() {
         </div>
         </div>
     );
-
-    // return (
-    //     <div className="main-div">
-    //         <CountryCardHeader />
-    //         <CountryCard
-    //             key={country.id}
-    //             countryId={country.id}
-    //             name={country.name}
-    //             cities={country.cities}
-    //         />
-    //         <BackTo />
-    //         <Footer />
-    //     </div>
-    // );
 }
