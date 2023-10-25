@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>jQuery demo</title>
+    <script src="code.jquery.com_jquery-3.6.0.js"></script>
+    <script src="base.js"></script>
+    <link rel="stylesheet" href="base.css">
+</head>
+<body onload="legacyOnload()">
+<div class="mainDiv" data-main="true">
+    <div class="left">
+        <div class="left" data-cell="left">
+            left.left
+        </div>
+        <div class="right" data-cell="right">
+            left.right
+        </div>
+    </div>
+    <div class="right">
+        <div data-cell="right">
+            right
+        </div>
+    </div>
+</div>
+<div class="mainDiv" data-main="true">
+    <div class="left">
+        <div class="left" data-cell="left">
+            left.left
+        </div>
+        <div class="right" data-cell="right">
+            left.right
+        </div>
+    </div>
+    <div class="right">
+        <div data-cell="right">
+            right
+        </div>
+    </div>
+</div>
+<button id="findRights">Find rights</button>
+<button id="decorateRights">Decorate rights</button>
+</body>
+</html>
