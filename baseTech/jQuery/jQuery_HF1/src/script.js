@@ -23,7 +23,7 @@ function jOnReady(ev) {
         newRow.append("<div class='table-col table-col-name'>" + country.name + "</div>");
         newRow.append("<div class='table-col table-col-population'>" + country.population + "</div>");
         newRow.append("<div class='table-col'><button>Edit</button></div>");
-        newRow.append("<div class='table-col'><button>Remove</button></div>");
+        newRow.append("<div class='table-col'><button class='delete-button' data-country-id='" + country.id + "'>Remove</button></div>");
 
         countryTable.append(newRow);
     }
@@ -52,12 +52,20 @@ function jOnReady(ev) {
         }
     });
 
+    $("#countryTable").on("click", ".delete-button", function () {
+        var countryId = $(this).data("country-id");
+        deleteCountry(countryId);
+    });
+
     function addCountry(country) {
         countries.push(country);
         appendToCountryTable(country);
     }
 
     function deleteCountry(id) {
-
+        countries.forEach(function (country,i ) {
+               countries.splice(i, 1);
+               $("#countryTable #country-" + country.id).remove();
+        });
     }
 }
