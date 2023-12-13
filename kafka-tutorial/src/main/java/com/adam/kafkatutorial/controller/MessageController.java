@@ -11,13 +11,16 @@ import org.springframework.web.bind.annotation.*;
 public class MessageController {
 
     private final KafkaProducerService kafkaProducerService;
+    private final KafkaConsumerService kafkaConsumerService;
 
-    public MessageController(KafkaProducerService kafkaProducerService) {
+    public MessageController(KafkaProducerService kafkaProducerService, KafkaConsumerService kafkaConsumerService) {
         this.kafkaProducerService = kafkaProducerService;
+        this.kafkaConsumerService = kafkaConsumerService;
     }
 
     @PostMapping
     public void postToPlayList(@RequestBody UserInput userInput) {
         kafkaProducerService.produce(userInput);
+        kafkaConsumerService.consume(userInput);
     }
 }

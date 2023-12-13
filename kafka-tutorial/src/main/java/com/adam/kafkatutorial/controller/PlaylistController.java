@@ -21,7 +21,7 @@ public class PlaylistController {
 
     @GetMapping
     public ResponseEntity<List<String>> currentPlayList() {
-        List<String> playlist = playlistProvider.retrievePlaylist(); // Adatok helyi lekérdezése
+        List<String> playlist = playlistProvider.retrievePlaylist();
         return ResponseEntity.ok(playlist);
     }
 }
