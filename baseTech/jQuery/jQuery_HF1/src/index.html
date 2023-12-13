@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>jQuery HF1</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="script.js"></script>
+    <link rel="stylesheet" href="base.css">
+</head>
+<body>
+<div class="container">
+    <form id="addCountry" action="">
+        <h3>Add Country</h3>
+        <div class="form-group">
+            <input class="form-control" type="text" name="name" placeholder="Country Name" required>
+        </div>
+        <div class="form-group">
+            <input class="form-control" type="text" name="population" placeholder="Population">
+        </div>
+        <button class="form-control-button" type="submit">Submit</button>
+    </form>
+    <div id="countryTable">
+        <h3>Country List</h3>
+        <div class="table-row-header">
+            <div class="table-col">Name</div>
+            <div class="table-col">Population</div>
+            <div class="table-col"></div>
+            <div class="table-col"></div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

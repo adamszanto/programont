@@ -12,6 +12,9 @@ export function CountryDetailList() {
     const params = useParams();
     const location = useLocation();
     const [country, setCountry] = useState({ cities: [] });
+    const [searchQuery, setSearchQuery] = useState("");
+    const [filteredCities, setFilteredCities] = useState([]);
+
 
 
     useEffect(() => {
@@ -70,11 +73,10 @@ export function CountryDetailList() {
                 throw new Error("Couldn't add city");
             }
 
-            // Frissítsd az állapotot a hozzáadott városokkal
             const data = await response.json();
             setCountry((prevCountry) => ({
                 ...prevCountry,
-                cities: [...prevCountry.cities, data], // Hozzáadott város
+                cities: [...prevCountry.cities, data],
             }));
         } catch (error) {
             console.error("Error adding city", error);
@@ -95,7 +97,6 @@ export function CountryDetailList() {
                 throw new Error("Couldn't edit city");
             }
 
-            // Frissítsd az állapotot az új város névvel
             setCountry((prevCountry) => ({
                 ...prevCountry,
                 cities: prevCountry.cities.map((city) =>
@@ -105,6 +106,16 @@ export function CountryDetailList() {
         } catch (error) {
             console.error("Error editing city", error);
         }
+    };
+
+    const handleSearchInputChange = (e) => {
+        const query = e.target.value.toLowerCase();
+        setSearchQuery(query);
+
+        const filtered = country.cities.filter((city) =>
+            city.name.toLowerCase().includes(query)
+        );
+        setFilteredCities(filtered);
     };
 
 
@@ -118,11 +129,29 @@ export function CountryDetailList() {
                 name={country.name}
                 cities={country.cities}
             />
+
+            <div className="search-container">
+                <input
+                    type="text"
+                    placeholder="Search city"
+                    value={searchQuery}
+                    onChange={handleSearchInputChange}
+                    className="search-input"
+                />
+            </div>
+
+
             <div className="cityList">
-                    <CityHeader />
-                    {country.cities.map((city) => (
-                        <CityDisplay key={city.id} id={city.id} name={city.name} onCityEdit={handleCityEdit} />
-                    ))}
+                <CityHeader />
+                {(searchQuery ? filteredCities : country.cities).map((city) => (
+                    <CityDisplay
+                        key={city.id}
+                        id={city.id}
+                        name={city.name}
+                        onCityEdit={handleCityEdit}
+                        onCityRemove={handleRemoveCity}
+                    />
+                ))}
                     <CityAddForm className="countryInput" onCityAdd={handleCityAdd} />
                     </div>
             <BackTo />
@@ -130,18 +159,4 @@ export function CountryDetailList() {
         </div>
         </div>
     );
-
-    // return (
-    //     <div className="main-div">
-    //         <CountryCardHeader />
-    //         <CountryCard
-    //             key={country.id}
-    //             countryId={country.id}
-    //             name={country.name}
-    //             cities={country.cities}
-    //         />
-    //         <BackTo />
-    //         <Footer />
-    //     </div>
-    // );
 }

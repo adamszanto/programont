@@ -7,6 +7,10 @@ export function DisplayTemplate({countryId, name, cityNum, onDelete, onView }) {
         console.log("DisplayTemplate countryId: " + countryId);
     };
 
+    const handleRemoveClick = () => {
+        onDelete(countryId);
+    }
+
     return (
         <div className="tableRow">
             <div className="tableCell">{countryId}</div>
@@ -19,7 +23,7 @@ export function DisplayTemplate({countryId, name, cityNum, onDelete, onView }) {
             </div>
             <div className="tableCell">
                 <div className="tableCell">
-                    <button onClick={onDelete}>Remove</button>
+                    <button onClick={handleRemoveClick}>Remove</button>
                 </div>
             </div>
         </div>

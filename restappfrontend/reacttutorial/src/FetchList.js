@@ -47,7 +47,7 @@ export function FetchList() {
     };
 
     const handleViewCountry = (countryId) => {
-        navigate("/country/${countryId}", {
+        navigate(`/country/${countryId}`, {
             state: { countryId }
         });
 
@@ -68,7 +68,7 @@ export function FetchList() {
             }
 
             const data = await response.json();
-            setCountryList([...countryList, data]); // Hozzáadott ország
+            setCountryList([...countryList, data]);
         } catch (error) {
             console.error("Error adding country", error);
         }
@@ -76,7 +76,6 @@ export function FetchList() {
 
     const handleShowHighestCities = async () => {
         try {
-            // Elküldjük a GET kérést a legtöbb city-vel rendelkező országok lekérdezéséhez
             const response = await fetch("http://localhost:8080/api/cc/highest");
 
             if (!response.ok) {
@@ -85,7 +84,6 @@ export function FetchList() {
 
             const data = await response.json();
 
-            // Itt beállítjuk az állapotot, hogy megjelenítsük az ablakot
             setShowHighestCities(data);
         } catch (error) {
             console.error("Error fetching highest city count countries", error);
@@ -95,6 +93,7 @@ export function FetchList() {
     console.log("FetchList.js countryId: " + countryId);
     console.log("FetchList.js country.id: " + countries.id);
     return(
+        <div>
         <div className="countryList">
             <DisplayHeader />
             {countries.map((country) => (
@@ -107,8 +106,13 @@ export function FetchList() {
                     onDelete={handleRemoveCountry}
                 />
             ))}
+            <div className="tableRow">
             <div className="addCountryField">
                 <CountryAddForm onCountryAdd={handleCountryAdd} />
+            </div>
+            </div>
+            <div className="countryList">
+                <div className="tableRow">
                 <button onClick={handleShowHighestCities}>Show Top Country</button>
                 {showHighestCities && (
                     <div className="popup">
@@ -118,8 +122,9 @@ export function FetchList() {
                         <button onClick={() => setShowHighestCities(false)}>Close</button>
                     </div>
                 )}
-
             </div>
+        </div>
+        </div>
         </div>
     );
 }
