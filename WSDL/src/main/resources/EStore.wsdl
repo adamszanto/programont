@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<s0:definitions name="EstoreServiceDefinitions" targetNamespace="http://estore.tmobile.hu/onlineif" xmlns:s0="http://schemas.xmlsoap.org/wsdl/" xmlns:s1="java:hu.westel.estore.onlineif.bean" xmlns:s2="http://www.bea.com/servers/wls90/wsee/attachment" xmlns:s3="http://estore.tmobile.hu/onlineif" xmlns:s4="http://schemas.xmlsoap.org/wsdl/soap/">
+  <s0:types>
+    <xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="java:java.util" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+      <xs:complexType name="TimeZone">
+        <xs:sequence>
+          <xs:element minOccurs="1" name="RawOffset" nillable="false" type="xs:int"/>
+          <xs:element minOccurs="1" name="ID" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="1" name="Default" nillable="true" type="java:TimeZone" xmlns:java="java:java.util"/>
+        </xs:sequence>
+      </xs:complexType>
+    </xs:schema>
+    <xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="java:hu.westel.estore.onlineif.bean" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+      <xs:complexType name="PutDocumentResponse">
+        <xs:sequence>
+          <xs:element minOccurs="1" name="DocumentId" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="1" name="DocumentUrl" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="1" name="Version" nillable="true" type="xs:string"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="ListDocumentDataResponse">
+        <xs:sequence>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="Documents" nillable="true" type="java:DocumentData" xmlns:java="java:hu.westel.estore.onlineif.bean"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="DocumentData">
+        <xs:sequence>
+          <xs:element minOccurs="1" name="DocumentId" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="1" name="DocumentType" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="1" name="ExternalId" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="1" name="RefDate" nillable="true" type="xs:string"/>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="Parameters" nillable="true" type="java:DocumentDescription" xmlns:java="java:hu.westel.estore.onlineif.bean"/>
+          <xs:element minOccurs="1" name="DocumentUrl" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="1" name="Version" nillable="true" type="xs:string"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="DocumentDescription">
+        <xs:sequence>
+          <xs:element minOccurs="1" name="Code" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="1" name="Value" nillable="true" type="xs:string"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="ListDocumentDataRequest">
+        <xs:sequence>
+          <xs:element minOccurs="1" name="DocumentType" nillable="true" type="xs:string"/>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="Parameters" nillable="true" type="java:DocumentDescription" xmlns:java="java:hu.westel.estore.onlineif.bean"/>
+          <xs:element minOccurs="1" name="Reason" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="1" name="RequestParameter" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="1" name="UserName" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="1" name="OrderParam" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="1" name="OrderDirection" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="1" name="MaxResults" nillable="true" type="xs:int"/>
+          <xs:element minOccurs="1" name="DocumentGroup" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="1" name="FromDate" nillable="true" type="xs:dateTime"/>
+          <xs:element minOccurs="1" name="ToDate" nillable="true" type="xs:dateTime"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="PutDocumentRequest">
+        <xs:sequence>
+          <xs:element minOccurs="1" name="DocumentType" nillable="true" type="xs:string"/>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="Parameters" nillable="true" type="java:DocumentDescription" xmlns:java="java:hu.westel.estore.onlineif.bean"/>
+          <xs:element minOccurs="1" name="Path" nillable="true" type="xs:string"/>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="ProcessParameters" nillable="true" type="java:ProcessParameter" xmlns:java="java:hu.westel.estore.onlineif.bean"/>
+          <xs:element minOccurs="1" name="ProcessType" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="1" name="Reason" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="1" name="RequestParameter" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="1" name="TransferType" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="1" name="UserName" nillable="true" type="xs:string"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="ProcessParameter">
+        <xs:sequence>
+          <xs:element minOccurs="1" name="Code" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="1" name="Value" nillable="true" type="xs:string"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="GetDocumentRequest">
+        <xs:sequence>
+          <xs:element minOccurs="1" name="DocumentId" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="1" name="DocumentType" nillable="true" type="xs:string"/>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="Parameters" nillable="true" type="java:DocumentDescription" xmlns:java="java:hu.westel.estore.onlineif.bean"/>
+          <xs:element minOccurs="1" name="Reason" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="1" name="RequestParameter" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="1" name="UserName" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="1" name="FromDate" nillable="true" type="xs:dateTime"/>
+          <xs:element minOccurs="1" name="ToDate" nillable="true" type="xs:dateTime"/>
+          <xs:element minOccurs="1" name="ExternalId" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="1" name="Version" nillable="true" type="xs:string"/>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="DocumentElement" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="1" name="Url" nillable="true" type="xs:string"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="InvalidateDocumentResponse">
+        <xs:sequence>
+          <xs:element minOccurs="1" name="Result" nillable="true" type="xs:string"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="InvalidateDocumentRequest">
+        <xs:sequence>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="DocumentIds" nillable="true" type="java:DocumentIdentifier" xmlns:java="java:hu.westel.estore.onlineif.bean"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="DocumentIdentifier">
+        <xs:sequence>
+          <xs:element minOccurs="1" name="DocumentId" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="1" name="DocumentType" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="1" name="ExternalId" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="1" name="RefDate" nillable="true" type="xs:dateTime"/>
+        </xs:sequence>
+      </xs:complexType>
+    </xs:schema>
+  </s0:types>
+  <s0:message name="PutDocument">
+    <s0:part name="PutDocumentRequestInput" type="s1:PutDocumentRequest"/>
+    <s0:part name="PutDocumentDocumentInput" type="s2:datahandler"/>
+  </s0:message>
+  <s0:message name="PutDocumentResponse">
+    <s0:part name="PutDocumentResult" type="s1:PutDocumentResponse"/>
+  </s0:message>
+  <s0:message name="ListDocumentData">
+    <s0:part name="ListDocumentDataRequestInput" type="s1:ListDocumentDataRequest"/>
+  </s0:message>
+  <s0:message name="ListDocumentDataResponse">
+    <s0:part name="ListDocumentDataResult" type="s1:ListDocumentDataResponse"/>
+  </s0:message>
+  <s0:message name="InvalidateDocument">
+    <s0:part name="InvalidateDocumentRequestInput" type="s1:InvalidateDocumentRequest"/>
+  </s0:message>
+  <s0:message name="InvalidateDocumentResponse">
+    <s0:part name="InvalidateDocumentResult" type="s1:InvalidateDocumentResponse"/>
+  </s0:message>
+  <s0:message name="GetDocument">
+    <s0:part name="GetDocumentRequestInput" type="s1:GetDocumentRequest"/>
+  </s0:message>
+  <s0:message name="GetDocumentResponse">
+    <s0:part name="GetDocumentResult" type="s2:datahandler"/>
+  </s0:message>
+  <s0:portType name="EstoreServicePortType">
+    <s0:operation name="PutDocument" parameterOrder="PutDocumentRequestInput PutDocumentDocumentInput">
+      <s0:input message="s3:PutDocument"/>
+      <s0:output message="s3:PutDocumentResponse"/>
+    </s0:operation>
+    <s0:operation name="ListDocumentData" parameterOrder="ListDocumentDataRequestInput">
+      <s0:input message="s3:ListDocumentData"/>
+      <s0:output message="s3:ListDocumentDataResponse"/>
+    </s0:operation>
+    <s0:operation name="InvalidateDocument" parameterOrder="InvalidateDocumentRequestInput">
+      <s0:input message="s3:InvalidateDocument"/>
+      <s0:output message="s3:InvalidateDocumentResponse"/>
+    </s0:operation>
+    <s0:operation name="GetDocument" parameterOrder="GetDocumentRequestInput">
+      <s0:input message="s3:GetDocument"/>
+      <s0:output message="s3:GetDocumentResponse"/>
+    </s0:operation>
+  </s0:portType>
+  <s0:binding name="EstoreServiceSoapBinding" type="s3:EstoreServicePortType">
+    <s4:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <s0:operation name="PutDocument">
+      <s4:operation soapAction="" style="rpc"/>
+      <s0:input>
+        <s4:body namespace="http://estore.tmobile.hu/onlineif" parts="PutDocumentRequestInput PutDocumentDocumentInput" use="literal"/>
+      </s0:input>
+      <s0:output>
+        <s4:body namespace="http://estore.tmobile.hu/onlineif" parts="PutDocumentResult" use="literal"/>
+      </s0:output>
+    </s0:operation>
+    <s0:operation name="ListDocumentData">
+      <s4:operation soapAction="" style="rpc"/>
+      <s0:input>
+        <s4:body namespace="http://estore.tmobile.hu/onlineif" parts="ListDocumentDataRequestInput" use="literal"/>
+      </s0:input>
+      <s0:output>
+        <s4:body namespace="http://estore.tmobile.hu/onlineif" parts="ListDocumentDataResult" use="literal"/>
+      </s0:output>
+    </s0:operation>
+    <s0:operation name="InvalidateDocument">
+      <s4:operation soapAction="" style="rpc"/>
+      <s0:input>
+        <s4:body namespace="http://estore.tmobile.hu/onlineif" parts="InvalidateDocumentRequestInput" use="literal"/>
+      </s0:input>
+      <s0:output>
+        <s4:body namespace="http://estore.tmobile.hu/onlineif" parts="InvalidateDocumentResult" use="literal"/>
+      </s0:output>
+    </s0:operation>
+    <s0:operation name="GetDocument">
+      <s4:operation soapAction="" style="rpc"/>
+      <s0:input>
+        <s4:body namespace="http://estore.tmobile.hu/onlineif" parts="GetDocumentRequestInput" use="literal"/>
+      </s0:input>
+      <s0:output>
+        <s4:body namespace="http://estore.tmobile.hu/onlineif" parts="GetDocumentResult" use="literal"/>
+      </s0:output>
+    </s0:operation>
+  </s0:binding>
+  <s0:service name="EstoreService">
+    <s0:port binding="s3:EstoreServiceSoapBinding" name="EstoreServicePortTypeSoapPort">
+      <s4:address location="http://slong1:17011/estorewebservice/EstoreService"/>
+    </s0:port>
+  </s0:service>
+</s0:definitions>
