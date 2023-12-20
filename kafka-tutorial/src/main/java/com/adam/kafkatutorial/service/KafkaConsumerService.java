@@ -29,5 +29,4 @@ public class KafkaConsumerService {
         kafkaDataRepository.save(userInput);
     }
 
-
 }

@@ -1,0 +1,36 @@
+body {
+  margin: 0;
+  font-family: sans-serif;
+}
+
+.main-div {
+  width: 60%;
+  margin: auto;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+footer {
+  padding: 50px 20px;
+  bottom: 0;
+  float: right;
+}
+
+.back-button {
+  border:none;
+  display:block;
+  margin:auto;
+  color:white;
+  padding: 10px 40px;
+  cursor: pointer;
+  text-align: center;
+  text-decoration: none;
+}
+
+a {
+  text-decoration: none;
+}

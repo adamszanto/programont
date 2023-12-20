@@ -69,3 +69,7 @@ function jOnReady(ev) {
         });
     }
 }
+// let 
+// let url = localhost:8080/findCountry
+// let param = jForm.serialize()
+// TODO: $post(url, param, function(data)
