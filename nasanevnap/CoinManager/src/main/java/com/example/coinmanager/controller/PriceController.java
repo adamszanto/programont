@@ -26,7 +26,8 @@ public class PriceController {
 
         if (coinApiUrl != null) {
             String apiUrl = coinApiUrl.getApiUrl();
-            priceService.processDataStream(coin);
+            priceService.setCurrentCoin(coin);
+            priceService.processDataStream();
             String message = coin + " stream in progress";
             return ResponseEntity.ok(message);
         } else {
