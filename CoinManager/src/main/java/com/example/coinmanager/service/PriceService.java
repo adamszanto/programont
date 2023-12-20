@@ -26,7 +26,7 @@ public class PriceService {
     @Scheduled(fixedRate = 100)
     public void processDataStream() {
         if (currentCoin == null) {
-            logger.info("Initial processing not completed. Skipping scheduled task.");
+            logger.debug("Initial processing not completed. Skipping scheduled task.");
             return;
         }
 
