@@ -4,10 +4,10 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class NasaNevnapApplication {
+public class NASAApiApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(NasaNevnapApplication.class, args);
+		SpringApplication.run(NASAApiApplication.class, args);
 	}
 
 }
