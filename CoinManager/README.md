@@ -1,5 +1,4 @@
-# COIN MANAGER 
-## BTC Real-time Data App
+# COIN MANAGER – Real-time Data App
 ## Introduction
 This Spring Boot application fetches real-time Bitcoin (BTC) exchange rate data from the Coinbase API. It utilizes MongoDB for data storage, Kafka for real-time event streaming, and Spring Boot for the backend. Postman can be used to interact with the exposed APIs.
 
