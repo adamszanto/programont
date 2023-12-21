@@ -1,8 +1,8 @@
-Bitcoin Real-time Data App
-Introduction
+# Bitcoin Real-time Data App
+## Introduction
 This Spring Boot application fetches real-time Bitcoin (BTC) exchange rate data from the Coinbase API. It utilizes MongoDB for data storage, Kafka for real-time event streaming, and Spring Boot for the backend. Postman can be used to interact with the exposed APIs.
 
-Prerequisites
+## Prerequisites
 Make sure you have the following installed:
 
 MongoDB
@@ -41,8 +41,10 @@ Console Producer:
 bash
 Copy code
 .\bin\kafka-console-producer.sh --topic BTCcoinDataConsumerTopic --bootstrap-server localhost:9092
-BTC Real-time API Calls
+## BTC Real-time API Calls
 The application performs API calls to Coinbase to fetch Bitcoin exchange rate data. It fetches 10 real-life moments of BTC data per second.
 
-Contributing
+## Contributing
 Feel free to contribute by opening issues or submitting pull requests.
+
+Happy Coding!
